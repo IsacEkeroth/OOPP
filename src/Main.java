@@ -7,6 +7,7 @@ public class Main {
         System.out.printf("Hello and welcome!");
 
         // TEST KOMMENTAR WOWOWOO
+        // ANOTHER COMMENT !!!!
         // test ole
 
         for (int i = 1; i <= 5; i++) {
