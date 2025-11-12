@@ -11,7 +11,7 @@ public class MainView extends JFrame {
 
 
     private final JPanel aquarium = new JPanel();
-
+    private final JPanel test = new JPanel();
 
 
     public MainView(int windowWidth, int windowHeight) {
@@ -27,7 +27,7 @@ public class MainView extends JFrame {
         //this.setPreferredSize(new Dimension(windowWidth, windowHeight));
         setSize(new Dimension(windowWidth, windowHeight));
         // Funkar bara om bilden ligger i samma mapp där projektet körs
-        this.setIconImage(new ImageIcon("icon-grupp26.png").getImage());
+        this.setIconImage(new ImageIcon("./src/view/images/icon-grupp26.png").getImage());
         // Fungerar oavsett var programmet körs eller om det packas till .jar
         // this.setIconImage(new ImageIcon(getClass().getResource("/images/logo.png")).getImage());
 
@@ -37,11 +37,31 @@ public class MainView extends JFrame {
         // aquarium.setLayout(new BorderLayout());
 
         aquarium.setBackground(Color.blue);
-        aquarium.setBounds(160, 90,960, 540);
+        aquarium.setBounds(160, 90,200, 200);
 
 
-        this.add(aquarium);
+        test.setBackground(Color.red);
+        test.setBounds(190, 90,200, 200);
 
+
+        //this.add(aquarium);
+
+        JLayeredPane layeredPane = new JLayeredPane();
+        layeredPane.setBackground(Color.black);
+        layeredPane.setOpaque(true);
+        //layeredPane.setSize(new Dimension(300, 310));
+        //layeredPane.setBackground(Color.red);
+        layeredPane.setBounds(0,0,960, 540);
+        this.add(layeredPane);
+
+
+
+        layeredPane.add(aquarium, Integer.valueOf(1));
+        layeredPane.add(test, Integer.valueOf(2));
+
+        JLabel fisk = new JLabel(new ImageIcon("./src/view/images/icon-grupp26.png"));
+        fisk.setBounds(100, 100, 50, 50);
+        layeredPane.add(fisk);
 
         //this.pack();
         this.setLayout(null);
@@ -51,6 +71,8 @@ public class MainView extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.setResizable(false);
+
+        this.repaint();
     }
 
 
