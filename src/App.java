@@ -11,14 +11,10 @@ public class App {
 
 
 
-
-
-    public static void main(String[] args) {
-
-       MainView view = new MainView(windowWidth,windowHeight);
-
-
-
-
+    public void start() {
+        MainView view = new MainView(windowWidth,windowHeight);
     }
+
+
+
 }
