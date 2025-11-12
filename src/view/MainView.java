@@ -10,6 +10,9 @@ public class MainView extends JFrame {
     private int windowHeight;
 
 
+    private final JPanel aquarium = new JPanel();
+
+
 
     public MainView(int windowWidth, int windowHeight) {
         this.windowWidth = windowWidth;
@@ -21,8 +24,8 @@ public class MainView extends JFrame {
 
     private void initComponents() {
         this.setTitle(WINDOW_TITLE);
-        this.setPreferredSize(new Dimension(windowWidth, windowHeight));
-
+        //this.setPreferredSize(new Dimension(windowWidth, windowHeight));
+        setSize(new Dimension(windowWidth, windowHeight));
         // Funkar bara om bilden ligger i samma mapp där projektet körs
         this.setIconImage(new ImageIcon("icon-grupp26.png").getImage());
         // Fungerar oavsett var programmet körs eller om det packas till .jar
@@ -30,8 +33,18 @@ public class MainView extends JFrame {
 
 
 
+        // Kommenterad tills jag lär mig BorderLayout
+        // aquarium.setLayout(new BorderLayout());
 
-        this.pack();
+        aquarium.setBackground(Color.blue);
+        aquarium.setBounds(160, 90,960, 540);
+
+
+        this.add(aquarium);
+
+
+        //this.pack();
+        this.setLayout(null);
 
         this.setVisible(true);
 

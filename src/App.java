@@ -15,7 +15,7 @@ public class App {
 
     public static void main(String[] args) {
 
-        MainView view = new MainView(windowWidth,windowHeight);
+       MainView view = new MainView(windowWidth,windowHeight);
 
 
 
