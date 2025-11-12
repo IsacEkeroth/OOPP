@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class MainView extends JFrame {
 
@@ -9,9 +10,9 @@ public class MainView extends JFrame {
     private int windowWidth;
     private int windowHeight;
 
+    JLayeredPane container = new JLayeredPane();
 
-    private final JPanel aquarium = new JPanel();
-    private final JPanel test = new JPanel();
+    JPanel panel = new JPanel();
 
 
     public MainView(int windowWidth, int windowHeight) {
@@ -24,44 +25,38 @@ public class MainView extends JFrame {
 
     private void initComponents() {
         this.setTitle(WINDOW_TITLE);
-        //this.setPreferredSize(new Dimension(windowWidth, windowHeight));
         setSize(new Dimension(windowWidth, windowHeight));
-        // Funkar bara om bilden ligger i samma mapp där projektet körs
-        this.setIconImage(new ImageIcon("./src/view/images/icon-grupp26.png").getImage());
-        // Fungerar oavsett var programmet körs eller om det packas till .jar
-        // this.setIconImage(new ImageIcon(getClass().getResource("/images/logo.png")).getImage());
+
+        container.setBackground(Color.BLUE);
+        container.setOpaque(true);
+
+        container.setBounds(160,90,960, 540);
+        this.add(container);
 
 
+        panel.setSize(new Dimension(200,200));
+        panel.setBackground(Color.green);
+        container.add(panel);
 
-        // Kommenterad tills jag lär mig BorderLayout
-        // aquarium.setLayout(new BorderLayout());
+        // Temporärt
+        // Load original image
+        ImageIcon originalIcon = new ImageIcon("./src/view/images/icon-grupp26.png");
+        BufferedImage originalImage = new BufferedImage(
+                originalIcon.getIconWidth(),
+                originalIcon.getIconHeight(),
+                BufferedImage.TYPE_INT_ARGB);
 
-        aquarium.setBackground(Color.blue);
-        aquarium.setBounds(160, 90,200, 200);
+        Graphics g = originalImage.getGraphics();
+        g.drawImage(originalIcon.getImage(), 0, 0, null);
+        g.dispose();
+        // Scale the image to desired dimensions
+        Image scaledImage = originalImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
 
-
-        test.setBackground(Color.red);
-        test.setBounds(190, 90,200, 200);
-
-
-        //this.add(aquarium);
-
-        JLayeredPane layeredPane = new JLayeredPane();
-        layeredPane.setBackground(Color.black);
-        layeredPane.setOpaque(true);
-        //layeredPane.setSize(new Dimension(300, 310));
-        //layeredPane.setBackground(Color.red);
-        layeredPane.setBounds(0,0,960, 540);
-        this.add(layeredPane);
-
-
-
-        layeredPane.add(aquarium, Integer.valueOf(1));
-        layeredPane.add(test, Integer.valueOf(2));
-
-        JLabel fisk = new JLabel(new ImageIcon("./src/view/images/icon-grupp26.png"));
+        JLabel fisk = new JLabel(scaledIcon);
         fisk.setBounds(100, 100, 50, 50);
-        layeredPane.add(fisk);
+        fisk.setOpaque(false);
+        container.add(fisk, Integer.valueOf(1));
 
         //this.pack();
         this.setLayout(null);
@@ -71,8 +66,6 @@ public class MainView extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.setResizable(false);
-
-        this.repaint();
     }
 
 
