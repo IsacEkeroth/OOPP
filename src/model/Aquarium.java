@@ -1,11 +1,14 @@
 package model;
 
 import java.awt.*;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Vector;
 
 public class Aquarium implements IAquarium {
-    List<IFish> fishList;
-    final Point size = new Point(720, 540);
+    ArrayList<IFish> fishList;
+    ArrayList<Vector> obstacleList;
+    
+    final Point aquariumSize = new Point(720, 540);
     
     @Override
     public void addFish(IFish fish) {
@@ -23,20 +26,30 @@ public class Aquarium implements IAquarium {
     
     // Assuming fish are rectangular and not rotated
     @Override
-    public boolean isValidPosition(int x, int y, int fishX, int fishY) {
-        if (0 <= x && x <= this.size.getX() - fishX
-            && 0 <= y && y <= this.size.getY() - fishY) {
+    public boolean isValidPosition(Vector<Integer> pos, Vector<Integer> size) {
+        int x = pos.get(0);
+        int y = pos.get(1);
+        if (0 <= x && x <= this.aquariumSize.getX() - size.get(0)
+            && 0 <= y && y <= this.aquariumSize.getY() - size.get(1)) {
             return true;
         } else {
             return false;
         }
     }
     
-    // Probably never used
-    @Override
-    public Point getSize() {
-        return this.size;
+    private boolean noObstacles(int x, int y, int fishX, int fishY) {
+        for (Vector obstacle : obstacleList) {
+            
+            return false;
+        }
+        return true;
     }
     
-    // Sends fishList and size? to view-adapter
+    // Probably never used
+    @Override
+    public Point getAquariumSize() {
+        return this.aquariumSize;
+    }
+    
+    // view-adapter
 }
