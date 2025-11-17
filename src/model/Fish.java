@@ -37,9 +37,9 @@ public class Fish implements IFish {
 
     @Override
     public void setPos(int x, int y, int z) {
-        pos.setX(0);
-        pos.setY(1);
-        pos.setZ(2);
+        pos.setX(x);
+        pos.setY(y);
+        pos.setZ(z);
     }
 
     @Override
