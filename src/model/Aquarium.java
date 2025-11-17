@@ -37,7 +37,7 @@ public class Aquarium implements IAquarium {
     
     @Override
     public Point getAquariumSize() {
-        return this.aquariumSize;
+        return new Point(this.aquariumSize);
     }
     
 }
