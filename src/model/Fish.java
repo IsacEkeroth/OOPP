@@ -11,6 +11,10 @@ public class Fish implements IFish {
     private int speed;
     private Vector<Integer> pos;
 
+    Fish(IAquarium aquarium) {
+        this.aquarium = aquarium;
+    }
+
     @Override
     public IAquarium getAquarium() {
         return aquarium;
@@ -33,9 +37,9 @@ public class Fish implements IFish {
 
     @Override
     public void setPos(int x, int y, int z) {
-        pos.set(0,x);
-        pos.set(1,y);
-        pos.set(2,z);
+        pos.set(0, x);
+        pos.set(1, y);
+        pos.set(2, z);
     }
 
     @Override
