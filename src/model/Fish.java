@@ -9,7 +9,7 @@ public class Fish implements IFish {
 
     private int age;
     private int speed;
-    private Vector<Integer> pos;
+    private Vec3<Integer> pos;
 
     Fish(IAquarium aquarium) {
         this.aquarium = aquarium;
@@ -31,15 +31,15 @@ public class Fish implements IFish {
     }
 
     @Override
-    public Vector<Integer> getPos() {
+    public Vec3<Integer> getPos() {
         return pos;
     }
 
     @Override
     public void setPos(int x, int y, int z) {
-        pos.set(0, x);
-        pos.set(1, y);
-        pos.set(2, z);
+        pos.setX(0);
+        pos.setY(1);
+        pos.setZ(2);
     }
 
     @Override

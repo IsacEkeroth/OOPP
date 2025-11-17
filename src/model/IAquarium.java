@@ -1,9 +1,5 @@
 package model;
 
-import java.util.List;
-import java.util.Vector;
-import java.awt.Dimension;
-import java.awt.Point;
 
 public interface IAquarium {
     // comment = private attributes
@@ -14,7 +10,7 @@ public interface IAquarium {
 
     void removeFish(IFish fish);
 
-    boolean isValidPosition(Vector<Integer> pos, Vector<Integer> size);
+    boolean isValidPosition(Vec2<Integer> pos, Vec2<Integer> size);
     
-    Point getAquariumSize();
+    Vec2 getAquariumSize();
 }
