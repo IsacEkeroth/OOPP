@@ -31,7 +31,7 @@ public class simpleMove implements IAi {
             newY = (int) Math.floor(newY + momentumY);
         }
         // newPos = oldPos + Speed*direction
-        // if statements to prevent 0 movement by rounding movement backwards down and forwards up
+        // if statements to prevent 0 movement by rounding movement backwards:down and forwards:up
 
 
         Vector<Integer>  newPos = new Vector<>(); newPos.add(newX); newPos.add(newY);

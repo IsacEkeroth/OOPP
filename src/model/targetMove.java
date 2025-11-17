@@ -10,7 +10,6 @@ public class targetMove implements IAi {
         this.direction = direction;
     }
 
-
     @Override
     public void move(IFish fish){
     // goal is to find shortest path to coordinates
