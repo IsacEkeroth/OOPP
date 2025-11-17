@@ -7,7 +7,7 @@ import java.util.Vector;
 public class Aquarium implements IAquarium {
     ArrayList<IFish> fishList;
     
-    final Point aquariumSize = new Point(720, 540);
+    final Point aquariumSize = new Point(720,540);
     
     @Override
     public void addFish(IFish fish) {
