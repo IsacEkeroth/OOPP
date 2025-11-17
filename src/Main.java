@@ -9,7 +9,6 @@ public class Main {
 
         // TEST KOMMENTAR WOWOWOO
         // ANOTHER COMMENT !!!!
-        // test ole
 
         for (int i = 1; i <= 5; i++) {
             // TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have

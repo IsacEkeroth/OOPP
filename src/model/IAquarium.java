@@ -8,11 +8,13 @@ import java.awt.Point;
 public interface IAquarium {
     // comment = private attributes
     // List<IFish> fish;
-    // Point size = new Point(720, 540);
+    // Point aquariumSize = new Point(720, 540);
 
-    void addFish();
+    void addFish(IFish fish);
 
-    void removeFish();
+    void removeFish(IFish fish);
 
-    boolean isValidPosition();
+    boolean isValidPosition(Vector<Integer> pos, Vector<Integer> size);
+    
+    Point getAquariumSize();
 }
