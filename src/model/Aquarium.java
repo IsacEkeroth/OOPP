@@ -6,14 +6,12 @@ import java.util.Vector;
 
 public class Aquarium implements IAquarium {
     ArrayList<IFish> fishList;
-    ArrayList<Vector> obstacleList;
     
     final Point aquariumSize = new Point(720, 540);
     
     @Override
     public void addFish(IFish fish) {
         this.fishList.add(fish);
-        // Fish factory somewhere else that creates the fish?
     }
     
     @Override
@@ -37,19 +35,9 @@ public class Aquarium implements IAquarium {
         }
     }
     
-    private boolean noObstacles(int x, int y, int fishX, int fishY) {
-        for (Vector obstacle : obstacleList) {
-            
-            return false;
-        }
-        return true;
-    }
-    
-    // Probably never used
     @Override
     public Point getAquariumSize() {
         return this.aquariumSize;
     }
     
-    // view-adapter
 }
