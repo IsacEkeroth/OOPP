@@ -7,7 +7,7 @@ public interface IFish {
     // has the following
     // int age;
     // int speed;
-    // Vector<Integer> pos; // x, y, z
+    // Vector<Integer> pos; // x, y,     z
     // IAi ai;
 
     IAquarium getAquarium();
