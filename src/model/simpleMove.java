@@ -36,7 +36,8 @@ public class simpleMove implements IAi {
 
         Vector<Integer>  newPos = new Vector<>(); newPos.add(newX); newPos.add(newY);
 
-        Boolean isValid = aquarium.isValidPosition(newPos, fish.getSize());
+        // Boolean isValid = aquarium.isValidPosition(newPos, fish.getSize());
+        Boolean isValid = true;
         if(!isValid){
             double newDirection = (this.direction + Math.PI) % (2*Math.PI);
             // mirrors direction
