@@ -67,6 +67,14 @@ public class MainView extends JFrame {
         drawPanel.setBackground(Color.red);
         drawPanel.setOpaque(true);
 
+        FishEntity f1 = new FishEntity(new Point(0, 0), new Point(50, 50),
+                getImage("./src/view/images/icon-grupp26.png"));
+        FishEntity f2 = new FishEntity(new Point(200, 200), new Point(50, 50),
+                getImage("./src/view/images/icon-grupp26.png"));
+
+        drawPanel.addEntity(f1);
+        drawPanel.addEntity(f2);
+        drawPanel.repaint();
         container.add(drawPanel, Integer.valueOf(1));
 
     }
