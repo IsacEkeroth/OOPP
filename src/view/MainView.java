@@ -12,13 +12,7 @@ public class MainView extends JFrame {
     private static final String WINDOW_TITLE = "Aquarium-MVP";
     private int windowWidth;
     private int windowHeight;
-
-    // Denna ska bort
-    JLayeredPane container = new JLayeredPane();
-
-    // "Akvarium"
-    // "Fiskar och dekorationer"
-    DrawPanel drawPanel;
+    private DrawPanel drawPanel;
 
     public MainView(int windowWidth, int windowHeight) {
         this.windowWidth = windowWidth;
@@ -27,43 +21,30 @@ public class MainView extends JFrame {
     }
 
     private void initComponents() {
-        this.setLayout(null);
-        this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setTitle(WINDOW_TITLE);
-        setSize(new Dimension(windowWidth, windowHeight));
-
-        // Lägger Fönstret i mitten av skärmen
+        this.setSize(windowWidth, windowHeight);
         this.setLocationRelativeTo(null);
 
-        // LayeredPanes characteristics
-        container.setBounds(160, 90, 960, 540);
-        container.setOpaque(true);
+        drawPanel = new DrawPanel(windowWidth, windowHeight);
+        drawPanel.setOpaque(true);
 
-        // lägg till Akvarium till Fönstret
-        this.add(container);
-
-        Entity bgEntity = new Entity(new Point(0, 0), 0, new Point(this.windowWidth, this.windowHeight),
+        Entity bgEntity = new Entity(new Point(0, 0), 0, new Point(windowWidth, windowHeight),
                 getImage("./src/view/images/akvarium1.jpg"));
-
         Entity f1 = new Entity(new Point(0, 0), 1, new Point(50, 50),
                 getImage("./src/view/images/icon-grupp26.png"));
         Entity f2 = new Entity(new Point(200, 200), 1, new Point(50, 50),
                 getImage("./src/view/images/icon-grupp26.png"));
 
-        drawPanel = new DrawPanel(this.windowWidth, this.windowHeight);
-
-        drawPanel.setBounds(0, 0, this.windowWidth, this.windowHeight);
-        drawPanel.setOpaque(true);
-
         drawPanel.addEntity(bgEntity);
         drawPanel.addEntity(f1);
         drawPanel.addEntity(f2);
 
+        this.add(drawPanel);
         drawPanel.repaint();
 
-        container.add(drawPanel, Integer.valueOf(0));
+        this.setVisible(true);
     }
 
     private BufferedImage getImage(String path) {
@@ -74,7 +55,6 @@ public class MainView extends JFrame {
             e.printStackTrace();
             img = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB); // fallback
         }
-
         return img;
     }
 }
