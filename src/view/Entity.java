@@ -9,7 +9,7 @@ public class Entity implements IRenderedEntity {
     Point size;
     BufferedImage image;
 
-    Entity(Point pos, int depth, Point size, BufferedImage image) {
+    public Entity(Point pos, int depth, Point size, BufferedImage image) {
         this.pos = pos;
         this.depth = depth;
         this.size = size;
