@@ -36,6 +36,8 @@ public class App {
             public void actionPerformed(ActionEvent e) {
                 Point p = f1.getPos();
                 p.x++;
+                p.x++;
+                p.y++;
                 f1.setPos(p);
 
                 view.repaint();
