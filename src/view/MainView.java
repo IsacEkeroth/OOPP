@@ -1,8 +1,11 @@
 package view;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class MainView extends JFrame {
 
@@ -14,23 +17,21 @@ public class MainView extends JFrame {
     JLayeredPane container = new JLayeredPane();
     // "Dekoration"?
     JPanel panel = new JPanel();
+    DrawPanel drawPanel = new DrawPanel(getImage("./src/view/images/icon-grupp26.png"), 300, 300);
 
-    //Temporär bakgrund
-    //JLabel bakgrund = new JLabel(new ImageIcon("./src/view/images/akvarium1.jpg"));
+    // Temporär bakgrund
+    // JLabel bakgrund = new JLabel(new
+    // ImageIcon("./src/view/images/akvarium1.jpg"));
     JLabel bakgrund = new JLabel();
 
     ImageIcon OGimage = new ImageIcon("./src/view/images/akvarium1.jpg");
     Image scaledImage = OGimage.getImage().getScaledInstance(960, 540, Image.SCALE_SMOOTH);
-
-
 
     public MainView(int windowWidth, int windowHeight) {
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
         initComponents();
     }
-
-
 
     private void initComponents() {
         this.setTitle(WINDOW_TITLE);
@@ -39,7 +40,7 @@ public class MainView extends JFrame {
         this.setLocationRelativeTo(null);
 
         // LayeredPanes characteristics
-        container.setBounds(160,90,960, 540);
+        container.setBounds(160, 90, 960, 540);
         container.setOpaque(true);
 
         // lägg till Akvarium till Fönstret
@@ -47,15 +48,21 @@ public class MainView extends JFrame {
 
         // Lägger till bilden till bakgrund(JLabel)
         bakgrund.setIcon(new ImageIcon(scaledImage));
-        bakgrund.setBounds(0,0,960,540);
+        bakgrund.setBounds(0, 0, 960, 540);
         container.add(bakgrund, Integer.valueOf(0));
 
         // Dekorationens characteristics
-        //panel.setSize(new Dimension(200,200));
-        panel.setBounds(0,330,200, 200);
+        // panel.setSize(new Dimension(200,200));
+        panel.setBounds(0, 330, 200, 200);
         panel.setBackground(Color.green);
         // Lägger till Dekorationen till Akvariet
         container.add(panel, Integer.valueOf(1));
+
+        drawPanel.setBounds(200, 200, 200, 200);
+        drawPanel.setBackground(Color.red);
+        drawPanel.setOpaque(true);
+
+        container.add(drawPanel, Integer.valueOf(1));
 
         // Temporärt
         // Load original image
@@ -78,7 +85,7 @@ public class MainView extends JFrame {
         // Lägger till fisken till akvariet
         container.add(fisk, Integer.valueOf(2));
 
-        //this.pack();
+        // this.pack();
         this.setLayout(null);
 
         this.setVisible(true);
@@ -89,9 +96,15 @@ public class MainView extends JFrame {
 
     }
 
+    private BufferedImage getImage(String path) {
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new File(path));
+        } catch (IOException e) {
+            e.printStackTrace();
+            img = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB); // fallback
+        }
 
-
-
-
-
+        return img;
+    }
 }
