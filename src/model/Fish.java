@@ -26,7 +26,7 @@ public class Fish implements IFish {
         return age;
     }
 
-    public int getSize() { return size;}
+    public int getSize() { return size; }
 
     @Override
     public int getSpeed() {
