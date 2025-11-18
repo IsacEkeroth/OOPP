@@ -19,7 +19,7 @@ public class DrawPanel extends JPanel {
 
         this.setPreferredSize(new Dimension(x, y));
 
-        this.setBackground(Color.pink);
+        // this.setBackground(Color.pink);
 
     }
 

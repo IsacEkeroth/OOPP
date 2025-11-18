@@ -17,7 +17,8 @@ public class MainView extends JFrame {
     JLayeredPane container = new JLayeredPane();
 
     // "Fiskar och dekorationer"
-    DrawPanel drawPanel = new DrawPanel(getImage("./src/view/images/icon-grupp26.png"), 300, 300);
+    DrawPanel drawPanel = new DrawPanel(getImage("./src/view/images/icon-grupp26.png"), this.windowWidth,
+            this.windowHeight);
 
     // Temporär bakgrund
     // JLabel bakgrund = new JLabel(new
@@ -56,7 +57,13 @@ public class MainView extends JFrame {
         bakgrund.setBounds(0, 0, 960, 540);
         container.add(bakgrund, Integer.valueOf(0));
 
-        drawPanel.setBounds(200, 200, 200, 200);
+        DrawPanel testPanel = new DrawPanel(getImage("./src/view/images/icon-grupp26.png"), 100, 100);
+        testPanel.setBounds(500, 500, 100, 100);
+        drawPanel.setOpaque(true);
+        testPanel.setBackground(Color.CYAN);
+        container.add(testPanel, Integer.valueOf(1));
+
+        drawPanel.setBounds(0, 0, this.windowWidth, this.windowHeight);
         drawPanel.setBackground(Color.red);
         drawPanel.setOpaque(true);
 
