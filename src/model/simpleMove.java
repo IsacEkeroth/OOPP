@@ -13,8 +13,8 @@ public class simpleMove implements IAi {
 
     @Override
     public void move(IFish fish){
-        int newX = fish.getPos().get(0);
-        int newY = fish.getPos().get(1);
+        int newX = fish.getPos().getX();
+        int newY = fish.getPos().getY();
         double momentumX = (fish.getSpeed()*Math.cos(this.direction));
         double momentumY = (fish.getSpeed()*Math.sin(this.direction));
 
@@ -34,7 +34,7 @@ public class simpleMove implements IAi {
         // if statements to prevent 0 movement by rounding movement backwards:down and forwards:up
 
 
-        Vector<Integer>  newPos = new Vector<>(); newPos.add(newX); newPos.add(newY);
+        Vec3<Integer>  newPos = new Vec3<Integer>(newX, newY, fish.getPos().getZ());
 
         // Boolean isValid = aquarium.isValidPosition(newPos, fish.getSize());
         Boolean isValid = true;
@@ -47,19 +47,19 @@ public class simpleMove implements IAi {
             momentumY = (fish.getSpeed()*Math.sin(this.direction));
 
             if (momentumX >= 0){
-                newX = (int) Math.ceil(fish.getPos().get(0) + momentumX); 
+                newX = (int) Math.ceil(fish.getPos().getX() + momentumX);
             }
             else{
-                newX = (int) Math.floor(fish.getPos().get(0) + momentumX); 
+                newX = (int) Math.floor(fish.getPos().getX() + momentumX);
             }
             if (momentumY >= 0){
-                newY = (int) Math.ceil(fish.getPos().get(1) + momentumY);
+                newY = (int) Math.ceil(fish.getPos().getY() + momentumY);
             }
             else{
-                newY = (int) Math.floor(fish.getPos().get(1) + momentumY);
+                newY = (int) Math.floor(fish.getPos().getY() + momentumY);
             }
             // new mirrored direction
         }
-        fish.setPos(newX,newY,fish.getPos().get(2));
+        fish.setPos(newX,newY,fish.getPos().getZ());
     }
 }
