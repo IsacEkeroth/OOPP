@@ -3,13 +3,15 @@ package view;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
-public class FishEntity implements IRenderedEntity {
+public class Entity implements IRenderedEntity {
     Point pos;
+    int depth;
     Point size;
     BufferedImage image;
 
-    FishEntity(Point pos, Point size, BufferedImage image) {
+    Entity(Point pos, int depth, Point size, BufferedImage image) {
         this.pos = pos;
+        this.depth = depth;
         this.size = size;
         this.image = image;
     }
@@ -17,6 +19,10 @@ public class FishEntity implements IRenderedEntity {
     @Override
     public Point getPos() {
         return new Point(pos);
+    }
+
+    public int getDepth() {
+        return depth;
     }
 
     @Override
