@@ -4,13 +4,14 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.JPanel;
 
+import java.util.Map;
+
 public class DrawPanel extends JPanel {
-    ArrayList<IRenderedEntity> l0 = new ArrayList<>();
-    ArrayList<IRenderedEntity> l1 = new ArrayList<>();
-    ArrayList<IRenderedEntity> l2 = new ArrayList<>();
+    Map<Integer, ArrayList<IRenderedEntity>> layers = new HashMap<>();
 
     DrawPanel(int w, int h) {
         super();
@@ -23,27 +24,16 @@ public class DrawPanel extends JPanel {
 
     public void addEntity(IRenderedEntity e) {
         int depth = e.getDepth();
-        if (depth == 0) {
-            l0.add(e);
-        } else if (depth == 1) {
-            l1.add(e);
-        } else if (depth == 2) {
-            l2.add(e);
-        } else {
-            throw new Error("Illegal depth");
+        layers.putIfAbsent(depth, new ArrayList<>());
+        if (!layers.get(depth).contains(e)) {
+            layers.get(depth).add(e);
         }
     }
 
     public void removeEntity(IRenderedEntity e) {
         int depth = e.getDepth();
-        if (depth == 0) {
-            l0.remove(e);
-        } else if (depth == 1) {
-            l1.remove(e);
-        } else if (depth == 2) {
-            l2.remove(e);
-        } else {
-            throw new Error("Illegal depth");
+        if (layers.containsKey(depth)) {
+            layers.get(depth).remove(e);
         }
     }
 
@@ -51,14 +41,10 @@ public class DrawPanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        for (IRenderedEntity entity : l0) {
-            renderEntity(entity, g);
-        }
-        for (IRenderedEntity entity : l1) {
-            renderEntity(entity, g);
-        }
-        for (IRenderedEntity entity : l2) {
-            renderEntity(entity, g);
+        for (ArrayList<IRenderedEntity> layer : layers.values()) {
+            for (IRenderedEntity entity : layer) {
+                renderEntity(entity, g);
+            }
         }
     }
 
