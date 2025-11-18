@@ -13,13 +13,12 @@ public class MainView extends JFrame {
     private int windowWidth;
     private int windowHeight;
 
-    // "Akvarium"
+    // Denna ska bort
     JLayeredPane container = new JLayeredPane();
 
+    // "Akvarium"
     // "Fiskar och dekorationer"
     DrawPanel drawPanel;
-
-    DrawPanel background;
 
     public MainView(int windowWidth, int windowHeight) {
         this.windowWidth = windowWidth;
