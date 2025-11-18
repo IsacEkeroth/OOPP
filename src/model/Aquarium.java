@@ -1,13 +1,11 @@
 package model;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.Vector;
 
 public class Aquarium implements IAquarium {
     ArrayList<IFish> fishList;
     
-    final Point aquariumSize = new Point(720, 540);
+    final Vec2<Integer> aquariumSize = new Vec2(720,540);
     
     @Override
     public void addFish(IFish fish) {
@@ -24,11 +22,9 @@ public class Aquarium implements IAquarium {
     
     // Assuming fish are rectangular and not rotated
     @Override
-    public boolean isValidPosition(Vector<Integer> pos, Vector<Integer> size) {
-        int x = pos.get(0);
-        int y = pos.get(1);
-        if (0 <= x && x <= this.aquariumSize.getX() - size.get(0)
-            && 0 <= y && y <= this.aquariumSize.getY() - size.get(1)) {
+    public boolean isValidPosition(Vec2<Integer> pos, Vec2<Integer> size) {
+        if ((0 <= pos.getX()) && (pos.getX() <= aquariumSize.getX() - size.getX())
+                && (0 <= pos.getY()) && (pos.getY() <= (aquariumSize.getY() - size.getY()))) {
             return true;
         } else {
             return false;
@@ -36,8 +32,8 @@ public class Aquarium implements IAquarium {
     }
     
     @Override
-    public Point getAquariumSize() {
-        return new Point(this.aquariumSize);
+    public Vec2 getAquariumSize() {
+        return new Vec2(aquariumSize.getX(), aquariumSize.getY());
     }
     
 }
