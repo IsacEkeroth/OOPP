@@ -15,8 +15,8 @@ public class MainView extends JFrame {
 
     // "Akvarium"
     JLayeredPane container = new JLayeredPane();
-    // "Dekoration"?
-    JPanel panel = new JPanel();
+
+    // "Fiskar och dekorationer"
     DrawPanel drawPanel = new DrawPanel(getImage("./src/view/images/icon-grupp26.png"), 300, 300);
 
     // Temporär bakgrund
@@ -34,8 +34,13 @@ public class MainView extends JFrame {
     }
 
     private void initComponents() {
+        this.setLayout(null);
+        this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
         this.setTitle(WINDOW_TITLE);
         setSize(new Dimension(windowWidth, windowHeight));
+
         // Lägger Fönstret i mitten av skärmen
         this.setLocationRelativeTo(null);
 
@@ -51,48 +56,11 @@ public class MainView extends JFrame {
         bakgrund.setBounds(0, 0, 960, 540);
         container.add(bakgrund, Integer.valueOf(0));
 
-        // Dekorationens characteristics
-        // panel.setSize(new Dimension(200,200));
-        panel.setBounds(0, 330, 200, 200);
-        panel.setBackground(Color.green);
-        // Lägger till Dekorationen till Akvariet
-        container.add(panel, Integer.valueOf(1));
-
         drawPanel.setBounds(200, 200, 200, 200);
         drawPanel.setBackground(Color.red);
         drawPanel.setOpaque(true);
 
         container.add(drawPanel, Integer.valueOf(1));
-
-        // Temporärt
-        // Load original image
-        ImageIcon originalIcon = new ImageIcon("./src/view/images/icon-grupp26.png");
-        BufferedImage originalImage = new BufferedImage(
-                originalIcon.getIconWidth(),
-                originalIcon.getIconHeight(),
-                BufferedImage.TYPE_INT_ARGB);
-
-        Graphics g = originalImage.getGraphics();
-        g.drawImage(originalIcon.getImage(), 0, 0, null);
-        g.dispose();
-        // Scale the image to desired dimensions
-        Image scaledImage = originalImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon = new ImageIcon(scaledImage);
-
-        JLabel fisk = new JLabel(scaledIcon);
-        fisk.setBounds(100, 400, 50, 50);
-        fisk.setOpaque(false);
-        // Lägger till fisken till akvariet
-        container.add(fisk, Integer.valueOf(2));
-
-        // this.pack();
-        this.setLayout(null);
-
-        this.setVisible(true);
-
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        this.setResizable(false);
 
     }
 
