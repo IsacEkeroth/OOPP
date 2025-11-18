@@ -4,7 +4,12 @@ import java.util.Vector;
 
 public class Decoration implements IDecoration {
 
+    private int size;
+
     private Vector<Integer> pos;
+
+    @Override
+    public int getSize() { return size; }
 
     @Override
     public void setPos(int x, int y, int z) {
