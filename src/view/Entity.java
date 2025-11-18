@@ -21,6 +21,11 @@ public class Entity implements IRenderedEntity {
         return new Point(pos);
     }
 
+    public void setPos(Point pos) {
+        this.pos.x = (int) pos.getX();
+        this.pos.y = (int) pos.getY();
+    }
+
     public int getDepth() {
         return depth;
     }

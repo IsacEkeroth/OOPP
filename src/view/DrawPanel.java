@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 public class DrawPanel extends JPanel {
-    ArrayList<IRenderedEntity> entities = new ArrayList<>();
     ArrayList<IRenderedEntity> l0 = new ArrayList<>();
     ArrayList<IRenderedEntity> l1 = new ArrayList<>();
     ArrayList<IRenderedEntity> l2 = new ArrayList<>();
@@ -23,8 +22,6 @@ public class DrawPanel extends JPanel {
     }
 
     public void addEntity(IRenderedEntity e) {
-        // TODO: add depth enum/ change way its handled
-        this.entities.add(e);
         int depth = e.getDepth();
         if (depth == 0) {
             l0.add(e);
@@ -35,7 +32,19 @@ public class DrawPanel extends JPanel {
         } else {
             throw new Error("Illegal depth");
         }
+    }
 
+    public void removeEntity(IRenderedEntity e) {
+        int depth = e.getDepth();
+        if (depth == 0) {
+            l0.remove(e);
+        } else if (depth == 1) {
+            l1.remove(e);
+        } else if (depth == 2) {
+            l2.remove(e);
+        } else {
+            throw new Error("Illegal depth");
+        }
     }
 
     @Override

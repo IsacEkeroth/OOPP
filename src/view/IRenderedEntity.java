@@ -10,5 +10,7 @@ public interface IRenderedEntity {
 
     Point getPos();
 
+    void setPos(Point pos);
+
     BufferedImage getImage();
 }

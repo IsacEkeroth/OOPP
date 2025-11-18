@@ -35,6 +35,10 @@ public class MainView extends JFrame {
         drawPanel.addEntity(e);
     }
 
+    public void removeEntity(IRenderedEntity e) {
+        drawPanel.removeEntity(e);
+    }
+
     @Override
     public void repaint() {
         super.repaint();
