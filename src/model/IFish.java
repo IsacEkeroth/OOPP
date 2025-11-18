@@ -14,6 +14,8 @@ public interface IFish {
 
     int getAge();
 
+    int getSize();
+
     int getSpeed();
 
     Vector<Integer> getPos();
