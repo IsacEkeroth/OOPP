@@ -6,6 +6,8 @@ import java.awt.image.BufferedImage;
 public interface IRenderedEntity {
     Point getSize();
 
+    int getDepth();
+
     Point getPos();
 
     BufferedImage getImage();

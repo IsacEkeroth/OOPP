@@ -17,16 +17,9 @@ public class MainView extends JFrame {
     JLayeredPane container = new JLayeredPane();
 
     // "Fiskar och dekorationer"
-    DrawPanel drawPanel = new DrawPanel(getImage("./src/view/images/icon-grupp26.png"), this.windowWidth,
-            this.windowHeight);
+    DrawPanel drawPanel;
 
-    // Temporär bakgrund
-    // JLabel bakgrund = new JLabel(new
-    // ImageIcon("./src/view/images/akvarium1.jpg"));
-    JLabel bakgrund = new JLabel();
-
-    ImageIcon OGimage = new ImageIcon("./src/view/images/akvarium1.jpg");
-    Image scaledImage = OGimage.getImage().getScaledInstance(960, 540, Image.SCALE_SMOOTH);
+    DrawPanel background;
 
     public MainView(int windowWidth, int windowHeight) {
         this.windowWidth = windowWidth;
@@ -52,31 +45,26 @@ public class MainView extends JFrame {
         // lägg till Akvarium till Fönstret
         this.add(container);
 
-        // Lägger till bilden till bakgrund(JLabel)
-        bakgrund.setIcon(new ImageIcon(scaledImage));
-        bakgrund.setBounds(0, 0, 960, 540);
-        container.add(bakgrund, Integer.valueOf(0));
+        Entity bgEntity = new Entity(new Point(0, 0), 0, new Point(this.windowWidth, this.windowHeight),
+                getImage("./src/view/images/akvarium1.jpg"));
 
-        DrawPanel testPanel = new DrawPanel(getImage("./src/view/images/icon-grupp26.png"), 100, 100);
-        testPanel.setBounds(500, 500, 100, 100);
-        drawPanel.setOpaque(true);
-        testPanel.setBackground(Color.CYAN);
-        container.add(testPanel, Integer.valueOf(1));
+        Entity f1 = new Entity(new Point(0, 0), 1, new Point(50, 50),
+                getImage("./src/view/images/icon-grupp26.png"));
+        Entity f2 = new Entity(new Point(200, 200), 1, new Point(50, 50),
+                getImage("./src/view/images/icon-grupp26.png"));
+
+        drawPanel = new DrawPanel(this.windowWidth, this.windowHeight);
 
         drawPanel.setBounds(0, 0, this.windowWidth, this.windowHeight);
-        drawPanel.setBackground(Color.red);
         drawPanel.setOpaque(true);
 
-        FishEntity f1 = new FishEntity(new Point(0, 0), new Point(50, 50),
-                getImage("./src/view/images/icon-grupp26.png"));
-        FishEntity f2 = new FishEntity(new Point(200, 200), new Point(50, 50),
-                getImage("./src/view/images/icon-grupp26.png"));
-
+        drawPanel.addEntity(bgEntity);
         drawPanel.addEntity(f1);
         drawPanel.addEntity(f2);
-        drawPanel.repaint();
-        container.add(drawPanel, Integer.valueOf(1));
 
+        drawPanel.repaint();
+
+        container.add(drawPanel, Integer.valueOf(0));
     }
 
     private BufferedImage getImage(String path) {
