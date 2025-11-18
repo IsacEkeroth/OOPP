@@ -20,7 +20,6 @@ public class MainView extends JFrame {
         this.setResizable(false);
         this.setTitle(WINDOW_TITLE);
         this.setSize(windowWidth, windowHeight);
-        this.setLocationRelativeTo(null);
 
         drawPanel = new DrawPanel(windowWidth, windowHeight);
         drawPanel.setOpaque(true);
