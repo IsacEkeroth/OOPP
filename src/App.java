@@ -4,7 +4,9 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
+import javax.swing.Timer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.imageio.ImageIO;
 
 public class App {
@@ -28,6 +30,18 @@ public class App {
         view.addEntity(f2);
 
         view.repaint();
+
+        Timer timer = new Timer(50, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Point p = f1.getPos();
+                p.x++;
+                f1.setPos(p);
+
+                view.repaint();
+            }
+        });
+        timer.start();
 
     }
 
