@@ -16,7 +16,7 @@ public interface IFish {
 
     int getSpeed();
 
-    Vector<Integer> getPos();
+    Vec3<Integer> getPos();
 
     void setPos(int x, int y, int z);
 

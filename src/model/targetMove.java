@@ -9,10 +9,8 @@ public class targetMove implements IAi {
         this.aquarium = aquarium;
         this.direction = direction;
     }
-
+    
     @Override
     public void move(IFish fish){
-    // goal is to find shortest path to coordinates
-    // check pos() at every call
     }
 }
