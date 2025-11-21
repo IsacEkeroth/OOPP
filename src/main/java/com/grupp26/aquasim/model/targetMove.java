@@ -1,4 +1,4 @@
-package main.java.com.grupp26.aquasim.model;
+package com.grupp26.aquasim.model;
 
 public class targetMove implements IAi {
 

@@ -1,4 +1,4 @@
-package main.java.com.grupp26.aquasim;
+package com.grupp26.aquasim;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
@@ -6,8 +6,8 @@ import java.io.File;
 import java.io.IOException;
 import javax.swing.Timer;
 
-import main.java.com.grupp26.aquasim.view.MainView;
-import main.java.com.grupp26.aquasim.view.Entity;
+import com.grupp26.aquasim.view.MainView;
+import com.grupp26.aquasim.view.Entity;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,11 +23,11 @@ public class App {
 
         // this should go in the model facade but is here for now
         Entity bgEntity = new Entity(new Point(0, 0), 0, new Point(windowWidth, windowHeight),
-                getImage("./src/view/images/akvarium1.jpg"));
+                getImage("images/akvarium1.jpg"));
         Entity f1 = new Entity(new Point(0, 0), 1, new Point(50, 50),
-                getImage("./src/view/images/icon-grupp26.png"));
+                getImage("images/icon-grupp26.png"));
         Entity f2 = new Entity(new Point(200, 200), 1, new Point(50, 50),
-                getImage("./src/view/images/icon-grupp26.png"));
+                getImage("images/icon-grupp26.png"));
 
         view.addEntity(bgEntity);
         view.addEntity(f1);
@@ -54,8 +54,8 @@ public class App {
     private static BufferedImage getImage(String path) {
         BufferedImage img = null;
         try {
-            img = ImageIO.read(new File(path));
-        } catch (IOException e) {
+            img = ImageIO.read(App.class.getClassLoader().getResourceAsStream(path));
+        } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
             img = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB); // fallback
         }

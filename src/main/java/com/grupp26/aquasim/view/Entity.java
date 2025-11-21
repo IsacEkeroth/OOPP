@@ -1,4 +1,4 @@
-package main.java.com.grupp26.aquasim.view;
+package com.grupp26.aquasim.view;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
