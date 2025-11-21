@@ -1,4 +1,4 @@
-package test.java.com.grupp26.aquasim;
+package com.grupp26.aquasim;
 
 /**
  * Unit test for simple App.
