@@ -1,5 +1,4 @@
-package model;
-
+package main.java.com.grupp26.aquasim.model;
 
 public interface IAquarium {
     // comment = private attributes
@@ -11,6 +10,6 @@ public interface IAquarium {
     void removeFish(IFish fish);
 
     boolean isValidPosition(Vec2<Integer> pos, Vec2<Integer> size);
-    
+
     Vec2 getAquariumSize();
 }

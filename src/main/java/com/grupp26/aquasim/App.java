@@ -1,10 +1,14 @@
-import view.Entity;
-import view.MainView;
+package main.java.com.grupp26.aquasim;
+
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.Timer;
+
+import main.java.com.grupp26.aquasim.view.MainView;
+import main.java.com.grupp26.aquasim.view.Entity;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.imageio.ImageIO;

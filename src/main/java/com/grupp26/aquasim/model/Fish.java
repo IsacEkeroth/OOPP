@@ -1,6 +1,4 @@
-package model;
-
-import java.util.Vector;
+package main.java.com.grupp26.aquasim.model;
 
 public class Fish implements IFish {
 

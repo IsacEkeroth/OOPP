@@ -1,8 +1,4 @@
-package com.grupp26.aquasim;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import org.junit.jupiter.api.Test;
+package test.java.com.grupp26.aquasim;
 
 /**
  * Unit test for simple App.
@@ -12,8 +8,8 @@ public class AppTest {
     /**
      * Rigorous Test :-)
      */
-    @Test
-    public void shouldAnswerWithTrue() {
-        assertTrue(true);
-    }
+    // @Test
+    // public void shouldAnswerWithTrue() {
+    // assertTrue(true);
+    // }
 }
