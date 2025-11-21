@@ -2,7 +2,6 @@ package com.grupp26.aquasim;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import javax.swing.Timer;
 
