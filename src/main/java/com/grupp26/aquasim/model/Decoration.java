@@ -1,6 +1,4 @@
-package model;
-
-import java.util.Vector;
+package com.grupp26.aquasim.model;
 
 public class Decoration implements IDecoration {
 
@@ -9,7 +7,9 @@ public class Decoration implements IDecoration {
     private Vec3<Integer> pos;
 
     @Override
-    public int getSize() { return size; }
+    public int getSize() {
+        return size;
+    }
 
     @Override
     public void setPos(int x, int y, int z) {

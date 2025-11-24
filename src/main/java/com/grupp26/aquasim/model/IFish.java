@@ -1,13 +1,11 @@
-package model;
-
-import java.util.Vector;
+package com.grupp26.aquasim.model;
 
 public interface IFish {
     // comment = private attributes
     // has the following
     // int age;
     // int speed;
-    // Vector<Integer> pos; // x, y,     z
+    // Vector<Integer> pos; // x, y, z
     // IAi ai;
 
     IAquarium getAquarium();
