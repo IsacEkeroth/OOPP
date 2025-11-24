@@ -18,4 +18,9 @@ public class Decoration implements IDecoration {
         pos.setZ(z);
     }
 
+    @Override
+    public Vec3<Integer> getPos() {
+        return pos;
+    }
+
 }
