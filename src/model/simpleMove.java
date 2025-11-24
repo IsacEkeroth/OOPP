@@ -1,5 +1,4 @@
 package model;
-import java.util.Vector;
 
 public class simpleMove implements IAi {
 
