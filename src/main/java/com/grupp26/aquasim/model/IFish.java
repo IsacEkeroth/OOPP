@@ -12,6 +12,8 @@ public interface IFish {
 
     int getAge();
 
+    int getSize();
+
     int getSpeed();
 
     Vec3<Integer> getPos();

@@ -3,7 +3,6 @@ package com.grupp26.aquasim.model;
 import java.util.Vector;
 
 public class Vec3<E> extends Vector<E> {
-
     public Vec3(E x, E y, E z) {
         super(3);
         this.setX(x);
