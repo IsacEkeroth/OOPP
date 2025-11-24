@@ -1,3 +1,5 @@
+package com.grupp26.aquasim;
+
 public class Main {
 
     public static void main(String[] args) {
