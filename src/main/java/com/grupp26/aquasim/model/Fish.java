@@ -6,6 +6,7 @@ public class Fish implements IFish {
     private final IAquarium aquarium;
 
     private int age;
+    private int size;
     private int speed;
     private Vec3<Integer> pos;
 
@@ -22,6 +23,8 @@ public class Fish implements IFish {
     public int getAge() {
         return age;
     }
+
+    public int getSize() { return size; }
 
     @Override
     public int getSpeed() {
