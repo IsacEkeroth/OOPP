@@ -11,5 +11,5 @@ public interface IAquarium {
 
     boolean isValidPosition(Vec2<Integer> pos, Vec2<Integer> size);
 
-    Vec2 getAquariumSize();
+    Vec2<Integer> getAquariumSize();
 }
