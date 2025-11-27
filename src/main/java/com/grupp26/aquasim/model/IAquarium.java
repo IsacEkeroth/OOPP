@@ -1,5 +1,7 @@
 package com.grupp26.aquasim.model;
 
+import java.util.ArrayList;
+
 public interface IAquarium {
     // comment = private attributes
     // List<IFish> fish;
@@ -12,4 +14,10 @@ public interface IAquarium {
     boolean isValidPosition(Vec2<Integer> pos, Vec2<Integer> size);
 
     Vec2 getAquariumSize();
+    
+    ArrayList<IFish> getFishList();
+    
+    ArrayList<IDecoration> getDecorationList();
+    
+    AquariumState getState();
 }

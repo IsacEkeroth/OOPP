@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Aquarium implements IAquarium {
     ArrayList<IFish> fishList;
+    ArrayList<IDecoration> decorationList;
 
     final Vec2<Integer> aquariumSize = new Vec2(720, 540);
 
@@ -35,5 +36,19 @@ public class Aquarium implements IAquarium {
     public Vec2 getAquariumSize() {
         return new Vec2(aquariumSize.getX(), aquariumSize.getY());
     }
-
+    
+    @Override
+    public ArrayList<IFish> getFishList() {
+        return new ArrayList<>(this.fishList);
+    }
+    
+    @Override
+    public ArrayList<IDecoration> getDecorationList() {
+        return new ArrayList<>(this.decorationList);
+    }
+    
+    @Override
+    public AquariumState getState() {
+        return new AquariumState(new ArrayList<>(this.fishList), new ArrayList<>(this.decorationList));
+    }
 }
