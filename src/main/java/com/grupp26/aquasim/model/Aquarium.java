@@ -6,7 +6,7 @@ public class Aquarium implements IAquarium {
     ArrayList<IFish> fishList;
     ArrayList<IDecoration> decorationList;
 
-    final Vec2<Integer> aquariumSize = new Vec2(720, 540);
+    final Vec2<Integer> aquariumSize = new Vec2<Integer>(720, 540);
 
     @Override
     public void addFish(IFish fish) {
@@ -34,21 +34,19 @@ public class Aquarium implements IAquarium {
 
     @Override
     public Vec2<Integer> getAquariumSize() {
-        return new Vec2(aquariumSize.getX(), aquariumSize.getY());
+        return new Vec2<Integer>(aquariumSize.getX(), aquariumSize.getY());
     }
-    
+
     @Override
-    public ArrayList<IFish> getFishList() {
-        return new ArrayList<>(this.fishList);
-    }
-    
-    @Override
-    public ArrayList<IDecoration> getDecorationList() {
-        return new ArrayList<>(this.decorationList);
-    }
-    
-    @Override
-    public AquariumState getState() {
-        return new AquariumState(new ArrayList<>(this.fishList), new ArrayList<>(this.decorationList));
+    public void tick() {
+        for (IFish fish : fishList) {
+            fish.tick();
+        }
+        // decorations not tickabe (yet)
+        // Add tickable inteface?
+        // iterate trhough tickable or check each if tickable
+        // for (IDecoration decoration : decorationList) {
+        // decoration.tick();
+        // }
     }
 }
