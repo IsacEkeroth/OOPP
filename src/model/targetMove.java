@@ -1,4 +1,4 @@
-package com.grupp26.aquasim.model;
+package model;
 
 public class targetMove implements IAi {
 
@@ -19,39 +19,23 @@ public class targetMove implements IAi {
         }
 
         int xaxis = target.getX() - fish.getPos().getX();
-        //bottom of the triangle
         int yaxis = target.getY() - fish.getPos().getY();
-        //side  of the triangle
         
         double length = Math.sqrt(xaxis*xaxis + yaxis*yaxis);
-        //hypothenus
         
         if (length <= fish.getSpeed()) {
             fish.setPos(target.getX(), target.getY(), target.getZ());
             return;
-            //prevents fish from overshooting and orbiting
         }
 
         double stepX = (xaxis / length) * fish.getSpeed();
         double stepY = (yaxis / length) * fish.getSpeed();
-        //calculate movement
 
         int newX = fish.getPos().getX() + (int)Math.round(stepX);
         int newY = fish.getPos().getY() + (int)Math.round(stepY);
-        Vec2<Integer> newPos = new Vec2<Integer>(newX, newY);
-        //new position
-
-        Boolean isValid = aquarium.isValidPosition(newPos, fish.getSize());
-        if(!isValid){
-            newX = fish.getPos().getX();
-            newY = fish.getPos().getY();
-            // if not valid position, stay? (you cant really turn around)
-        }
 
         double newDirection = Math.atan2(yaxis, xaxis);
         this.direction = newDirection;
-        //change direction
-
         fish.setPos(newX, newY, fish.getPos().getZ());
     }
 

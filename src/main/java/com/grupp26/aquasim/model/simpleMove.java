@@ -1,5 +1,4 @@
 package com.grupp26.aquasim.model;
-
 import java.util.Vector;
 
 public class simpleMove implements IAi {
