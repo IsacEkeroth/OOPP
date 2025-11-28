@@ -9,11 +9,11 @@ import java.awt.event.ActionListener;
 
 public class Controller implements IController {
 
-    TmpModelFacade model;
+    TmpModelFacade modelFacade;
     MainView view;
 
-    public Controller(TmpModelFacade model, MainView view) {
-        this.model = model;
+    public Controller(TmpModelFacade modelFacade, MainView view) {
+        this.modelFacade = modelFacade;
         this.view = view;
         initListeners();
     }
@@ -22,19 +22,27 @@ public class Controller implements IController {
     // Controller reggar sig själv som lyssnare på addFish-knappen i view
     private void initListeners() {
 
-
         // Anonym ActionListener
         // Lyssnar på addFish-knappen i view,
         // säger till ModelFacade att köra addFIsh
         view.getAddFish().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                model.addFish();
+                modelFacade.addFish();
             }
         });
+
+        /* andra sättet man kunde skriva på ifall Controller implements ActionListener
+        view.getAddFish().addActionListener(this);
+         */
     }
 
-
+    /* andra sättet man kunde skriva på ifall Controller implements ActionListener
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == view.getAddFish()) model.addFish();
+    }
+     */
 
 
 

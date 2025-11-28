@@ -1,13 +1,17 @@
 package com.grupp26.aquasim.view;
 
 import javax.swing.*;
+import java.util.List;
 
-public class MainView extends JFrame {
+public class MainView extends JFrame implements IObserver {
 
     private static final String WINDOW_TITLE = "Aquarium-MVP";
     private int windowWidth;
     private int windowHeight;
     private DrawPanel drawPanel;
+
+    // bara testar att koppla en lyssnare till denna knapp
+    private final JButton addFishButton = new JButton("Add fish");
 
     public MainView(int windowWidth, int windowHeight) {
         this.windowWidth = windowWidth;
@@ -45,4 +49,20 @@ public class MainView extends JFrame {
         drawPanel.repaint();
     }
 
+
+
+    public JButton getAddFish() {
+        return this.addFishButton;
+    }
+
+
+
+    // Får inte view för mycket information om modellen?
+    // Antagligen ska vi ha en getState() som den anropar på Modelfacade.
+    // ModelFacade i sin tur anropar Model och returnerar till slut tillbaka
+    // det nya state till view.
+    @Override
+    public void actOnNotification(List<Entity> entities) {
+        // for-each gör nått med varje entity
+    }
 }
