@@ -10,7 +10,7 @@ public class Fish implements IFish {
     private int speed;
     private Vec3<Integer> pos;
 
-    Fish(IAquarium aquarium) {
+    public Fish(IAquarium aquarium) {
         this.aquarium = aquarium;
     }
 

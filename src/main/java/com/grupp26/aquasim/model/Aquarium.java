@@ -33,7 +33,7 @@ public class Aquarium implements IAquarium {
     }
 
     @Override
-    public Vec2 getAquariumSize() {
+    public Vec2<Integer> getAquariumSize() {
         return new Vec2(aquariumSize.getX(), aquariumSize.getY());
     }
     
