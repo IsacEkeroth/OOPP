@@ -12,7 +12,7 @@ public interface IFish {
 
     int getAge();
 
-    int getSize();
+    Vec2<Integer> getSize();
 
     int getSpeed();
 

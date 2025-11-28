@@ -6,11 +6,11 @@ public class Fish implements IFish {
     private final IAquarium aquarium;
 
     private int age;
-    private int size;
+    private Vec2<Integer> size = new Vec2<Integer>(50, 50);
     private int speed;
     private Vec3<Integer> pos;
 
-    Fish(IAquarium aquarium) {
+    public Fish(IAquarium aquarium) {
         this.aquarium = aquarium;
     }
 
@@ -24,7 +24,9 @@ public class Fish implements IFish {
         return age;
     }
 
-    public int getSize() { return size; }
+    public Vec2<Integer> getSize() {
+        return size;
+    }
 
     @Override
     public int getSpeed() {
