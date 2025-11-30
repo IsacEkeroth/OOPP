@@ -2,7 +2,7 @@ package com.grupp26.aquasim.model;
 
 public interface IEdible {
 
-    void setPos(Vec3<Integer> pos);
+    void setPos(int x, int y, int z);
 
     Vec3<Integer> getPos();
 
