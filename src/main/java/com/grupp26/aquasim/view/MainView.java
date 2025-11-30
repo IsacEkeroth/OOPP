@@ -1,5 +1,6 @@
 package com.grupp26.aquasim.view;
 
+import com.grupp26.aquasim.model.IEntity;
 import com.grupp26.aquasim.model.ModelFacade;
 
 import javax.swing.*;
@@ -53,9 +54,9 @@ public class MainView extends JFrame implements IObserver {
     public void update() {
         drawPanel.clear();
         
-        ArrayList<IRenderedEntity> entities = new ArrayList<>(facade.getEntities());
-        for (IRenderedEntity e : entities) {
-            addEntity(e);
+        ArrayList<IEntity> modelEntities = new ArrayList<>(facade.getEntities());
+        for (IEntity e : modelEntities) {
+            addEntity(new RenderedEntity(e));
         }
         repaint();
     }
