@@ -13,7 +13,11 @@ public class Food implements IEdible {
     }
 
     @Override
-    public void setPos(Vec3<Integer> pos) { this.pos = pos; }
+    public void setPos(int x, int y, int z) {
+        this.pos.setX(x);
+        this.pos.setY(y);
+        this.pos.setZ(z);
+    }
 
     @Override
     public Vec3<Integer> getPos() { return pos; }
