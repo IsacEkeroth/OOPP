@@ -1,8 +1,8 @@
-package com.grupp26.aquasim;
+package com.grupp26.aquasim.model;
 
-import com.grupp26.aquasim.model.*;
+import com.grupp26.aquasim.App;
 import com.grupp26.aquasim.view.Entity;
-import com.grupp26.aquasim.view.MainView;
+import com.grupp26.aquasim.view.IObserver;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -16,19 +16,22 @@ import java.util.HashMap;
 // when tick done, notify observers (view)
 // view calls getEntities to then repaint
 
-public class ModelFacade {
+// Separate BufferedImage from Entity,
+// add it in another class renderedEntity in view
+
+public class ModelFacade implements IObservable {
     private final IAquarium aquarium;
     private AquariumState state;
     private ArrayList <Entity> entities;
-    private final MainView view;
+    private ArrayList <IObserver> observers = new ArrayList<>();
     
-    public ModelFacade(IAquarium aquarium, MainView view) {
+    public ModelFacade(IAquarium aquarium, IObserver observer) {
         this.aquarium = aquarium;
-        this.view = view;
+        this.observers.add(observer);
     }
     
     public void tick() {
-        // aquarium.tick(); // uncomment when tick is implemented in Aquarium
+        aquarium.tick();
         state = aquarium.getState();
         entities = new ArrayList<>();
         
@@ -43,8 +46,9 @@ public class ModelFacade {
         for(IFish fish : state.getFish()) {
             Entity entity = new Entity(new Point(fish.getPos().getX(), fish.getPos().getY()),
                     fish.getPos().getZ(),
-                    new Point(fish.getSize(), fish.getSize()),
-                    getImage("images/icon-grupp26.png")); // all fish are smurfs
+                    new Point(fish.getSize().getX(), fish.getSize().getY()),
+                    //getImage("images/icon-grupp26.png")); // all fish are smurfs
+                    getImage("images/veryGoodAnchor.png"));
             entities.add(entity);
         }
         for(IDecoration deco : state.getDecorations()) {
@@ -54,6 +58,7 @@ public class ModelFacade {
                     getImage("images/veryGoodAnchor.png")); // all decorations are anchors
             entities.add(entity);
         }
+        notifyObservers();
     }
     
     public ArrayList<Entity> getEntities() {
@@ -64,9 +69,7 @@ public class ModelFacade {
     public void addFish() {
         aquarium.addFish(new Fish(aquarium));
     }
-    public void addDecoration() {
-        // aquarium.addDecoration(new Decoration(aquarium));
-    }
+    public void addDecoration() { aquarium.addDecoration(new Decoration()); }
     
     
     private static final HashMap<String, BufferedImage> cache = new HashMap<>();
@@ -85,5 +88,22 @@ public class ModelFacade {
             img = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB); // fallback
         }
         return img;
+    }
+    
+    @Override
+    public void addObserver(IObserver observer) {
+        observers.add(observer);
+    }
+    
+    @Override
+    public void removeObserver(IObserver observer) {
+        observers.remove(observer);
+    }
+    
+    @Override
+    public void notifyObservers() {
+        for (IObserver observer : observers) {
+            observer.update();
+        }
     }
 }

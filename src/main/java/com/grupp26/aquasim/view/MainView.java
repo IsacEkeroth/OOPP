@@ -1,13 +1,17 @@
 package com.grupp26.aquasim.view;
 
-import javax.swing.*;
+import com.grupp26.aquasim.model.ModelFacade;
 
-public class MainView extends JFrame {
+import javax.swing.*;
+import java.util.ArrayList;
+
+public class MainView extends JFrame implements IObserver {
 
     private static final String WINDOW_TITLE = "Aquarium-MVP";
     private int windowWidth;
     private int windowHeight;
     private DrawPanel drawPanel;
+    private ModelFacade facade;
 
     public MainView(int windowWidth, int windowHeight) {
         this.windowWidth = windowWidth;
@@ -44,5 +48,19 @@ public class MainView extends JFrame {
 
         drawPanel.repaint();
     }
-
+    
+    @Override
+    public void update() {
+        drawPanel.clear();
+        
+        ArrayList<IRenderedEntity> entities = new ArrayList<>(facade.getEntities());
+        for (IRenderedEntity e : entities) {
+            addEntity(e);
+        }
+        repaint();
+    }
+    
+    public void setFacade(ModelFacade facade) {
+        this.facade = facade;
+    }
 }
