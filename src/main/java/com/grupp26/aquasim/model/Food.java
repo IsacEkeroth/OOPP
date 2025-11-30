@@ -20,7 +20,9 @@ public class Food implements IEdible {
     }
 
     @Override
-    public Vec3<Integer> getPos() { return pos; }
+    public Vec3<Integer> getPos() {
+        return pos;
+    }
 
     @Override
     public void setAmount(int amount) {
@@ -29,7 +31,9 @@ public class Food implements IEdible {
     }
 
     @Override
-    public int getAmount() { return amount; }
+    public int getAmount() {
+        return amount;
+    }
 
     @Override
     public void eat(int amount) {
@@ -46,6 +50,8 @@ public class Food implements IEdible {
     }
 
     @Override
-    public boolean isEaten() { return isEaten; }
+    public boolean isEaten() {
+        return isEaten;
+    }
 
 }
