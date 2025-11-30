@@ -22,7 +22,7 @@ public class App {
         Aquarium aquarium = new Aquarium();
         ModelFacade facade = new ModelFacade(aquarium, view);
         view.setFacade(facade);
-        facade.addFish();
+        //facade.addFish(); //Unitialized values in Fish causes runtime error
         
 
         Timer timer = new Timer(25, new ActionListener() {
