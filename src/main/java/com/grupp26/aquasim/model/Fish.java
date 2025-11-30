@@ -52,7 +52,7 @@ public class Fish implements IFish {
     }
 
     public void setHunger(int hunger) {
-        this.hunger = Math.max(0, hunger);
+        this.hunger = Math.max(0, Math.min(100, hunger));
     }
 
     public int getBaseSpeed() {
