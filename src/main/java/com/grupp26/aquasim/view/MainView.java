@@ -1,6 +1,7 @@
 package com.grupp26.aquasim.view;
 
 import javax.swing.*;
+import java.util.List;
 
 public class MainView extends JFrame {
 
@@ -8,6 +9,9 @@ public class MainView extends JFrame {
     private int windowWidth;
     private int windowHeight;
     private DrawPanel drawPanel;
+
+    // bara testar att koppla en lyssnare till denna knapp
+    private final JButton addFishButton = new JButton("Add fish");
 
     public MainView(int windowWidth, int windowHeight) {
         this.windowWidth = windowWidth;
@@ -43,6 +47,12 @@ public class MainView extends JFrame {
         super.repaint();
 
         drawPanel.repaint();
+    }
+
+
+
+    public JButton getAddFish() {
+        return this.addFishButton;
     }
 
 }
