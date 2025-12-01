@@ -1,10 +1,10 @@
 package com.grupp26.aquasim.controller;
 
+import com.grupp26.aquasim.model.ModelFacade;
+
 import com.grupp26.aquasim.view.MainView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-
 
 public class Controller implements IController {
 
@@ -16,7 +16,6 @@ public class Controller implements IController {
         this.view = view;
         initListeners();
     }
-
 
     // Controller reggar sig själv som lyssnare på addFish-knappen i view
     private void initListeners() {
@@ -31,8 +30,6 @@ public class Controller implements IController {
             }
         });
 
-
     }
-
 
 }
