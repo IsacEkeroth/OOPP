@@ -5,6 +5,7 @@ import com.grupp26.aquasim.model.ModelFacade;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainView extends JFrame implements IObserver {
 
@@ -13,6 +14,9 @@ public class MainView extends JFrame implements IObserver {
     private int windowHeight;
     private DrawPanel drawPanel;
     private ModelFacade facade;
+
+    // bara testar att koppla en lyssnare till denna knapp
+    private final JButton addFishButton = new JButton("Add fish");
 
     public MainView(int windowWidth, int windowHeight) {
         this.windowWidth = windowWidth;
@@ -64,4 +68,11 @@ public class MainView extends JFrame implements IObserver {
     public void setFacade(ModelFacade facade) {
         this.facade = facade;
     }
+
+
+
+    public JButton getAddFish() {
+        return this.addFishButton;
+    }
+
 }
