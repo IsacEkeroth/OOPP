@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 public class Aquarium implements IAquarium {
     ArrayList<IFish> fishList;
+    ArrayList<IDecoration> decorationList;
 
-    final Vec2<Integer> aquariumSize = new Vec2(720, 540);
+    final Vec2<Integer> aquariumSize = new Vec2<Integer>(720, 540);
 
     @Override
     public void addFish(IFish fish) {
@@ -32,8 +33,20 @@ public class Aquarium implements IAquarium {
     }
 
     @Override
-    public Vec2 getAquariumSize() {
-        return new Vec2(aquariumSize.getX(), aquariumSize.getY());
+    public Vec2<Integer> getAquariumSize() {
+        return new Vec2<Integer>(aquariumSize.getX(), aquariumSize.getY());
     }
 
+    @Override
+    public void tick() {
+        for (IFish fish : fishList) {
+            fish.tick();
+        }
+        // decorations not tickabe (yet)
+        // Add tickable inteface?
+        // iterate trhough tickable or check each if tickable
+        // for (IDecoration decoration : decorationList) {
+        // decoration.tick();
+        // }
+    }
 }
