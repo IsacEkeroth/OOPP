@@ -3,10 +3,10 @@ package com.grupp26.aquasim.model;
 import java.util.ArrayList;
 
 public class Aquarium implements IAquarium {
-    ArrayList<IFish> fishList;
-    ArrayList<IDecoration> decorationList;
+    ArrayList<IFish> fishList = new ArrayList<>();
+    ArrayList<IDecoration> decorationList = new ArrayList<>();
 
-    final Vec2<Integer> aquariumSize = new Vec2<Integer>(720, 540);
+    final Vec2<Integer> aquariumSize = new Vec2<Integer>(1280, 720);
 
     @Override
     public void addFish(IFish fish) {
@@ -19,6 +19,11 @@ public class Aquarium implements IAquarium {
         if (fishIndex >= 0) {
             this.fishList.remove(fishIndex);
         }
+    }
+    
+    @Override
+    public void addDecoration(IDecoration decoration) {
+        this.decorationList.add(decoration);
     }
 
     // Assuming fish are rectangular and not rotated
@@ -48,5 +53,10 @@ public class Aquarium implements IAquarium {
         // for (IDecoration decoration : decorationList) {
         // decoration.tick();
         // }
+    }
+    
+    @Override
+    public AquariumState getState() {
+        return new AquariumState(new ArrayList<>(this.fishList), new ArrayList<>(this.decorationList));
     }
 }

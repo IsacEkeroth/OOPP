@@ -14,4 +14,8 @@ public interface IAquarium {
     Vec2<Integer> getAquariumSize();
 
     void tick();
+    
+    AquariumState getState();
+    
+    void addDecoration(IDecoration decoration);
 }
