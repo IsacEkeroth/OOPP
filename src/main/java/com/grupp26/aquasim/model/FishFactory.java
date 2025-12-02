@@ -2,9 +2,9 @@ package com.grupp26.aquasim.model;
 
 public class FishFactory {
 
-    public static Fish createFish(IAquarium aquarium, int hunger, int health, int baseSpeed, Vec3<Integer> pos) {
+    public static Goldfish createFish(IAquarium aquarium, int hunger, int health, int baseSpeed, Vec3<Integer> pos) {
 
-        Fish fish = new Fish(aquarium);
+        Goldfish fish = new Goldfish(aquarium);
 
         // ska vi ha en fish.setAge()? kanske för ev. debugging?
 
