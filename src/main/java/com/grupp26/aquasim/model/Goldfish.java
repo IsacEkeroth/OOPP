@@ -1,6 +1,6 @@
 package com.grupp26.aquasim.model;
 
-public class Fish implements IFish {
+public class Goldfish implements IFish {
 
     private final IAquarium aquarium;
 
@@ -15,7 +15,7 @@ public class Fish implements IFish {
     private Vec2<Integer> size = new Vec2<>(50, 50);
     private Vec3<Integer> pos;
 
-    public Fish(IAquarium aquarium) {
+    public Goldfish(IAquarium aquarium) {
 
         this.isAlive = true;
         this.aquarium = aquarium;
