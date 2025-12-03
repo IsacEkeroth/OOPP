@@ -1,13 +1,22 @@
 package com.grupp26.aquasim.view;
 
-import javax.swing.*;
+import com.grupp26.aquasim.model.IEntity;
+import com.grupp26.aquasim.model.ModelFacade;
 
-public class MainView extends JFrame {
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainView extends JFrame implements IObserver {
 
     private static final String WINDOW_TITLE = "Aquarium-MVP";
     private int windowWidth;
     private int windowHeight;
     private DrawPanel drawPanel;
+    private ModelFacade facade;
+
+    // bara testar att koppla en lyssnare till denna knapp
+    private final JButton addFishButton = new JButton("Add fish");
 
     public MainView(int windowWidth, int windowHeight) {
         this.windowWidth = windowWidth;
@@ -43,6 +52,27 @@ public class MainView extends JFrame {
         super.repaint();
 
         drawPanel.repaint();
+    }
+    
+    @Override
+    public void update() {
+        drawPanel.clear();
+        
+        ArrayList<IEntity> modelEntities = new ArrayList<>(facade.getEntities());
+        for (IEntity e : modelEntities) {
+            addEntity(new RenderedEntity(e));
+        }
+        repaint();
+    }
+    
+    public void setFacade(ModelFacade facade) {
+        this.facade = facade;
+    }
+
+
+
+    public JButton getAddFish() {
+        return this.addFishButton;
     }
 
 }

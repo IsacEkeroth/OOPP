@@ -55,5 +55,9 @@ public class DrawPanel extends JPanel {
         g.drawImage(entity.getImage(), (int) pos.getX(), (int) pos.getY(), (int) size.getX(), (int) size.getY(),
                 null);
     }
+    
+    public void clear() {
+        layers.clear();
+    }
 
 }

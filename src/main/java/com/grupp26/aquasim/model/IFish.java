@@ -12,6 +12,16 @@ public interface IFish {
 
     int getAge();
 
+    void setHealth(int health);
+
+    int getHunger();
+
+    void setHunger(int hunger);
+
+    int getBaseSpeed();
+
+    void setBaseSpeed(int baseSpeed);
+
     Vec2<Integer> getSize();
 
     int getSpeed();
@@ -21,4 +31,5 @@ public interface IFish {
     void setPos(int x, int y, int z);
 
     void tick();
+
 }
