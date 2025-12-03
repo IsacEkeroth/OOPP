@@ -1,6 +1,6 @@
 package com.grupp26.aquasim.model;
 
-public class SimpleMove implements IAi {
+public class SimpleMove implements IMovement {
 
     private final IAquarium aquarium;
     private double direction;
