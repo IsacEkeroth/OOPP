@@ -123,7 +123,8 @@ public class Aquarium implements IAquarium {
     
     @Override
     public AquariumState getState() {
-        return new AquariumState(new ArrayList<>(this.fishList), new ArrayList<>(this.decorationList));
+        return new AquariumState(new ArrayList<>(this.fishList), new ArrayList<>(this.decorationList),
+                this.temperature, this.algaeLevel, this.o2Conc, this.salinity, this.pHLevel);
     }
     
     @Override
