@@ -26,4 +26,20 @@ public class AquariumState {
     public ArrayList<IDecoration> getDecorations() {
         return new ArrayList<>(this.decorations);
     }
+    public int getTemperature() {
+        return this.temperature;
+    }
+    public int getAlgaeLevel() {
+        return this.algaeLevel;
+    }
+    public int getO2Conc() {
+        return this.o2Conc;
+    }
+    public int getSalinity() {
+        return this.salinity;
+    }
+    public int getPHLevel() {
+        return this.pHLevel;
+    }
+    
 }
