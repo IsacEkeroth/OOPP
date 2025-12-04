@@ -27,28 +27,6 @@ public class GoldFishBehaviour implements IBehaviour{
         }
     }
 
-    private void HungerTarget(){
-        List<IEdible> food = new ArrayList<>(aquarium.getFood());
-        IEdible closestFood = food.get(0);
-        int minRange = 5000;
-        // unreachable
-        int xaxis;
-        int yaxis;
-        int hypothenus;
-        for (IEdible edible : food){
-            xaxis = edible.getPos().getX() - this.fish.getPos().getX();
-            yaxis = edible.getPos().getY() - this.fish.getPos().getY();
-            hypothenus = (int) Math.hypot(xaxis,yaxis);
-            if(hypothenus < minRange){
-                closestFood = edible;
-                minRange = hypothenus;
-            }
-            //check for the closest food
-        }
-        this.targetmove.setTarget(closestFood.getPos());
-        //target is the closest food
-    }
-
     private boolean HungerState(){
         if (CheckHunger()){
             HungerTarget();
