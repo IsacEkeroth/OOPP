@@ -13,7 +13,8 @@ public class Fish implements IFish {
     private int speed;
 
     private Vec2<Integer> size = new Vec2<>(50, 50);
-    private Vec3<Integer> pos;
+    // Temporary default pos --> Delete later
+    private Vec3<Integer> pos = new Vec3<>(100, 100,0);
 
     public Fish(IAquarium aquarium) {
 
