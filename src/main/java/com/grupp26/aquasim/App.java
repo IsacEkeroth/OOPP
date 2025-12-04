@@ -6,6 +6,7 @@ import javax.swing.Timer;
 
 import com.grupp26.aquasim.model.Aquarium;
 import com.grupp26.aquasim.model.ModelFacade;
+import com.grupp26.aquasim.view.HelloFX;
 import com.grupp26.aquasim.view.MainView;
 
 import java.awt.event.ActionEvent;
@@ -18,12 +19,16 @@ public class App {
     private static final int windowHeight = 720;
 
     public static void start() {
-        MainView view = new MainView(windowWidth, windowHeight);
-        Aquarium aquarium = new Aquarium();
-        ModelFacade facade = new ModelFacade(aquarium, view);
-        view.setFacade(facade);
-        //facade.addFish(); //Unitialized values in Fish causes runtime error
-        
+
+        // MainView view = new MainView(windowWidth, windowHeight);
+        Aquarium model = new Aquarium();
+        ModelFacade facade = new ModelFacade(model);
+
+        HelloFX.setAquarium(facade);
+        HelloFX.main(new String[0]);
+        System.out.println("start asdas");
+
+        // facade.addFish(); //Unitialized values in Fish causes runtime error
 
         Timer timer = new Timer(25, new ActionListener() {
             @Override
