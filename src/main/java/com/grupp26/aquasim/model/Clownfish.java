@@ -20,10 +20,10 @@ public class Clownfish implements IFish {
         this.isAlive = true;
         this.aquarium = aquarium;
 
-        this.health = 100;
+        this.health = 150;
         this.hunger = 0;
         this.age = 0;
-        this.baseSpeed = 5;
+        this.baseSpeed = 7;
         this.speed = baseSpeed;
 
     }
