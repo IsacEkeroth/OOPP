@@ -24,6 +24,7 @@ public class PassiveState implements IFishState{
     public void update(){
         checkState();
         this.simplemove.move(fish);
+        //check state, if no switch, continue swimming
     }
 
 }

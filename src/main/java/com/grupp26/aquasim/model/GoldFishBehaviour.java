@@ -1,11 +1,7 @@
 package com.grupp26.aquasim.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class GoldFishBehaviour implements IBehaviour{
     private IAquarium aquarium;
-    private IFish fish;
 
     private IFishState state;
     private IFishState passiveState;
@@ -14,7 +10,6 @@ public class GoldFishBehaviour implements IBehaviour{
 
     public GoldFishBehaviour(IFish fish, int initialDirection, int hungryAt){
         this.hungryAt = hungryAt;
-        this.fish = fish;
         this.aquarium = fish.getAquarium();
 
         this.passiveState = new PassiveState(this, fish, new SimpleMove(this.aquarium, initialDirection), aquarium);

@@ -45,9 +45,11 @@ public class HungerState implements IFishState{
             this.targetmove.setTarget(null);
             context.setState(context.getPassiveState());
             //if you are not hungry or there is no food in the aquarium, enter passive state
+            //also remove target
         }
         else{
             findFood();
+            //otherwise locate the food
         }
     }
 

@@ -26,7 +26,7 @@ public class Fish implements IFish {
         this.age = 0;
         this.baseSpeed = 5;
         this.speed = baseSpeed;
-        this.behaviour = new GoldFishBehaviour(this, 0);
+        this.behaviour = new GoldFishBehaviour(this, 0, 30); //30 is a placeholder
 
     }
 
