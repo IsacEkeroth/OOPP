@@ -1,18 +1,18 @@
 package com.grupp26.aquasim.model;
 
-public class Food implements IEdible {
+public class LoveFood implements IEdible {
 
     private Vec3<Integer> pos;
     private int amount;
     private boolean isEaten;
     private final boolean isLoveFood;
 
-    public Food(Vec3<Integer> pos, int amount) {
+    public LoveFood(Vec3<Integer> pos, int amount) {
 
         this.pos = pos;
         this.amount = amount;
         this.isEaten = false;
-        this.isLoveFood = false;
+        this.isLoveFood = true;
 
     }
 

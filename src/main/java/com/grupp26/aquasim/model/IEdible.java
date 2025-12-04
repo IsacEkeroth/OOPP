@@ -14,6 +14,8 @@ public interface IEdible {
 
     void eat(int amount);
 
+    boolean isLoveFood();
+
     boolean isEaten();
 
 }
