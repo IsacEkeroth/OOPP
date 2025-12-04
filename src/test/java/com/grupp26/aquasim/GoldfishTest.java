@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class FishTest {
+public class GoldfishTest {
 
     private IAquarium aquarium;
     private Goldfish fish;
