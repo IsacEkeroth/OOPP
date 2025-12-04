@@ -20,6 +20,14 @@ public class Aquarium implements IAquarium {
             this.fishList.remove(fishIndex);
         }
     }
+
+    // Temporary method --> Delete later
+    @Override
+    public void removeLastFish() {
+        if(!this.fishList.isEmpty()) {
+            this.fishList.remove(fishList.size() - 1);
+        }
+    }
     
     @Override
     public void addDecoration(IDecoration decoration) {

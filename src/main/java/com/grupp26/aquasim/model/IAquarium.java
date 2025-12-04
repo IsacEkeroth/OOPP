@@ -18,4 +18,7 @@ public interface IAquarium {
     AquariumState getState();
     
     void addDecoration(IDecoration decoration);
+
+    // Temporary method --> Delete later
+    void removeLastFish();
 }
