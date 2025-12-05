@@ -23,14 +23,14 @@ public class HungerState implements IFishState{
         // unreachable
         int xaxis;
         int yaxis;
-        int hypothenus;
+        int hypotenuse;
         for (IEdible edible : food){
             xaxis = edible.getPos().getX() - this.fish.getPos().getX();
             yaxis = edible.getPos().getY() - this.fish.getPos().getY();
-            hypothenus = (int) Math.hypot(xaxis,yaxis);
-            if(hypothenus < minRange){
+            hypotenuse = (int) Math.hypot(xaxis,yaxis);
+            if(hypotenuse < minRange){
                 closestFood = edible;
-                minRange = hypothenus;
+                minRange = hypotenuse;
             }
             //check for the closest food
         }
@@ -40,23 +40,25 @@ public class HungerState implements IFishState{
         //target is the closest food       
     }
 
-    private void checkState(){
+    private IFishState checkState(){
         if (this.fish.getHunger() > context.getHungryAt() || aquarium.getFood() == null || aquarium.getFood().isEmpty()){
-            this.targetmove.setTarget(null);
-            context.setState(context.getPassiveState());
-            //if you are not hungry or there is no food in the aquarium, enter passive state
-            //also remove target
+            return context.getPassiveState();
         }
         else{
-            findFood();
-            //otherwise locate the food
+            return context.getHungerState();
         }
     }
 
 
     @Override
     public void update(){
-        checkState();
-        this.targetmove.move(this.fish);
+        IFishState newState = checkState();
+        if(!newState.equals(this)){
+            context.setState(newState);
+        }
+        else{
+            findFood();
+            this.targetmove.move(this.fish);
+        }
     }
 }

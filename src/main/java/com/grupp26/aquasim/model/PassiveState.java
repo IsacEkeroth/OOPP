@@ -13,17 +13,25 @@ public class PassiveState implements IFishState{
         this.aquarium = aquarium;
     }
 
-    private void checkState(){
+    private IFishState checkState(){
         if (this.fish.getHunger() < context.getHungryAt() && aquarium.getFood() != null && !aquarium.getFood().isEmpty()){
-            context.setState(context.getHungerState());
+            return context.getHungerState();
             //if there is food in the aquarium and you are hungry, enter hungry mode
+        }
+        else{
+            return context.getPassiveState();
         }
     }
 
     @Override
     public void update(){
-        checkState();
-        this.simplemove.move(fish);
+        IFishState newState = checkState();
+        if(!newState.equals(this)){
+            context.setState(newState);
+        }
+        else {
+            this.simplemove.move(fish);
+        }
         //check state, if no switch, continue swimming
     }
 
