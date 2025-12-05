@@ -31,7 +31,7 @@ public class ModelFacade implements IObservable {
         for(IFish fish : state.getFish()) {
             IEntity entity = new Entity(fish.getPos(),
                     fish.getSize(),
-                    "images/icon-grupp26.png"); // all fish are smurfs
+                    "images/icon-grupp26nobg.png"); // all fish are smurfs
             entities.add(entity);
         }
         for(IDecoration deco : state.getDecorations()) {
