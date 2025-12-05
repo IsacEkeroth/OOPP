@@ -23,5 +23,8 @@ public interface IAquarium {
     
     void addDecoration(IDecoration decoration);
 
+    // Temporary method --> Delete later
+    void removeLastFish();
+  
     void addFood(IEdible edible);
 }
