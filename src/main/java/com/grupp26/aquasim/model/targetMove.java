@@ -1,12 +1,12 @@
 package com.grupp26.aquasim.model;
 
-public class targetMove implements IAi {
+public class TargetMove implements IMovement {
 
     private final IAquarium aquarium;
     private double direction;
     private Vec3<Integer> target;
 
-    public targetMove(IAquarium aquarium, double direction){
+    public TargetMove(IAquarium aquarium, double direction){
         this.aquarium = aquarium;
         this.direction = direction;
         this.target = null;
@@ -57,6 +57,10 @@ public class targetMove implements IAi {
 
     public void setTarget(Vec3<Integer> targetPos){
         this.target = targetPos;
+    }
+
+    public Vec3<Integer> getTarget(){
+        return this.target;
     }
 
     public double getDirection(){

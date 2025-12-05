@@ -13,8 +13,8 @@ public class Fish implements IFish {
     private int speed;
 
     private Vec2<Integer> size = new Vec2<>(50, 50);
-    // Temporary default pos --> Delete later
-    private Vec3<Integer> pos = new Vec3<>(100, 100,0);
+    private Vec3<Integer> pos;
+    private IBehaviour behaviour;;
 
     public Fish(IAquarium aquarium) {
 
@@ -26,6 +26,7 @@ public class Fish implements IFish {
         this.age = 0;
         this.baseSpeed = 5;
         this.speed = baseSpeed;
+        this.behaviour = new GoldFishBehaviour(this, 0, 30); //30 is a placeholder
 
     }
 
@@ -102,5 +103,8 @@ public class Fish implements IFish {
         }
 
         speed = Math.max(1, baseSpeed - (hunger / 20));
+
+        this.behaviour.update();
+        
     }
 }
