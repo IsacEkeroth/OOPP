@@ -1,6 +1,6 @@
 package com.grupp26.aquasim.model;
 
-public class GoldFishBehaviour implements IBehaviour{
+public class GoldFishBehaviour implements IBehaviour {
     private IAquarium aquarium;
 
     private IFishState state;
@@ -8,7 +8,7 @@ public class GoldFishBehaviour implements IBehaviour{
     private IFishState hungerState;
     private int hungryAt;
 
-    public GoldFishBehaviour(IFish fish, int initialDirection, int hungryAt){
+    public GoldFishBehaviour(IFish fish, double initialDirection, int hungryAt) {
         this.hungryAt = hungryAt;
         this.aquarium = fish.getAquarium();
 
@@ -17,18 +17,23 @@ public class GoldFishBehaviour implements IBehaviour{
         this.state = this.passiveState;
     }
 
-    public void setState(IFishState newState){
+    public void setState(IFishState newState) {
         this.state = newState;
     }
 
-    public IFishState getPassiveState() { return passiveState; }
-    public IFishState getHungerState() { return hungerState; }
+    public IFishState getPassiveState() {
+        return passiveState;
+    }
 
-    public int getHungryAt(){
+    public IFishState getHungerState() {
+        return hungerState;
+    }
+
+    public int getHungryAt() {
         return this.hungryAt;
     }
 
-    public void update(){
+    public void update() {
         this.state.update();
     }
 
