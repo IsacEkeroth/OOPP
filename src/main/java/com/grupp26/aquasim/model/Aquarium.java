@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Aquarium implements IAquarium {
     ArrayList<IFish> fishList = new ArrayList<>();
     ArrayList<IDecoration> decorationList = new ArrayList<>();
+    ArrayList<IEdible> foodList = new ArrayList<>();
 
     final Vec2<Integer> aquariumSize = new Vec2<Integer>(1280, 720);
 
@@ -20,10 +21,23 @@ public class Aquarium implements IAquarium {
             this.fishList.remove(fishIndex);
         }
     }
+
+    // Temporary method --> Delete later
+    @Override
+    public void removeLastFish() {
+        if(!this.fishList.isEmpty()) {
+            this.fishList.remove(fishList.size() - 1);
+        }
+    }
     
     @Override
     public void addDecoration(IDecoration decoration) {
         this.decorationList.add(decoration);
+    }
+
+    @Override
+    public void addFood(IEdible edible){
+        this.foodList.add(edible);
     }
 
     // Assuming fish are rectangular and not rotated
@@ -40,6 +54,11 @@ public class Aquarium implements IAquarium {
     @Override
     public Vec2<Integer> getAquariumSize() {
         return new Vec2<Integer>(aquariumSize.getX(), aquariumSize.getY());
+    }
+
+    @Override
+    public ArrayList<IEdible> getFood(){
+        return new ArrayList<IEdible>(foodList);
     }
 
     @Override
