@@ -6,8 +6,6 @@ public class FishFactory {
 
         Fish fish = new Fish(aquarium);
 
-        // ska vi ha en fish.setAge()? kanske för ev. debugging?
-
         fish.setHunger(hunger);
 
         fish.setHealth(health);

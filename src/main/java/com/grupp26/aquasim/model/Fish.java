@@ -25,7 +25,7 @@ public class Fish implements IFish {
         this.age = 0;
         this.baseSpeed = 5;
         this.speed = baseSpeed;
-        this.behaviour = new GoldFishBehaviour(this, Math.random() * 2 * Math.PI, 30); // 30 is a placeholder
+        this.behaviour = new GoldFishBehaviour(this, Math.random() * 2 * Math.PI, 30);
 
     }
 
@@ -44,7 +44,6 @@ public class Fish implements IFish {
     }
 
     public void setHealth(int health) {
-        // clamp, minst 0, max 100
         this.health = Math.max(0, Math.min(100, health));
     }
 
@@ -93,11 +92,11 @@ public class Fish implements IFish {
 
         if (hunger >= 100) {
             health--;
-            hunger = 100; // clamp, max 100 hunger
+            hunger = 100;
         }
 
         if (health <= 0) {
-            health = 0; // clamp, minst 0 hälsa
+            health = 0;
             this.isAlive = false;
         }
 

@@ -17,6 +17,8 @@ public class SimpleMove implements IMovement {
         double momentumX = (fish.getSpeed() * Math.cos(this.direction));
         double momentumY = (fish.getSpeed() * Math.sin(this.direction));
 
+        // if statements to prevent 0 movement by rounding movement backwards:down and
+        // forwards:up
         if (momentumX >= 0) {
             newX = (int) Math.ceil(newX + momentumX);
         } else {
@@ -27,17 +29,13 @@ public class SimpleMove implements IMovement {
         } else {
             newY = (int) Math.floor(newY + momentumY);
         }
-        // newPos = oldPos + Speed*direction
-        // if statements to prevent 0 movement by rounding movement backwards:down and
-        // forwards:up
 
         Vec2<Integer> newPos = new Vec2<Integer>(newX, newY);
 
         Boolean isValid = aquarium.isValidPosition(newPos, fish.getSize());
-        // Boolean isValid = true;
         if (!isValid) {
-            double newDirection = (this.direction + Math.PI) % (2 * Math.PI);
             // mirrors direction
+            double newDirection = (this.direction + Math.PI) % (2 * Math.PI);
             this.direction = newDirection;
 
             momentumX = (fish.getSpeed() * Math.cos(this.direction));

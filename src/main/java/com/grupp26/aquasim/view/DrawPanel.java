@@ -16,7 +16,6 @@ public class DrawPanel extends JPanel {
     DrawPanel(int w, int h) {
         super();
 
-        // vet ej om detta behövs
         this.setDoubleBuffered(true);
 
         this.setPreferredSize(new Dimension(w, h));
@@ -55,7 +54,7 @@ public class DrawPanel extends JPanel {
         g.drawImage(entity.getImage(), (int) pos.getX(), (int) pos.getY(), (int) size.getX(), (int) size.getY(),
                 null);
     }
-    
+
     public void clear() {
         layers.clear();
     }

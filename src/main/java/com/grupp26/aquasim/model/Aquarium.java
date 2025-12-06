@@ -22,21 +22,20 @@ public class Aquarium implements IAquarium {
         }
     }
 
-    // Temporary method --> Delete later
     @Override
     public void removeLastFish() {
-        if(!this.fishList.isEmpty()) {
+        if (!this.fishList.isEmpty()) {
             this.fishList.remove(fishList.size() - 1);
         }
     }
-    
+
     @Override
     public void addDecoration(IDecoration decoration) {
         this.decorationList.add(decoration);
     }
 
     @Override
-    public void addFood(IEdible edible){
+    public void addFood(IEdible edible) {
         this.foodList.add(edible);
     }
 
@@ -57,7 +56,7 @@ public class Aquarium implements IAquarium {
     }
 
     @Override
-    public ArrayList<IEdible> getFood(){
+    public ArrayList<IEdible> getFood() {
         return new ArrayList<IEdible>(foodList);
     }
 
@@ -66,14 +65,8 @@ public class Aquarium implements IAquarium {
         for (IFish fish : fishList) {
             fish.tick();
         }
-        // decorations not tickabe (yet)
-        // Add tickable inteface?
-        // iterate trhough tickable or check each if tickable
-        // for (IDecoration decoration : decorationList) {
-        // decoration.tick();
-        // }
     }
-    
+
     @Override
     public AquariumState getState() {
         return new AquariumState(new ArrayList<>(this.fishList), new ArrayList<>(this.decorationList));
