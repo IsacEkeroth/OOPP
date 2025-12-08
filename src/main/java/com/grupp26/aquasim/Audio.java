@@ -4,26 +4,37 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
+import java.net.URL;
+
 public class Audio {
-    private JFXPanel jFXPanel;
+    // private JFXPanel jFXPanel;
     private MediaPlayer mediaPlayer;
 
     Audio() {
-        jFXPanel = new JFXPanel();
-        mediaPlayer = new MediaPlayer(null);
-    }
-
-    public void playSound(String path) {
-        Media sound = loadMedia(path);
+        JFXPanel jFXPanel = new JFXPanel(); // this needs to be created once to be able to play sound.
 
     }
 
-    public Media loadMedia(String path) {
+    public void playSound(String fileName) {
+        Media media = loadMedia(fileName);
+        mediaPlayer = new MediaPlayer(media);
+        // for music to loop
+        // mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.play();
+
+    }
+
+    // bubble-pop.mp3
+    public Media loadMedia(String fileName) {
         Media media;
         try {
-            media = new Media(path);
+            URL resource = getClass().getResource("/audio/" + fileName);
+            if (resource == null) {
+                throw new RuntimeException("File not found");
+            }
+            media = new Media(resource.toExternalForm());
         } catch (Exception e) {
-            throw new RuntimeException("File not found", e);
+            throw new RuntimeException("File not found: " + fileName, e);
         }
         return media;
     }
