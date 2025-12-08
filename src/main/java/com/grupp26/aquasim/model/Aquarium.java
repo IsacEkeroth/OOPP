@@ -66,12 +66,11 @@ public class Aquarium implements IAquarium {
         for (IFish fish : fishList) {
             fish.tick();
         }
-        // decorations not tickabe (yet)
-        // Add tickable inteface?
-        // iterate trhough tickable or check each if tickable
-        // for (IDecoration decoration : decorationList) {
-        // decoration.tick();
-        // }
+        for (IDecoration decoration : decorationList) {
+            if (decoration instanceof ITickable tickDeco) {
+                tickDeco.tick();
+            }
+        }
     }
     
     @Override
