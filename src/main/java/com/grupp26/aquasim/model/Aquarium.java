@@ -19,8 +19,6 @@ public class Aquarium implements IAquarium {
     
     public Aquarium(int width, int height) {
         aquariumSize = new Vec2<>(width, height);
-        fishList = new ArrayList<>();
-        decorationList = new ArrayList<>();
         defaultAttributes();
     }
     
