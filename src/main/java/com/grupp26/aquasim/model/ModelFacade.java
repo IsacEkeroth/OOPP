@@ -60,7 +60,7 @@ public class ModelFacade implements IObservable {
     }
 
     public void addDecoration() {
-        aquarium.addDecoration(new Decoration());
+        aquarium.addDecoration(new Decoration(aquarium, new Vec3<>(0,0,0)));
     }
 
     public void feedFish() { }
