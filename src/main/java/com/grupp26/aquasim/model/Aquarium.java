@@ -3,8 +3,8 @@ package com.grupp26.aquasim.model;
 import java.util.ArrayList;
 
 public class Aquarium implements IAquarium {
-    private final ArrayList<IFish> fishList;
-    private final ArrayList<IDecoration> decorationList;
+    private final ArrayList<IFish> fishList = new ArrayList<>();
+    private final ArrayList<IDecoration> decorationList = new ArrayList<>();
 
     private final Vec2<Integer> aquariumSize;
     
