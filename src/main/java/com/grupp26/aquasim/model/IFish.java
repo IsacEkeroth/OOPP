@@ -1,6 +1,6 @@
 package com.grupp26.aquasim.model;
 
-public interface IFish {
+public interface IFish extends ITickable {
     // comment = private attributes
     // has the following
     // int age;
@@ -12,7 +12,17 @@ public interface IFish {
 
     int getAge();
 
-    int getSize();
+    void setHealth(int health);
+
+    int getHunger();
+
+    void setHunger(int hunger);
+
+    int getBaseSpeed();
+
+    void setBaseSpeed(int baseSpeed);
+
+    Vec2<Integer> getSize();
 
     int getSpeed();
 
@@ -20,5 +30,4 @@ public interface IFish {
 
     void setPos(int x, int y, int z);
 
-    void tick();
 }

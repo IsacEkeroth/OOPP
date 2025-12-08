@@ -1,13 +1,11 @@
 package com.grupp26.aquasim.model;
 
-import java.util.Vector;
-
-public class simpleMove implements IAi {
+public class SimpleMove implements IMovement {
 
     private final IAquarium aquarium;
     private double direction;
 
-    public simpleMove(IAquarium aquarium, double direction) {
+    public SimpleMove(IAquarium aquarium, double direction) {
         this.aquarium = aquarium;
         this.direction = direction;
     }
@@ -33,10 +31,10 @@ public class simpleMove implements IAi {
         // if statements to prevent 0 movement by rounding movement backwards:down and
         // forwards:up
 
-        Vec3<Integer> newPos = new Vec3<Integer>(newX, newY, fish.getPos().getZ());
+        Vec2<Integer> newPos = new Vec2<Integer>(newX, newY);
 
-        // Boolean isValid = aquarium.isValidPosition(newPos, fish.getSize());
-        Boolean isValid = true;
+        Boolean isValid = aquarium.isValidPosition(newPos, fish.getSize());
+        // Boolean isValid = true;
         if (!isValid) {
             double newDirection = (this.direction + Math.PI) % (2 * Math.PI);
             // mirrors direction

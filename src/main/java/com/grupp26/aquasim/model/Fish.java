@@ -2,16 +2,31 @@ package com.grupp26.aquasim.model;
 
 public class Fish implements IFish {
 
-    // set by the aquarium itself?
     private final IAquarium aquarium;
 
-    private int age;
-    private int size;
-    private int speed;
-    private Vec3<Integer> pos;
+    private boolean isAlive;
 
-    Fish(IAquarium aquarium) {
+    private int age;
+    private int health;
+    private int hunger;
+    private int baseSpeed;
+    private int speed;
+
+    private Vec2<Integer> size = new Vec2<>(50, 50);
+    private Vec3<Integer> pos = new Vec3<Integer>(640, 360, 1);
+    private IBehaviour behaviour;;
+
+    public Fish(IAquarium aquarium) {
+
+        this.isAlive = true;
         this.aquarium = aquarium;
+        this.health = 100;
+        this.hunger = 0;
+        this.age = 0;
+        this.baseSpeed = 5;
+        this.speed = baseSpeed;
+        this.behaviour = new GoldFishBehaviour(this, Math.random() * 2 * Math.PI, 30); // 30 is a placeholder
+
     }
 
     @Override
@@ -24,7 +39,34 @@ public class Fish implements IFish {
         return age;
     }
 
-    public int getSize() { return size; }
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        // clamp, minst 0, max 100
+        this.health = Math.max(0, Math.min(100, health));
+    }
+
+    public int getHunger() {
+        return hunger;
+    }
+
+    public void setHunger(int hunger) {
+        this.hunger = Math.max(0, Math.min(100, hunger));
+    }
+
+    public int getBaseSpeed() {
+        return baseSpeed;
+    }
+
+    public void setBaseSpeed(int baseSpeed) {
+        this.baseSpeed = Math.max(0, baseSpeed);
+    }
+
+    public Vec2<Integer> getSize() {
+        return size;
+    }
 
     @Override
     public int getSpeed() {
@@ -45,6 +87,23 @@ public class Fish implements IFish {
 
     @Override
     public void tick() {
+
+        age++;
+        hunger++;
+
+        if (hunger >= 100) {
+            health--;
+            hunger = 100; // clamp, max 100 hunger
+        }
+
+        if (health <= 0) {
+            health = 0; // clamp, minst 0 hälsa
+            this.isAlive = false;
+        }
+
+        speed = Math.max(1, baseSpeed + (hunger / 20));
+
+        this.behaviour.update();
 
     }
 }

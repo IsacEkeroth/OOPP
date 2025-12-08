@@ -5,8 +5,8 @@ import java.util.Vector;
 public class Vec2<E> extends Vector<E> {
     public Vec2(E x, E y) {
         super(2);
-        this.setX(x);
-        this.setY(y);
+        this.add(x);
+        this.add(y);
     }
 
     public void setX(E x) {
