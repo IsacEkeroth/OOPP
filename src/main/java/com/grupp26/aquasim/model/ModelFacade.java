@@ -31,7 +31,7 @@ public class ModelFacade implements IObservable {
         for(IFish fish : state.getFish()) {
             IEntity entity = new Entity(fish.getPos(),
                     fish.getSize(),
-                    "images/icon-grupp26.png"); // all fish are smurfs
+                    "images/icon-grupp26nobg.png"); // all fish are smurfs
             entities.add(entity);
         }
         for(IDecoration deco : state.getDecorations()) {
@@ -50,8 +50,20 @@ public class ModelFacade implements IObservable {
     // some kind of argument from controller to know which fish to add: enum, String, int?
     public void addFish() {
         aquarium.addFish(new Fish(aquarium));
+        notifyObservers();
     }
-    public void addDecoration() { aquarium.addDecoration(new Decoration()); }
+
+    public void removeFish() {
+        // Temporary call to removeLastFish() --> Delete later
+        aquarium.removeLastFish();
+        notifyObservers();
+    }
+
+    public void addDecoration() {
+        aquarium.addDecoration(new Decoration());
+    }
+
+    public void feedFish() { }
     
     @Override
     public void addObserver(IObserver observer) {

@@ -21,13 +21,23 @@ public class Controller implements IController {
     private void initListeners() {
 
         // Anonym ActionListener
-        // Lyssnar på addFish-knappen i view,
-        // säger till ModelFacade att köra addFIsh
-        view.getAddFish().addActionListener(new ActionListener() {
+        view.getAddFishButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 modelFacade.addFish();
             }
+        });
+
+        view.getRemoveFishButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                modelFacade.removeFish();
+            }
+        });
+
+        view.getFeedFishButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) { modelFacade.feedFish(); }
         });
 
     }

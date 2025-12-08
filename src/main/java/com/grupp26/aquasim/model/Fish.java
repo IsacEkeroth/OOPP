@@ -13,18 +13,19 @@ public class Fish implements IFish {
     private int speed;
 
     private Vec2<Integer> size = new Vec2<>(50, 50);
-    private Vec3<Integer> pos;
+    private Vec3<Integer> pos = new Vec3<Integer>(640, 360, 1);
+    private IBehaviour behaviour;;
 
     public Fish(IAquarium aquarium) {
 
         this.isAlive = true;
         this.aquarium = aquarium;
-
         this.health = 100;
         this.hunger = 0;
         this.age = 0;
         this.baseSpeed = 5;
         this.speed = baseSpeed;
+        this.behaviour = new GoldFishBehaviour(this, Math.random() * 2 * Math.PI, 30); // 30 is a placeholder
 
     }
 
@@ -100,6 +101,9 @@ public class Fish implements IFish {
             this.isAlive = false;
         }
 
-        speed = Math.max(1, baseSpeed - (hunger / 20));
+        speed = Math.max(1, baseSpeed + (hunger / 20));
+
+        this.behaviour.update();
+
     }
 }

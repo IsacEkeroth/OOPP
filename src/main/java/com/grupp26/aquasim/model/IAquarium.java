@@ -1,5 +1,7 @@
 package com.grupp26.aquasim.model;
 
+import java.util.ArrayList;
+
 public interface IAquarium {
     // comment = private attributes
     // List<IFish> fish;
@@ -36,7 +38,13 @@ public interface IAquarium {
     AquariumState getState();
 
     void tick();
-    
+
+    ArrayList<IEdible> getFood();
     
     void addDecoration(IDecoration decoration);
+
+    // Temporary method --> Delete later
+    void removeLastFish();
+  
+    void addFood(IEdible edible);
 }

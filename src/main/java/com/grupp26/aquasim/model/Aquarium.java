@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Aquarium implements IAquarium {
     private final ArrayList<IFish> fishList = new ArrayList<>();
     private final ArrayList<IDecoration> decorationList = new ArrayList<>();
+    private final ArrayList<IEdible> foodList = new ArrayList<>();
 
     private final Vec2<Integer> aquariumSize;
     
@@ -47,10 +48,23 @@ public class Aquarium implements IAquarium {
             this.fishList.remove(fishIndex);
         }
     }
+
+    // Temporary method --> Delete later
+    @Override
+    public void removeLastFish() {
+        if(!this.fishList.isEmpty()) {
+            this.fishList.remove(fishList.size() - 1);
+        }
+    }
     
     @Override
     public void addDecoration(IDecoration decoration) {
         this.decorationList.add(decoration);
+    }
+
+    @Override
+    public void addFood(IEdible edible){
+        this.foodList.add(edible);
     }
 
     // Assuming fish are rectangular and not rotated
@@ -126,15 +140,19 @@ public class Aquarium implements IAquarium {
     }
     
     @Override
+    public ArrayList<IEdible> getFood(){
+        return new ArrayList<IEdible>(foodList);
+    }
+
+    @Override
     public void tick() {
         for (IFish fish : fishList) {
             fish.tick();
         }
-        // decorations not tickabe (yet)
-        // Add tickable inteface?
-        // iterate trhough tickable or check each if tickable
-        // for (IDecoration decoration : decorationList) {
-        // decoration.tick();
-        // }
+        for (IDecoration decoration : decorationList) {
+            if (decoration instanceof ITickable tickDeco) {
+                tickDeco.tick();
+            }
+        }
     }
 }
