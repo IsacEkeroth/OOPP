@@ -14,10 +14,30 @@ public interface IAquarium {
     boolean isValidPosition(Vec2<Integer> pos, Vec2<Integer> size);
 
     Vec2<Integer> getAquariumSize();
-
-    void tick();
+    
+    int getTemperature();
+    
+    void setTemperature(int temp);
+    
+    int getAlgaeLevel();
+    
+    void setAlgaeLevel(int level);
+    
+    int getO2Conc();
+    
+    void setO2Conc(int conc);
+    
+    int getSalinity();
+    
+    void setSalinity(int salinity);
+    
+    int getPHLevel();
+    
+    void setPHLevel(int level);
     
     AquariumState getState();
+
+    void tick();
 
     ArrayList<IEdible> getFood();
     
