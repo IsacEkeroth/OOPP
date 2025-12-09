@@ -106,7 +106,6 @@ public class Fish implements IFish {
         }
 
         speed = Math.max(1, baseSpeed + (hunger / 20));
-
         this.behaviour.update();
 
     }
