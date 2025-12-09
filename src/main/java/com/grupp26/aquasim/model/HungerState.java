@@ -7,9 +7,9 @@ public class HungerState implements IFishState{
     private IFish fish;
     private TargetMove targetmove;
     private IAquarium aquarium;
-    private IBehaviour context;
+    private IFishBehaviour context;
 
-    public HungerState(IBehaviour context, IFish fish, TargetMove targetmove, IAquarium aquarium){
+    public HungerState(IFishBehaviour context, IFish fish, TargetMove targetmove, IAquarium aquarium){
         this.context = context;
         this.fish = fish;
         this.targetmove = targetmove;
@@ -41,7 +41,10 @@ public class HungerState implements IFishState{
     }
 
     private IFishState checkState(){
-        if (this.fish.getHunger() > context.getHungryAt() || aquarium.getFood() == null || aquarium.getFood().isEmpty()){
+        if(!fish.getLife()){
+            return context.getDeathState();
+        }
+        else if (this.fish.getHunger() < context.getHungryAt() || aquarium.getFood() == null || aquarium.getFood().isEmpty()){
             return context.getPassiveState();
         }
         else{
