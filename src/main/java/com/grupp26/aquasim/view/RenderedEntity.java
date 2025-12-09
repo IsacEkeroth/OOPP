@@ -15,7 +15,7 @@ public class RenderedEntity implements IRenderedEntity {
     String entity_type;
     BufferedImage image;
 
-    private int currentFrameIndex;
+    private int currentTick;
 
 
 
@@ -27,16 +27,16 @@ public class RenderedEntity implements IRenderedEntity {
         this.image = image;
     }
     
-    public RenderedEntity(IEntity entity, int currFrameIdx) {
+    public RenderedEntity(IEntity entity, int currentTick) {
         this.pos = entity.getPos();
         this.depth = entity.getDepth();
         this.size = entity.getSize();
 
         this.entityID = entity.getEntity_ID();
         this.entity_type = entity.getEntityType();
-        this.currentFrameIndex = currFrameIdx;
+        this.currentTick = currentTick;
 
-        this.image = SpriteManager.getFrame(this.entity_type, this.currentFrameIndex);
+        this.image = SpriteManager.getFrame(this.entity_type, this.currentTick);
 
 
     }
@@ -45,8 +45,8 @@ public class RenderedEntity implements IRenderedEntity {
 
 
     @Override
-    public int getCurrFrameIdx() {
-        return this.currentFrameIndex;
+    public int getCurrentTick() {
+        return this.currentTick;
     }
 
     @Override

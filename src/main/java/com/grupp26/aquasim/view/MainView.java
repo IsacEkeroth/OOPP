@@ -15,10 +15,10 @@ public class MainView extends JFrame implements IObserver {
     private DrawPanel drawPanel;
     private ModelFacade facade;
 
-    // TODO         Mappar varje entityID till rätt animationsFrame för den entity
+    // TODO Mappar varje entityID till nuvarande tick för hela simulationen
     // Agerar som "minne" för view
-    // Varje entityID som ska ritas är mappad till ett frameIndex
-    private Map<String, Integer> entityFrameindexMap = new HashMap<>();
+    // Varje entityID som ska ritas är mappad till ett tick.
+    private Map<String, Integer> entityAnimationCounter = new HashMap<>();
 
     // controlPanel för framtida knappar
     private final JPanel controlPanel = new JPanel();
@@ -81,9 +81,6 @@ public class MainView extends JFrame implements IObserver {
         drawPanel.repaint();
     }
 
-
-
-    // TODO             --* fiskarna skrivs/ritas över så man kan bara se en i taget *--
     @Override
     public void update() {
         drawPanel.clear();
@@ -98,19 +95,18 @@ public class MainView extends JFrame implements IObserver {
             String entityID = e.getEntity_ID();
             activeIDs.add(entityID);
 
-            // Hämtar nuvarande framIndex för en given entity, eller börjar på 0 om den är ny
-            int currFrameindex = entityFrameindexMap.getOrDefault(entityID, 0);
+            // Hämtar nuvarande tick för given entity
+            int currentTick = entityAnimationCounter.getOrDefault(entityID, 0);
 
-            IRenderedEntity renderedEntity = new RenderedEntity(e, currFrameindex);
+            IRenderedEntity renderedEntity = new RenderedEntity(e, currentTick);
             addRenderedEntity(renderedEntity);
 
             // Öka värdet till nästa uppdatering
-            // (Hur löser vi om vi vill ha långsammare animation? öka varannan update? nått sånt?)
-            entityFrameindexMap.put(entityID, currFrameindex + 1);
+            entityAnimationCounter.put(entityID, currentTick + 1);
         }
         // Ta bort alla ID från mappen som inte längre finns i modellen
         // Använder HashSet:et som "mall" för att enbart behålla dom och inget annat.
-        entityFrameindexMap.keySet().retainAll(activeIDs);
+        entityAnimationCounter.keySet().retainAll(activeIDs);
 
         repaint();
     }

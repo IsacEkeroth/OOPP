@@ -13,6 +13,7 @@ public interface IEntity {
     
     String getEntity_ID();
 
+    // Temporär
     String getEntityType();
 
 }

@@ -44,8 +44,7 @@ public class Entity implements IEntity{
     public String getEntity_ID() {
         return entity_ID;
     }
-
-    // TODO         glöm ej uppdatera interfacet
+    // Temporär
     @Override
     public String getEntityType() {
         return entity_type;

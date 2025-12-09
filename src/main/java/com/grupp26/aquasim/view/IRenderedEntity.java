@@ -14,5 +14,5 @@ public interface IRenderedEntity {
 
     BufferedImage getImage();
 
-    int getCurrFrameIdx();
+    int getCurrentTick();
 }

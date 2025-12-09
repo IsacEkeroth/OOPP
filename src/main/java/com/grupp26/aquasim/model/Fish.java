@@ -27,7 +27,7 @@ public class Fish implements IFish {
         this.baseSpeed = 5;
         this.speed = baseSpeed;
         this.behaviour = new GoldFishBehaviour(this, Math.random() * 2 * Math.PI, 30); // 30 is a placeholder
-        this.id = createUniqueID();
+        this.id = UniqueID.createUniqueID();
     }
 
     @Override
@@ -90,15 +90,6 @@ public class Fish implements IFish {
     public String getFishID() {
         return this.id;
     }
-
-    // Denna borde inte ligga i Fish, den ska fungera för alla klasser som behöver ID
-    private String createUniqueID() {
-        return java.util.UUID.randomUUID().toString();
-    }
-
-
-
-
 
     @Override
     public void tick() {
