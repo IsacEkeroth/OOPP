@@ -2,15 +2,42 @@
 
   "goldfish": {
 
-    "maxSpeed" : 5,
+    "baseSpeed" : 5,
 
     "maxHealth" : 100,
 
     "tempRange" : {
-        "minTemp" : 20,
-        "maxTemp" : 40
+      "minTemp" : 20,
+      "maxTemp" : 25
+    },
+
+    "behaviour" : "GoldFishBehaviour",
+
+    "initSize" : {
+      "x" : 50,
+      "y" : 50
     }
 
+  },
+
+  "clownfish": {
+
+    "baseSpeed" : 7,
+
+    "maxHealth" : 150,
+
+    "tempRange" : {
+      "minTemp" : 25,
+      "maxTemp" : 30
+    },
+
+    "behaviour" : "ClownFishBehaviour",
+
+    "initSize" : {
+      "x" : 75,
+      "y" : 75
     }
+
+  }
 
 }
