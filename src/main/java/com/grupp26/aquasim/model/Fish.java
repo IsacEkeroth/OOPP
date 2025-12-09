@@ -11,6 +11,7 @@ public class Fish implements IFish {
     private int hunger;
     private int baseSpeed;
     private int speed;
+    private String id;
 
     private Vec2<Integer> size = new Vec2<>(50, 50);
     private Vec3<Integer> pos = new Vec3<Integer>(640, 360, 1);
@@ -26,7 +27,7 @@ public class Fish implements IFish {
         this.baseSpeed = 5;
         this.speed = baseSpeed;
         this.behaviour = new GoldFishBehaviour(this, Math.random() * 2 * Math.PI, 30); // 30 is a placeholder
-
+        this.id = createUniqueID();
     }
 
     @Override
@@ -84,6 +85,20 @@ public class Fish implements IFish {
         pos.setY(y);
         pos.setZ(z);
     }
+
+    @Override
+    public String getFishID() {
+        return this.id;
+    }
+
+    // Denna borde inte ligga i Fish, den ska fungera för alla klasser som behöver ID
+    private String createUniqueID() {
+        return java.util.UUID.randomUUID().toString();
+    }
+
+
+
+
 
     @Override
     public void tick() {

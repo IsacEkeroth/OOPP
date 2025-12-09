@@ -5,8 +5,7 @@ import com.grupp26.aquasim.model.ModelFacade;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class MainView extends JFrame implements IObserver {
 
@@ -15,6 +14,11 @@ public class MainView extends JFrame implements IObserver {
     private int windowHeight;
     private DrawPanel drawPanel;
     private ModelFacade facade;
+
+    // TODO         Mappar varje entityID till rätt animationsFrame för den entity
+    // Agerar som "minne" för view
+    // Varje entityID som ska ritas är mappad till ett frameIndex
+    private Map<String, Integer> entityFrameindexMap = new HashMap<>();
 
     // controlPanel för framtida knappar
     private final JPanel controlPanel = new JPanel();
@@ -60,7 +64,9 @@ public class MainView extends JFrame implements IObserver {
         this.setVisible(true);
     }
 
-    public void addEntity(IRenderedEntity e) {
+
+    // TODO   --* Byt namn till addRenderedEntity *--
+    public void addRenderedEntity(IRenderedEntity e) {
         drawPanel.addEntity(e);
     }
 
@@ -74,15 +80,38 @@ public class MainView extends JFrame implements IObserver {
 
         drawPanel.repaint();
     }
-    
+
+
+
+    // TODO             --* fiskarna skrivs/ritas över så man kan bara se en i taget *--
     @Override
     public void update() {
         drawPanel.clear();
-        
+
         ArrayList<IEntity> modelEntities = new ArrayList<>(facade.getEntities());
+
+        // Set över aktiva IDs i denna uppdatering, så vi inte får dubbletter
+        Set<String> activeIDs = new HashSet<>();
+
         for (IEntity e : modelEntities) {
-            addEntity(new RenderedEntity(e));
+            // Hämtar IDet för given entity, lägger till i mappen
+            String entityID = e.getEntity_ID();
+            activeIDs.add(entityID);
+
+            // Hämtar nuvarande framIndex för en given entity, eller börjar på 0 om den är ny
+            int currFrameindex = entityFrameindexMap.getOrDefault(entityID, 0);
+
+            IRenderedEntity renderedEntity = new RenderedEntity(e, currFrameindex);
+            addRenderedEntity(renderedEntity);
+
+            // Öka värdet till nästa uppdatering
+            // (Hur löser vi om vi vill ha långsammare animation? öka varannan update? nått sånt?)
+            entityFrameindexMap.put(entityID, currFrameindex + 1);
         }
+        // Ta bort alla ID från mappen som inte längre finns i modellen
+        // Använder HashSet:et som "mall" för att enbart behålla dom och inget annat.
+        entityFrameindexMap.keySet().retainAll(activeIDs);
+
         repaint();
     }
     

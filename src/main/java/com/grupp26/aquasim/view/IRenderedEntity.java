@@ -13,4 +13,6 @@ public interface IRenderedEntity {
     void setPos(Point pos);
 
     BufferedImage getImage();
+
+    int getCurrFrameIdx();
 }

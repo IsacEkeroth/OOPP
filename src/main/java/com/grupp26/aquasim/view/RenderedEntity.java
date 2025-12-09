@@ -10,8 +10,16 @@ public class RenderedEntity implements IRenderedEntity {
     Point pos;
     int depth;
     Point size;
+
+    String entityID;
+    String entity_type;
     BufferedImage image;
-    
+
+    private int currentFrameIndex;
+
+
+
+
     public RenderedEntity(Point pos, int depth, Point size, BufferedImage image) {
         this.pos = pos;
         this.depth = depth;
@@ -19,11 +27,26 @@ public class RenderedEntity implements IRenderedEntity {
         this.image = image;
     }
     
-    public RenderedEntity(IEntity entity) {
+    public RenderedEntity(IEntity entity, int currFrameIdx) {
         this.pos = entity.getPos();
         this.depth = entity.getDepth();
         this.size = entity.getSize();
-        this.image = SpriteManager.imageFromString(entity.getImagePath());
+
+        this.entityID = entity.getEntity_ID();
+        this.entity_type = entity.getEntityType();
+        this.currentFrameIndex = currFrameIdx;
+
+        this.image = SpriteManager.getFrame(this.entity_type, this.currentFrameIndex);
+
+
+    }
+
+
+
+
+    @Override
+    public int getCurrFrameIdx() {
+        return this.currentFrameIndex;
     }
 
     @Override

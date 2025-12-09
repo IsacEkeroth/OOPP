@@ -1,9 +1,7 @@
 package com.grupp26.aquasim.model;
 
-import com.grupp26.aquasim.view.RenderedEntity;
 import com.grupp26.aquasim.view.IObserver;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class ModelFacade implements IObservable {
@@ -11,7 +9,11 @@ public class ModelFacade implements IObservable {
     private AquariumState state;
     private ArrayList <IEntity> entities;
     private ArrayList <IObserver> observers = new ArrayList<>();
-    
+
+    private final String FISH_TYPE = "FISH";
+    private final String BG_TYPE = "BG";
+    private final String DECOR_TYPE = "DECOR";
+
     public ModelFacade(IAquarium aquarium, IObserver observer) {
         this.aquarium = aquarium;
         this.observers.add(observer);
@@ -22,22 +24,29 @@ public class ModelFacade implements IObservable {
         state = aquarium.getState();
         entities = new ArrayList<>();
         
-        IEntity bgEntity = new Entity(new Vec3<Integer>(0, 0, 0),
+        IEntity bgEntity = new Entity(
+                new Vec3<Integer>(0, 0, 0),
                 aquarium.getAquariumSize(),
-                "images/akvarium1.jpg");
+                BG_TYPE,
+                "null");
         entities.add(bgEntity);
         
-        // store the imagepath in fish or new fishData class?
+        // TODO ** Ändrat: Entity har nu en "typ" som den skickar med, onödigt just nu,
+        //  men Factory method och mer logik senare löser nog allt sånt
         for(IFish fish : state.getFish()) {
-            IEntity entity = new Entity(fish.getPos(),
+            IEntity entity = new Entity(
+                    fish.getPos(),
                     fish.getSize(),
-                    "images/icon-grupp26nobg.png"); // all fish are smurfs
+                    FISH_TYPE,
+                    fish.getFishID());
             entities.add(entity);
         }
         for(IDecoration deco : state.getDecorations()) {
-            IEntity entity = new Entity(deco.getPos(),
+            IEntity entity = new Entity(
+                    deco.getPos(),
                     new Vec2<Integer>(deco.getSize(), deco.getSize()), // fix dec.getSize to return Vec2
-                    "images/veryGoodAnchor.png"); // all decorations are anchors
+                    DECOR_TYPE,
+                    "null");
             entities.add(entity);
         }
         notifyObservers();
