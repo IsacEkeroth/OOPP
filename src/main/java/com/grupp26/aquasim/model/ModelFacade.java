@@ -30,9 +30,7 @@ public class ModelFacade implements IObservable {
                 BG_TYPE,
                 "null");
         entities.add(bgEntity);
-        
-        // TODO ** Ändrat: Entity har nu en "typ" som den skickar med, onödigt just nu,
-        //  men Factory method och mer logik senare löser nog allt sånt
+
         for(IFish fish : state.getFish()) {
             IEntity entity = new Entity(
                     fish.getPos(),

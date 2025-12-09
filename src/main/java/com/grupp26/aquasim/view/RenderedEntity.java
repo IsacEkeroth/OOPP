@@ -36,13 +36,16 @@ public class RenderedEntity implements IRenderedEntity {
         this.entity_type = entity.getEntityType();
         this.currentTick = currentTick;
 
-        this.image = SpriteManager.getFrame(this.entity_type, this.currentTick);
+        this.image = SpriteManager.getSprite(this.entity_type, this.currentTick);
 
 
     }
 
 
-
+    @Override
+    public String getType() {
+        return this.entity_type;
+    }
 
     @Override
     public int getCurrentTick() {

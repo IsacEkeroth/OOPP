@@ -13,11 +13,42 @@ public class SpriteManager {
 
     private static final HashMap<String, AnimationSequence> ANIMATION_MAP = new HashMap<>();
 
+    //private static final BufferedImage SPRITESHEET  = SpriteManager.imageFromString("images/fish_spritesheet_64.png");
 
-    private static final BufferedImage SPRITESHEET  = SpriteManager.imageFromString("images/fish_spritesheet_64.png");
-    private static final int FRAME_WIDTH = 64;
-    private static final int FRAME_HEIGHT = 64;
-    private static final int MAX_FRAMES = 4;
+    private static final String FISH_SHEET_PATH = "images/fish_spritesheet_64.png";
+    private static final String BACKGROUND_PATH = "images/akvarium1.jpg";
+    private static final String DECOR_SHEET_PATH = "images/veryGoodAnchor.jpg";
+
+    private static final int SPRITE_FRAME_WIDTH = 64;
+    private static final int SPRITE_FRAME_HEIGHT = 64;
+
+    static {
+        ANIMATION_MAP.put("FISH", new AnimationSequence(0,4, 10));
+
+        // Förladda bilder
+        imageFromString(FISH_SHEET_PATH);
+        imageFromString(BACKGROUND_PATH);
+    }
+
+
+    // Borde heta "getSpriteOrnot" kanske eftersom vi har 2 fall
+    public static BufferedImage getSprite(String entityType, int totalTicks) {
+        String type = entityType.toUpperCase();
+        // Fall 1: animerad typ
+        if (ANIMATION_MAP.containsKey(type)) {
+            return getAnimatedFrame(type, totalTicks);
+        }
+        // Fall 2: Statisk typ
+        switch (type) {
+            case "BG":
+                return imageFromString(BACKGROUND_PATH);
+            case "DECOR":
+                return imageFromString(DECOR_SHEET_PATH);
+            default:
+                // borde kanske vara något annat här
+                return null;
+        }
+    }
 
 
 
@@ -46,27 +77,28 @@ public class SpriteManager {
     }
 
 
-    public static BufferedImage getFrame(String entityType, int totalTicks) {
-        AnimationSequence seq = ANIMATION_MAP.get(entityType.toUpperCase());
-        if (seq == null || seq.MAX_FRAMES == 0) return null; // borde kanske hantera felet
+    public static BufferedImage getAnimatedFrame(String entityType, int totalTicks) {
+        AnimationSequence seq = ANIMATION_MAP.get(entityType);
+        // Temporärt, nu ligger allt som kan animeras i sprite sheetet
+        BufferedImage spriteSheet = imageFromString(FISH_SHEET_PATH);
+
+        // Temporärt, behöver hanteras
+        if (spriteSheet == null) return null;
 
         // Dela totalTicks med hastigheten på animationen
         // Ex) Om ticks är 15 och speed är 10, blir animationTick 1. (Vi stannar på frame 1 i 10 ticks).
         int slowedTick = totalTicks / seq.TICKS_PER_FRAME;
-
         int currentFrameIndex = slowedTick % seq.MAX_FRAMES;
 
-        int x = currentFrameIndex * FRAME_WIDTH;
-        int y = seq.ROWINDEX * FRAME_HEIGHT;
+        int x = currentFrameIndex * SPRITE_FRAME_WIDTH;
+        int y = seq.ROWINDEX * SPRITE_FRAME_HEIGHT;
         // Returnera utklippt bild
         // bör antagligen hantera ifall den blir null?
-        return SPRITESHEET.getSubimage(x, y, FRAME_WIDTH, FRAME_HEIGHT);
+        return spriteSheet.getSubimage(x, y, SPRITE_FRAME_WIDTH, SPRITE_FRAME_HEIGHT);
     }
 
 
-    public static int getMaxFrames(String entityID) {
-        return MAX_FRAMES;
-    }
+
 
 
     private static class AnimationSequence {
@@ -81,9 +113,7 @@ public class SpriteManager {
         }
     }
 
-    static {
-        ANIMATION_MAP.put("FISH", new AnimationSequence(0,4, 5));
-    }
+
 
 
 }

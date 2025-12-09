@@ -9,6 +9,7 @@ import java.util.HashMap;
 import javax.swing.JPanel;
 
 import java.util.Map;
+import java.util.TreeMap;
 
 public class DrawPanel extends JPanel {
     Map<Integer, ArrayList<IRenderedEntity>> layers = new HashMap<>();
@@ -52,8 +53,12 @@ public class DrawPanel extends JPanel {
         Point pos = entity.getPos();
         Point size = entity.getSize();
 
-        g.drawImage(entity.getImage(), (int) pos.getX(), (int) pos.getY(), (int) size.getX(), (int) size.getY(),
-                null);
+        if (entity.getImage() != null) {
+            g.drawImage(entity.getImage(),
+                    (int) pos.getX(), (int) pos.getY(),
+                    (int) size.getX(), (int) size.getY(),
+                    null);
+        }
     }
     
     public void clear() {

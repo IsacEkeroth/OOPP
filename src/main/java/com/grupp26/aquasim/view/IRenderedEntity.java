@@ -15,4 +15,6 @@ public interface IRenderedEntity {
     BufferedImage getImage();
 
     int getCurrentTick();
+
+    String getType();
 }
