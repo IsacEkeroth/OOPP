@@ -11,6 +11,7 @@ public class Fish implements IFish {
     private int hunger;
     private int baseSpeed;
     private int speed;
+    private int bitingPower;
 
     private Vec2<Integer> size = new Vec2<>(50, 50);
     private Vec3<Integer> pos = new Vec3<Integer>(640, 360, 1);
@@ -25,6 +26,7 @@ public class Fish implements IFish {
         this.age = 0;
         this.baseSpeed = 5;
         this.speed = baseSpeed;
+        this.bitingPower = 10;
         this.behaviour = new GoldFishBehaviour(this, Math.random() * 2 * Math.PI, 30); // 30 is a placeholder
 
     }
@@ -76,6 +78,11 @@ public class Fish implements IFish {
     @Override
     public Vec3<Integer> getPos() {
         return pos;
+    }
+
+    @Override
+    public int getBitingPower(){
+        return bitingPower;
     }
 
     @Override

@@ -26,7 +26,7 @@ public class Aquarium implements IAquarium {
     // Default size 1280x720
     public Aquarium() {
         this(1280, 720);
-        foodList.add(new Food(new Vec3<Integer>(600, 1, 0), 100, this));
+        foodList.add(new Food(new Vec3<Integer>(600, 1, 1), 100, this));
     }
     
     private void defaultAttributes() {

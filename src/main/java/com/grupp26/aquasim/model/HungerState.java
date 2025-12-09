@@ -8,6 +8,7 @@ public class HungerState implements IFishState{
     private TargetMove targetmove;
     private IAquarium aquarium;
     private IBehaviour context;
+    private IEdible closestFood;
 
     public HungerState(IBehaviour context, IFish fish, TargetMove targetmove, IAquarium aquarium){
         this.context = context;
@@ -18,7 +19,7 @@ public class HungerState implements IFishState{
 
     private void findFood(){
         List<IEdible> food = new ArrayList<>(aquarium.getFood());
-        IEdible closestFood = null;
+        closestFood = null;
         int minRange = 5000;
         // unreachable
         int xaxis;
@@ -36,12 +37,31 @@ public class HungerState implements IFishState{
         }
         if(closestFood != null){
             this.targetmove.setTarget(closestFood.getPos());
+            //System.out.println(closestFood.getPos().getX() +" " +closestFood.getPos().getY()+ "      "+fish.getPos().getX() +" " +fish.getPos().getY());
+        }      
+    }
+
+    private void EatClosestFood(){
+        double dx = Math.abs(fish.getPos().getX() - closestFood.getPos().getX());
+        double dy = Math.abs(fish.getPos().getY() - closestFood.getPos().getY());
+
+        if (dx <= 10 && dy <= 10) {
+            closestFood.eat(fish.getBitingPower()); 
+            fish.setHunger(fish.getHunger()-closestFood.getAmount());
         }
-        //target is the closest food       
+    }
+
+    private boolean eatableFood(){
+        for (IEdible edible : aquarium.getFood()){
+            if (!edible.isEaten()){
+                return true;
+            }
+        }
+        return false;
     }
 
     private IFishState checkState(){
-        if (this.fish.getHunger() < context.getHungryAt() || aquarium.getFood() == null || aquarium.getFood().isEmpty()){
+        if (this.fish.getHunger() < context.getHungryAt() || aquarium.getFood() == null || aquarium.getFood().isEmpty() || !eatableFood()){
             return context.getPassiveState();
         }
         else{
@@ -59,6 +79,7 @@ public class HungerState implements IFishState{
         else{
             findFood();
             this.targetmove.move(this.fish);
+            EatClosestFood();
         }
     }
 }
