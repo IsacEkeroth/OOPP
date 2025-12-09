@@ -41,7 +41,7 @@ public class HungerState implements IFishState{
     }
 
     private IFishState checkState(){
-        if (this.fish.getHunger() > context.getHungryAt() || aquarium.getFood() == null || aquarium.getFood().isEmpty()){
+        if (this.fish.getHunger() < context.getHungryAt() || aquarium.getFood() == null || aquarium.getFood().isEmpty()){
             return context.getPassiveState();
         }
         else{
