@@ -1,0 +1,16 @@
+{
+
+  "goldfish": {
+
+    "maxSpeed" : 5,
+
+    "maxHealth" : 100,
+
+    "tempRange" : {
+        "minTemp" : 20,
+        "maxTemp" : 40
+    }
+
+    }
+
+}
