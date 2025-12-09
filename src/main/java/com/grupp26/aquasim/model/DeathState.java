@@ -11,7 +11,10 @@ public class DeathState implements IFishState {
         this.aquarium = aquarium;
     }
 
+
     public void update(){
         fish.setHealth(0); //fish.tick() kills it
+        //no further action, fish can (currently) not be raised from the dead
     }
+
 }

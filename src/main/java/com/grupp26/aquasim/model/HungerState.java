@@ -37,7 +37,7 @@ public class HungerState implements IFishState{
         if(closestFood != null){
             this.targetmove.setTarget(closestFood.getPos());
         }
-        //target is the closest food       
+        //target is the closest food    
     }
 
     private IFishState checkState(){

@@ -104,7 +104,6 @@ public class Fish implements IFish {
             health = 0; // clamp, minst 0 hälsa
             this.isAlive = false;
         }
-        System.out.println(isAlive);
 
         speed = Math.max(1, baseSpeed + (hunger / 20));
 
