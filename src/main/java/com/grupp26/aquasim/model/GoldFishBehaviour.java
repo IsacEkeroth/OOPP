@@ -35,7 +35,6 @@ public class GoldFishBehaviour implements IBehaviour {
 
     public void update() {
         this.state.update();
-        System.out.println(this.state);
     }
 
 }

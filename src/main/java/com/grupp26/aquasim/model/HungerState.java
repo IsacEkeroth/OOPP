@@ -37,7 +37,6 @@ public class HungerState implements IFishState{
         }
         if(closestFood != null){
             this.targetmove.setTarget(closestFood.getPos());
-            //System.out.println(closestFood.getPos().getX() +" " +closestFood.getPos().getY()+ "      "+fish.getPos().getX() +" " +fish.getPos().getY());
         }      
     }
 

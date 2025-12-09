@@ -28,7 +28,7 @@ public class FoodSinkingState implements IFoodState{
     private void sink(){
         //tänker att food i nuläget sjunker snabbare med högre amount (mer mat=tyngre)
         //kan inte använda simpleMove eller targetMove för att du tar in en IFish och kräver en getSpeed()
-        int sinkFactor = (int) Math.ceil(food.getAmount()/100);
+        int sinkFactor = Math.max(1,food.getAmount()/100);
         food.setPos(food.getPos().getX(), food.getPos().getY()+sinkFactor, food.getPos().getZ());
     }
 

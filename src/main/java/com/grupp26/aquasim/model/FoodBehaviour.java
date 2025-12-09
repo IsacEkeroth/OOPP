@@ -38,7 +38,7 @@ public class FoodBehaviour implements IFoodBehaviour{
     @Override
     public void update() {
         this.state.update();
-
+        //System.out.println(this.state);
     }
 
 }

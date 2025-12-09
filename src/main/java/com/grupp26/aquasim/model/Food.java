@@ -59,6 +59,7 @@ public class Food implements IEdible{
     @Override
     public void tick(){
         behaviour.update();
+        //System.out.println(pos.getX()+" "+pos.getY());
     }
 
 }
