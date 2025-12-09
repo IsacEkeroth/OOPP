@@ -16,6 +16,7 @@ public class Entity implements IEntity{
         this.depth = pos.getZ();
         this.size = new Point(size.getX(), size.getY());
 
+        // TODO     -- "String type" behöver nog vara "state" ifall animationen ska kunna byta sekvens  --
         this.entity_type = type;
         this.entity_ID = id;
     }

@@ -10,14 +10,11 @@ import java.util.HashMap;
 
 public class SpriteManager {
     private static final HashMap<String, BufferedImage> cache = new HashMap<>();
-
     private static final HashMap<String, AnimationSequence> ANIMATION_MAP = new HashMap<>();
 
-    //private static final BufferedImage SPRITESHEET  = SpriteManager.imageFromString("images/fish_spritesheet_64.png");
-
     private static final String FISH_SHEET_PATH = "images/fish_spritesheet_64.png";
-    private static final String BACKGROUND_PATH = "images/akvarium1.jpg";
     private static final String DECOR_SHEET_PATH = "images/veryGoodAnchor.jpg";
+    private static final String BACKGROUND_PATH = "images/akvarium1.jpg";
 
     private static final int SPRITE_FRAME_WIDTH = 64;
     private static final int SPRITE_FRAME_HEIGHT = 64;
@@ -28,26 +25,6 @@ public class SpriteManager {
         // Förladda bilder
         imageFromString(FISH_SHEET_PATH);
         imageFromString(BACKGROUND_PATH);
-    }
-
-
-    // Borde heta "getSpriteOrnot" kanske eftersom vi har 2 fall
-    public static BufferedImage getSprite(String entityType, int totalTicks) {
-        String type = entityType.toUpperCase();
-        // Fall 1: animerad typ
-        if (ANIMATION_MAP.containsKey(type)) {
-            return getAnimatedFrame(type, totalTicks);
-        }
-        // Fall 2: Statisk typ
-        switch (type) {
-            case "BG":
-                return imageFromString(BACKGROUND_PATH);
-            case "DECOR":
-                return imageFromString(DECOR_SHEET_PATH);
-            default:
-                // borde kanske vara något annat här
-                return null;
-        }
     }
 
 
@@ -77,9 +54,32 @@ public class SpriteManager {
     }
 
 
+
+    // Borde heta "getSpriteOrnot" kanske eftersom vi har 2 fall
+    public static BufferedImage getSprite(String entityType, int totalTicks) {
+        String type = entityType.toUpperCase();
+        // Fall 1: animerad typ
+        if (ANIMATION_MAP.containsKey(type)) {
+            return getAnimatedFrame(type, totalTicks);
+        }
+        // Fall 2: Statisk typ
+        switch (type) {
+            case "BG":
+                return imageFromString(BACKGROUND_PATH);
+            case "DECOR":
+                return imageFromString(DECOR_SHEET_PATH);
+            default:
+                // borde hanteras
+                return null;
+        }
+    }
+
+
+    // TODO     -- Kanske byta namn på totalTicks? lite oklart --
     public static BufferedImage getAnimatedFrame(String entityType, int totalTicks) {
         AnimationSequence seq = ANIMATION_MAP.get(entityType);
         // Temporärt, nu ligger allt som kan animeras i sprite sheetet
+        // Kommer behöva flera val här också beroende på om det är en DECOR, etc, likt getSprite
         BufferedImage spriteSheet = imageFromString(FISH_SHEET_PATH);
 
         // Temporärt, behöver hanteras
@@ -96,8 +96,6 @@ public class SpriteManager {
         // bör antagligen hantera ifall den blir null?
         return spriteSheet.getSubimage(x, y, SPRITE_FRAME_WIDTH, SPRITE_FRAME_HEIGHT);
     }
-
-
 
 
 

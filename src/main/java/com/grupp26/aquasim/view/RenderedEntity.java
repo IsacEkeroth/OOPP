@@ -35,10 +35,9 @@ public class RenderedEntity implements IRenderedEntity {
         this.entityID = entity.getEntity_ID();
         this.entity_type = entity.getEntityType();
         this.currentTick = currentTick;
-
+        // TODO     -- Kom ihåg: entity_type behöver vara state om animationen ska kunna bero på tillstånd --
+        // TODO     -- Eller kanske snarare OCKSÅ ett state, man kanske behöver båda trots allt --
         this.image = SpriteManager.getSprite(this.entity_type, this.currentTick);
-
-
     }
 
 

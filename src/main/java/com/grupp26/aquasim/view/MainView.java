@@ -41,6 +41,8 @@ public class MainView extends JFrame implements IObserver {
         drawPanel = new DrawPanel(windowWidth, windowHeight);
         drawPanel.setOpaque(true);
 
+
+        // TODO     -- Bättre att ha LayoutManager? Bör vi ändra? --
         // Denna behövdes lägga till, så vi har ingen layoutmanager.
         // Vi använder absolute positioning.
         drawPanel.setLayout(null);
@@ -53,6 +55,7 @@ public class MainView extends JFrame implements IObserver {
 
         int buttonWidth = 300;
         int buttonHeight = 50;
+        // TODO     -- Ändra så vi INTE använder Absolute Positioning --
         // Placering av controlPanel på (x, y) i drawPanel
         controlPanel.setBounds(10,windowHeight-90,buttonWidth,buttonHeight);
 
@@ -65,7 +68,7 @@ public class MainView extends JFrame implements IObserver {
     }
 
 
-    // TODO   --* Byt namn till addRenderedEntity *--
+
     public void addRenderedEntity(IRenderedEntity e) {
         drawPanel.addEntity(e);
     }
@@ -91,7 +94,7 @@ public class MainView extends JFrame implements IObserver {
         Set<String> activeIDs = new HashSet<>();
 
         for (IEntity e : modelEntities) {
-            // Hämtar IDet för given entity, lägger till i mappen
+            // Hämtar ID för given entity, lägger till i mappen
             String entityID = e.getEntity_ID();
             activeIDs.add(entityID);
 
