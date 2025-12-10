@@ -6,7 +6,7 @@ import com.grupp26.aquasim.view.IObserver;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class ModelFacade implements IObservable {
+public class ModelFacade implements IModelFacade {
     private final IAquarium aquarium;
     private AquariumState state;
     private ArrayList <IEntity> entities;
@@ -17,6 +17,7 @@ public class ModelFacade implements IObservable {
         this.observers.add(observer);
     }
     
+    @Override
     public void tick() {
         aquarium.tick();
         state = aquarium.getState();
@@ -43,26 +44,31 @@ public class ModelFacade implements IObservable {
         notifyObservers();
     }
     
+    @Override
     public ArrayList<IEntity> getEntities() {
         return new ArrayList<>(entities);
     }
     
     // some kind of argument from controller to know which fish to add: enum, String, int?
+    @Override
     public void addFish() {
         aquarium.addFish(new Fish(aquarium));
         notifyObservers();
     }
 
+    @Override
     public void removeFish() {
         // Temporary call to removeLastFish() --> Delete later
         aquarium.removeLastFish();
         notifyObservers();
     }
 
+    @Override
     public void addDecoration() {
         aquarium.addDecoration(new Decoration(aquarium, new Vec3<>(0,0,0)));
     }
 
+    @Override
     public void feedFish() { }
     
     @Override

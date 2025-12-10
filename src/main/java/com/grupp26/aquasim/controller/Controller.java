@@ -1,17 +1,18 @@
 package com.grupp26.aquasim.controller;
 
-import com.grupp26.aquasim.model.ModelFacade;
+import com.grupp26.aquasim.model.IModelFacade;
 
-import com.grupp26.aquasim.view.MainView;
+import com.grupp26.aquasim.view.IMainView;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Controller implements IController {
 
-    ModelFacade modelFacade;
-    MainView view;
+    IModelFacade modelFacade;
+    IMainView view;
 
-    public Controller(ModelFacade modelFacade, MainView view) {
+    public Controller(IModelFacade modelFacade, IMainView view) {
         this.modelFacade = modelFacade;
         this.view = view;
         initListeners();
