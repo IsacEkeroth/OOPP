@@ -82,6 +82,7 @@ public class Fish implements IFish {
     @Override
     public int getBitingPower(){
         return bitingPower;
+    }
       
     public boolean isAlive(){
         return isAlive;
