@@ -11,11 +11,15 @@ public class FoodSinkingState implements IFoodState{
         this.aquarium = aquarium;
     }
 
+    private boolean hasReachedBottom(){
+        return (food.getPos().getY() > aquarium.getAquariumSize().getY()-50);
+    }
+
     private IFoodState checkState(){
         if (food.isEaten()){
             return context.getEatenState();
         }
-        else if (food.getPos().getY() > aquarium.getAquariumSize().getY()-50){ 
+        else if (hasReachedBottom()){ 
             //har "nått" botten
             //valde 50 för att det såg ut som botten på min skärm när jag testade det
             return context.getStaleState();

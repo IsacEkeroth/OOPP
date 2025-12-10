@@ -11,12 +11,16 @@ public class FoodStaleState implements IFoodState{
         this.aquarium = aquarium;
     }
 
+    private boolean hasReachedBottom(){
+        return (food.getPos().getY() > aquarium.getAquariumSize().getY()-50);
+    }
+
     //kolla FoodSinkingState för kommentar på checkState
     private IFoodState checkState(){
         if (food.isEaten()){
             return context.getEatenState();
         }
-        else if (food.getPos().getY() <= aquarium.getAquariumSize().getY()-50){
+        else if (!hasReachedBottom()){
             return context.getSinkingState();
         }
         else{

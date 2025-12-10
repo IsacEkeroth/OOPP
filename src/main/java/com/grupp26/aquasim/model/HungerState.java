@@ -45,12 +45,13 @@ public class HungerState implements IFishState{
         double dy = Math.abs(fish.getPos().getY() - closestFood.getPos().getY());
 
         if (dx <= 10 && dy <= 10) {
-            closestFood.eat(fish.getBitingPower()); 
-            fish.setHunger(fish.getHunger()-closestFood.getAmount());
+            // closestFood.eat(fish.getBitingPower()); 
+            // fish.setHunger(fish.getHunger()-closestFood.getAmount());
+            // basically: eat the food
         }
     }
 
-    private boolean eatableFood(){
+    private boolean isThereFood(){
         for (IEdible edible : aquarium.getFood()){
             if (!edible.isEaten()){
                 return true;
@@ -60,7 +61,7 @@ public class HungerState implements IFishState{
     }
 
     private IFishState checkState(){
-        if (this.fish.getHunger() < context.getHungryAt() || aquarium.getFood() == null || aquarium.getFood().isEmpty() || !eatableFood()){
+        if (this.fish.getHunger() < context.getHungryAt() || aquarium.getFood() == null || aquarium.getFood().isEmpty() || !isThereFood()){
             return context.getPassiveState();
         }
         else{

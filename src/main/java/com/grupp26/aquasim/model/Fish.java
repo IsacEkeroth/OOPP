@@ -11,7 +11,7 @@ public class Fish implements IFish {
     private int hunger;
     private int baseSpeed;
     private int speed;
-    private int bitingPower;
+    private int bitingPower; //hur mycket du kan äta i en tugga
 
     private Vec2<Integer> size = new Vec2<>(50, 50);
     private Vec3<Integer> pos = new Vec3<Integer>(640, 360, 1);
