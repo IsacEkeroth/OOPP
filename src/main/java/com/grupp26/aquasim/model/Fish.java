@@ -79,7 +79,7 @@ public class Fish implements IFish {
     }
 
     @Override
-    public boolean getLife(){
+    public boolean isAlive(){
         return isAlive;
     }
 
