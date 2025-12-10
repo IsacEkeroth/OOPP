@@ -7,6 +7,7 @@ public class HungerState implements IFishState{
     private IFish fish;
     private TargetMove targetmove;
     private IAquarium aquarium;
+    private IEdible closestFood;
     private IFishBehaviour context;
 
     public HungerState(IFishBehaviour context, IFish fish, TargetMove targetmove, IAquarium aquarium){
@@ -18,7 +19,7 @@ public class HungerState implements IFishState{
 
     private void findFood(){
         List<IEdible> food = new ArrayList<>(aquarium.getFood());
-        IEdible closestFood = null;
+        closestFood = null;
         int minRange = 5000;
         // unreachable
         int xaxis;
@@ -36,15 +37,34 @@ public class HungerState implements IFishState{
         }
         if(closestFood != null){
             this.targetmove.setTarget(closestFood.getPos());
+        }      
+    }
+
+    private void EatClosestFood(){
+        double dx = Math.abs(fish.getPos().getX() - closestFood.getPos().getX());
+        double dy = Math.abs(fish.getPos().getY() - closestFood.getPos().getY());
+
+        if (dx <= 10 && dy <= 10) {
+            // closestFood.eat(fish.getBitingPower()); 
+            // fish.setHunger(fish.getHunger()-closestFood.getAmount());
+            // basically: eat the food
         }
-        //target is the closest food    
+    }
+
+    private boolean isThereFood(){
+        for (IEdible edible : aquarium.getFood()){
+            if (!edible.isEaten()){
+                return true;
+            }
+        }
+      return false; 
     }
 
     private IFishState checkState(){
         if(!fish.isAlive()){
             return context.getDeathState();
         }
-        else if (this.fish.getHunger() < context.getHungryAt() || aquarium.getFood() == null || aquarium.getFood().isEmpty()){
+        else if (this.fish.getHunger() < context.getHungryAt() || aquarium.getFood() == null || aquarium.getFood().isEmpty() || !isThereFood()){
             return context.getPassiveState();
         }
         else{
@@ -62,6 +82,7 @@ public class HungerState implements IFishState{
         else{
             findFood();
             this.targetmove.move(this.fish);
+            EatClosestFood();
         }
     }
 }
