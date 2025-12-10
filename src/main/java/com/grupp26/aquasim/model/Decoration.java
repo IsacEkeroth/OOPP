@@ -4,7 +4,7 @@ public class Decoration implements IDecoration {
 
     private final IAquarium aquarium;
 
-    private int size;
+    private Vec2<Integer> size;
 
     private Vec3<Integer> pos;
 
@@ -17,15 +17,17 @@ public class Decoration implements IDecoration {
     }
 
     @Override
-    public int getSize() {
+    public Vec2<Integer> getSize() {
         return size;
     }
 
     @Override
     public void setPos(int x, int y, int z) {
-        pos.setX(x);
-        pos.setY(y);
-        pos.setZ(z);
+        if (aquarium.isValidPosition(new Vec2<>(x,y), size)) {
+            pos.setX(x);
+            pos.setY(y);
+            pos.setZ(z);
+        }
     }
 
     @Override

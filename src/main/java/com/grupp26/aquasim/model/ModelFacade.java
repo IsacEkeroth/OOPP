@@ -36,7 +36,7 @@ public class ModelFacade implements IObservable {
         }
         for(IDecoration deco : state.getDecorations()) {
             IEntity entity = new Entity(deco.getPos(),
-                    new Vec2<Integer>(deco.getSize(), deco.getSize()), // fix dec.getSize to return Vec2
+                    deco.getSize(), // fix dec.getSize to return Vec2
                     "images/veryGoodAnchor.png"); // all decorations are anchors
             entities.add(entity);
         }

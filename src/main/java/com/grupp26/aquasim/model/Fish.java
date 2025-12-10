@@ -80,9 +80,11 @@ public class Fish implements IFish {
 
     @Override
     public void setPos(int x, int y, int z) {
-        pos.setX(x);
-        pos.setY(y);
-        pos.setZ(z);
+        if (aquarium.isValidPosition(new Vec2<>(x, y), size)) {
+            pos.setX(x);
+            pos.setY(y);
+            pos.setZ(z);
+        }
     }
 
     @Override
