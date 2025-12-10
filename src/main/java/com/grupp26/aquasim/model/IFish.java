@@ -30,4 +30,6 @@ public interface IFish extends ITickable {
 
     void setPos(int x, int y, int z);
 
+    boolean isAlive();
+
 }

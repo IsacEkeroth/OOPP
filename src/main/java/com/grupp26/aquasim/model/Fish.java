@@ -14,7 +14,7 @@ public class Fish implements IFish {
 
     private Vec2<Integer> size = new Vec2<>(50, 50);
     private Vec3<Integer> pos = new Vec3<Integer>(640, 360, 1);
-    private IBehaviour behaviour;;
+    private IFishBehaviour behaviour;;
 
     public Fish(IAquarium aquarium) {
 
@@ -25,7 +25,7 @@ public class Fish implements IFish {
         this.age = 0;
         this.baseSpeed = 5;
         this.speed = baseSpeed;
-        this.behaviour = new GoldFishBehaviour(this, Math.random() * 2 * Math.PI, 30); // 30 is a placeholder
+        this.behaviour = new GoldFishBehaviour(this, Math.random() * 2 * Math.PI, 50); // 30 is a placeholder
 
     }
 
@@ -79,6 +79,11 @@ public class Fish implements IFish {
     }
 
     @Override
+    public boolean isAlive(){
+        return isAlive;
+    }
+
+    @Override
     public void setPos(int x, int y, int z) {
         pos.setX(x);
         pos.setY(y);
@@ -87,7 +92,6 @@ public class Fish implements IFish {
 
     @Override
     public void tick() {
-
         age++;
         hunger++;
 
@@ -102,7 +106,6 @@ public class Fish implements IFish {
         }
 
         speed = Math.max(1, baseSpeed + (hunger / 20));
-
         this.behaviour.update();
 
     }

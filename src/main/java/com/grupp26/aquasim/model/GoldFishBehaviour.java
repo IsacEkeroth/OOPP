@@ -1,11 +1,12 @@
 package com.grupp26.aquasim.model;
 
-public class GoldFishBehaviour implements IBehaviour {
+public class GoldFishBehaviour implements IFishBehaviour {
     private IAquarium aquarium;
 
     private IFishState state;
     private IFishState passiveState;
     private IFishState hungerState;
+    private IFishState deathState;
     private int hungryAt;
 
     public GoldFishBehaviour(IFish fish, double initialDirection, int hungryAt) {
@@ -14,6 +15,7 @@ public class GoldFishBehaviour implements IBehaviour {
 
         this.passiveState = new PassiveState(this, fish, new SimpleMove(this.aquarium, initialDirection), aquarium);
         this.hungerState = new HungerState(this, fish, new TargetMove(this.aquarium, initialDirection), aquarium);
+        this.deathState = new DeathState(this, fish, aquarium);
         this.state = this.passiveState;
     }
 
@@ -27,6 +29,10 @@ public class GoldFishBehaviour implements IBehaviour {
 
     public IFishState getHungerState() {
         return hungerState;
+    }
+
+    public IFishState getDeathState() {
+        return deathState;
     }
 
     public int getHungryAt() {
