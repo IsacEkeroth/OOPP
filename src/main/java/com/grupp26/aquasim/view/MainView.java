@@ -19,7 +19,7 @@ public class MainView extends JFrame implements IObserver {
     // controlPanel för framtida knappar
     private final JPanel controlPanel = new JPanel();
     private final JButton addFishButton = new JButton("Add fish");
-    private final JButton addFoodButton = new JButton("Feed fish");
+    private final JButton addFoodButton = new JButton("Food mode");
     private final JButton removeFishButton = new JButton("Remove fish");
 
     public MainView(int windowWidth, int windowHeight) {
@@ -100,5 +100,17 @@ public class MainView extends JFrame implements IObserver {
 
     public JButton getRemoveFishButton() {
         return this.removeFishButton;
+    }
+
+    public DrawPanel getDrawPanel() {
+        return this.drawPanel;
+    }
+
+    public void setActive(JButton button) {
+        button.setForeground(Color.GREEN);
+    }
+
+    public void setInActive(JButton button) {
+        button.setForeground(Color.BLACK);
     }
 }

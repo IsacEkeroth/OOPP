@@ -55,8 +55,10 @@ public class ModelFacade implements IObservable {
 
     // some kind of argument from controller to know which fish to add: enum,
     // String, int?
-    public void addFish() {
-        aquarium.addFish(new Fish(aquarium));
+    public void addFish(int posX, int posY) {
+        IFish fish = new Fish(aquarium);
+        fish.setPos(posX, posY, fish.getPos().getZ());
+        aquarium.addFish(fish);
         notifyObservers();
     }
 
@@ -70,8 +72,10 @@ public class ModelFacade implements IObservable {
         aquarium.addDecoration(new Decoration(aquarium, new Vec3<>(0, 0, 0)));
     }
 
-    public void addFood(String type) {
-        aquarium.addFood(foodFactory.createFood(type));
+    public void addFood(String type, int posX, int posY) {
+        IEdible food = foodFactory.createFood(type);
+        food.setPos(posX, posY, food.getPos().getZ());
+        aquarium.addFood(food);
         notifyObservers();
     }
 
