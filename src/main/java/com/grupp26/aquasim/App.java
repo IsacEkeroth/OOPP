@@ -19,13 +19,13 @@ public class App {
     private static final int windowHeight = 720;
 
     public static void start() {
+        Audio audio = new Audio();
         MainView view = new MainView(windowWidth, windowHeight);
         Aquarium aquarium = new Aquarium();
         ModelFacade facade = new ModelFacade(aquarium, view);
         view.setFacade(facade);
         Controller controller = new Controller(facade, view);
 
-        Audio audio = new Audio();
         audio.playMusic("sea");
 
         Timer timer = new Timer(25, new ActionListener() {

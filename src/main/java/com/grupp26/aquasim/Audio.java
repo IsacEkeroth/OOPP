@@ -1,6 +1,5 @@
 package com.grupp26.aquasim;
 
-import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -9,13 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Audio {
-    // private JFXPanel jFXPanel;
-    Map<String, Media> cache = new HashMap<String, Media>();
-
-    Audio() {
-        JFXPanel jFXPanel = new JFXPanel(); // this needs to be created once to be able to play sound.
-
-    }
+    private Map<String, Media> cache = new HashMap<String, Media>();
 
     public void playSound(String fileName) {
         try {
@@ -49,7 +42,7 @@ public class Audio {
         }
     }
 
-    public Media loadMedia(String fileName, String category) {
+    private Media loadMedia(String fileName, String category) {
         Media media;
         try {
             URL resource = getClass().getResource("/audio/" + category + "/" + fileName + ".mp3");
