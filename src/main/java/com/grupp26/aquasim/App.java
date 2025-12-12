@@ -38,7 +38,6 @@ public class App {
             @Override
             public void actionPerformed(ActionEvent e) {
                 facade.tick();
-                // audio.playSound("bubble-pop");
             }
         });
         timer.start();
