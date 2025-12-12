@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class SpriteManager {
-    private static final HashMap<String, BufferedImage> cache = new HashMap<>();
+    private static final HashMap<String, BufferedImage> CACHE = new HashMap<>();
     private static final HashMap<String, AnimationSequence> ANIMATION_MAP = new HashMap<>();
 
     private static final String FISH_SHEET_PATH = "images/fish_spritesheet_64.png";
@@ -20,7 +20,7 @@ public class SpriteManager {
     private static final int SPRITE_FRAME_HEIGHT = 64;
 
     static {
-        ANIMATION_MAP.put("FISH", new AnimationSequence(0,4, 10));
+        ANIMATION_MAP.put("FISH", new AnimationSequence(1,4, 10));
 
         // Förladda bilder
         imageFromString(FISH_SHEET_PATH);
@@ -31,14 +31,14 @@ public class SpriteManager {
 
 
     public static BufferedImage imageFromString(String path) {
-        if (cache.containsKey(path)) {
-            return cache.get(path);
+        if (CACHE.containsKey(path)) {
+            return CACHE.get(path);
         }
         BufferedImage img = null;
         try {
             img = ImageIO.read(App.class.getClassLoader().getResourceAsStream(path));
             if (img != null) {
-                cache.put(path, img);
+                CACHE.put(path, img);
             }
         } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
@@ -48,14 +48,14 @@ public class SpriteManager {
             errorGraphics.fillRect(0, 0, 100, 100);
             errorGraphics.dispose();
             
-            cache.put(path, img);
+            CACHE.put(path, img);
         }
         return img;
     }
 
 
 
-    // Borde heta "getSpriteOrnot" kanske eftersom vi har 2 fall
+    // TODO     -- Hitta en bättre lösning än switch cases? --
     public static BufferedImage getSprite(String entityType, int totalTicks) {
         String type = entityType.toUpperCase();
         // Fall 1: animerad typ
@@ -78,7 +78,7 @@ public class SpriteManager {
     // TODO     -- Kanske byta namn på totalTicks? lite oklart --
     public static BufferedImage getAnimatedFrame(String entityType, int totalTicks) {
         AnimationSequence seq = ANIMATION_MAP.get(entityType);
-        // Temporärt, nu ligger allt som kan animeras i sprite sheetet
+        // Temporärt, nu ligger allt som kan animeras i fish_sheet_path
         // Kommer behöva flera val här också beroende på om det är en DECOR, etc, likt getSprite
         BufferedImage spriteSheet = imageFromString(FISH_SHEET_PATH);
 

@@ -10,6 +10,8 @@ public class ModelFacade implements IObservable {
     private ArrayList <IEntity> entities;
     private ArrayList <IObserver> observers = new ArrayList<>();
 
+    // TODO     -- Typerna är bara en placeholder för tillfället --
+    // TODO     -- Factory method borde sköta det istället? --
     private final String FISH_TYPE = "FISH";
     private final String BG_TYPE = "BG";
     private final String DECOR_TYPE = "DECOR";
@@ -55,6 +57,7 @@ public class ModelFacade implements IObservable {
     }
     
     // some kind of argument from controller to know which fish to add: enum, String, int?
+    // TODO     -- Lägg till fler knappar/menyval för att välja en specifik fisk --
     public void addFish() {
         aquarium.addFish(new Fish(aquarium));
         notifyObservers();
