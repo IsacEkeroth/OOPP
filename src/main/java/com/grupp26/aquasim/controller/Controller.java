@@ -35,9 +35,11 @@ public class Controller implements IController {
             }
         });
 
-        view.getFeedFishButton().addActionListener(new ActionListener() {
+        view.getAddFoodButton().addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) { modelFacade.feedFish(); }
+            public void actionPerformed(ActionEvent e) {
+                modelFacade.addFood("base");
+            }
         });
 
     }

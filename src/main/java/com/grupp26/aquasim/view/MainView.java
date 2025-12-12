@@ -19,7 +19,7 @@ public class MainView extends JFrame implements IObserver {
     // controlPanel för framtida knappar
     private final JPanel controlPanel = new JPanel();
     private final JButton addFishButton = new JButton("Add fish");
-    private final JButton feedFishButton = new JButton("Feed fish");
+    private final JButton addFoodButton = new JButton("Feed fish");
     private final JButton removeFishButton = new JButton("Remove fish");
 
     public MainView(int windowWidth, int windowHeight) {
@@ -41,16 +41,16 @@ public class MainView extends JFrame implements IObserver {
         // Vi använder absolute positioning.
         drawPanel.setLayout(null);
 
-        controlPanel.setLayout(new GridLayout(1,3));
-        controlPanel.add(addFishButton,0);
-        controlPanel.add(feedFishButton,1);
-        controlPanel.add(removeFishButton,2);
+        controlPanel.setLayout(new GridLayout(1, 3));
+        controlPanel.add(addFishButton, 0);
+        controlPanel.add(addFoodButton, 1);
+        controlPanel.add(removeFishButton, 2);
         controlPanel.setBackground(Color.BLACK);
 
         int buttonWidth = 300;
         int buttonHeight = 50;
         // Placering av controlPanel på (x, y) i drawPanel
-        controlPanel.setBounds(10,windowHeight-90,buttonWidth,buttonHeight);
+        controlPanel.setBounds(10, windowHeight - 90, buttonWidth, buttonHeight);
 
         // Lägger controlPanel PÅ drawPanel
         this.add(drawPanel);
@@ -74,30 +74,28 @@ public class MainView extends JFrame implements IObserver {
 
         drawPanel.repaint();
     }
-    
+
     @Override
     public void update() {
         drawPanel.clear();
-        
+
         ArrayList<IEntity> modelEntities = new ArrayList<>(facade.getEntities());
         for (IEntity e : modelEntities) {
             addEntity(new RenderedEntity(e));
         }
         repaint();
     }
-    
+
     public void setFacade(ModelFacade facade) {
         this.facade = facade;
     }
-
-
 
     public JButton getAddFishButton() {
         return this.addFishButton;
     }
 
-    public JButton getFeedFishButton() {
-        return this.feedFishButton;
+    public JButton getAddFoodButton() {
+        return this.addFoodButton;
     }
 
     public JButton getRemoveFishButton() {
