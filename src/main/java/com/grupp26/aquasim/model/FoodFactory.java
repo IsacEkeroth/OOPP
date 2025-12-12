@@ -5,11 +5,9 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class FoodFactory {
-    private final IAquarium aquarium;
     private final Map<String, Supplier<IEdible>> registry = new HashMap<>();
 
     public FoodFactory(IAquarium aquarium) {
-        this.aquarium = aquarium;
         int centerX = aquarium.getAquariumSize().getX() / 2;
         int centerY = 50;
         int centerZ = 1;
