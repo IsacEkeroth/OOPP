@@ -24,13 +24,15 @@ public class App {
         ModelFacade facade = new ModelFacade(aquarium, view);
         view.setFacade(facade);
         Controller controller = new Controller(facade, view);
-        //facade.addFish(); //Unitialized values in Fish causes runtime error
-        
+
+        Audio audio = new Audio();
+        audio.playMusic("sea");
 
         Timer timer = new Timer(25, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 facade.tick();
+                // audio.playSound("bubble-pop");
             }
         });
         timer.start();
