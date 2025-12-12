@@ -19,7 +19,7 @@ public class App {
     private static final int windowHeight = 720;
 
     public static void start() {
-        Audio audio = new Audio();
+        IAudio audio = new Audio();
         MainView view = new MainView(windowWidth, windowHeight);
         Aquarium aquarium = new Aquarium();
         ModelFacade facade = new ModelFacade(aquarium, view);

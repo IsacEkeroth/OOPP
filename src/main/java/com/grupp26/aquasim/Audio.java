@@ -7,7 +7,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Audio {
+public class Audio implements IAudio {
     private Map<String, Media> cache = new HashMap<String, Media>();
 
     public void playSound(String fileName) {
