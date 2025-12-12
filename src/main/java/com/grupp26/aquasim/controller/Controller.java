@@ -10,10 +10,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.swing.JButton;
 
 public class Controller implements IController {
     // offset to make it feel more resposive, placing it at the mouse instead of
@@ -24,26 +20,12 @@ public class Controller implements IController {
     MainView view;
     int mouseX;
     int mouseY;
-    MouseMode mouseMode = MouseMode.NONE;
-    Map<MouseMode, JButton> buttons = new HashMap<MouseMode, JButton>();
+    ActiveMode mouseMode = ActiveMode.NONE;
 
     public Controller(ModelFacade modelFacade, MainView view) {
         this.modelFacade = modelFacade;
         this.view = view;
-        registerButtons();
         initListeners();
-    }
-
-    private enum MouseMode {
-        NONE,
-        FOOD,
-        FISH,
-
-    }
-
-    private void registerButtons() {
-        buttons.put(MouseMode.FISH, view.getAddFishButton());
-        buttons.put(MouseMode.FOOD, view.getAddFoodButton());
     }
 
     // Controller reggar sig själv som lyssnare på addFish-knappen i view
@@ -53,7 +35,7 @@ public class Controller implements IController {
         view.getAddFishButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                handleMouseState(MouseMode.FISH);
+                handleMouseState(ActiveMode.FISH);
             }
         });
 
@@ -68,7 +50,7 @@ public class Controller implements IController {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                handleMouseState(MouseMode.FOOD);
+                handleMouseState(ActiveMode.FOOD);
             }
         });
 
@@ -84,29 +66,24 @@ public class Controller implements IController {
         view.getDrawPanel().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (mouseMode == MouseMode.FOOD) {
+                if (mouseMode == ActiveMode.FOOD) {
                     modelFacade.addFood("base", mouseX, mouseY);
-                } else if (mouseMode == MouseMode.FISH) {
+                } else if (mouseMode == ActiveMode.FISH) {
                     modelFacade.addFish(mouseX, mouseY);
                 }
             }
         });
     }
 
-    private void handleMouseState(MouseMode mode) {
+    private void handleMouseState(ActiveMode mode) {
         if (mouseMode == mode) {
-            mouseMode = MouseMode.NONE;
-            view.setInActive(buttons.get(mode));
+            mouseMode = ActiveMode.NONE;
+            view.updateActiveButton(ActiveMode.NONE);
             return;
         }
 
-        for (JButton button : buttons.values()) {
-            view.setInActive(button);
-        }
-
-        view.setActive(buttons.get(mode));
-
         mouseMode = mode;
+        view.updateActiveButton(mode);
     }
 
 }
