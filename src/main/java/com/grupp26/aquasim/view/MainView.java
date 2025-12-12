@@ -21,6 +21,7 @@ public class MainView extends JFrame implements IObserver {
     private final JButton addFishButton = new JButton("Add fish");
     private final JButton feedFishButton = new JButton("Feed fish");
     private final JButton removeFishButton = new JButton("Remove fish");
+    private final JButton addDecorationButton = new JButton("Add decoration");
 
     public MainView(int windowWidth, int windowHeight) {
         this.windowWidth = windowWidth;
@@ -41,16 +42,17 @@ public class MainView extends JFrame implements IObserver {
         // Vi använder absolute positioning.
         drawPanel.setLayout(null);
 
-        controlPanel.setLayout(new GridLayout(1,3));
-        controlPanel.add(addFishButton,0);
-        controlPanel.add(feedFishButton,1);
-        controlPanel.add(removeFishButton,2);
+        controlPanel.setLayout(new GridLayout(1, 4));
+        controlPanel.add(addFishButton, 0);
+        controlPanel.add(feedFishButton, 1);
+        controlPanel.add(removeFishButton, 2);
+        controlPanel.add(addDecorationButton, 3);
         controlPanel.setBackground(Color.BLACK);
 
-        int buttonWidth = 300;
+        int buttonWidth = 400;
         int buttonHeight = 50;
         // Placering av controlPanel på (x, y) i drawPanel
-        controlPanel.setBounds(10,windowHeight-90,buttonWidth,buttonHeight);
+        controlPanel.setBounds(10, windowHeight - 90, buttonWidth, buttonHeight);
 
         // Lägger controlPanel PÅ drawPanel
         this.add(drawPanel);
@@ -74,23 +76,21 @@ public class MainView extends JFrame implements IObserver {
 
         drawPanel.repaint();
     }
-    
+
     @Override
     public void update() {
         drawPanel.clear();
-        
+
         ArrayList<IEntity> modelEntities = new ArrayList<>(facade.getEntities());
         for (IEntity e : modelEntities) {
             addEntity(new RenderedEntity(e));
         }
         repaint();
     }
-    
+
     public void setFacade(ModelFacade facade) {
         this.facade = facade;
     }
-
-
 
     public JButton getAddFishButton() {
         return this.addFishButton;
@@ -102,5 +102,9 @@ public class MainView extends JFrame implements IObserver {
 
     public JButton getRemoveFishButton() {
         return this.removeFishButton;
+    }
+
+    public JButton getDecorationButton() {
+        return this.addDecorationButton;
     }
 }
