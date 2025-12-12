@@ -9,32 +9,34 @@ import java.util.ArrayList;
 public class ModelFacade implements IObservable {
     private final IAquarium aquarium;
     private AquariumState state;
-    private ArrayList <IEntity> entities;
-    private ArrayList <IObserver> observers = new ArrayList<>();
-    
+    private ArrayList<IEntity> entities;
+    private ArrayList<IObserver> observers = new ArrayList<>();
+    private FishFactory fishFactory;
+
     public ModelFacade(IAquarium aquarium, IObserver observer) {
         this.aquarium = aquarium;
         this.observers.add(observer);
+        this.fishFactory = new FishFactory(aquarium);
     }
-    
+
     public void tick() {
         aquarium.tick();
         state = aquarium.getState();
         entities = new ArrayList<>();
-        
+
         IEntity bgEntity = new Entity(new Vec3<Integer>(0, 0, 0),
                 aquarium.getAquariumSize(),
                 "images/akvarium1.jpg");
         entities.add(bgEntity);
-        
+
         // store the imagepath in fish or new fishData class?
-        for(IFish fish : state.getFish()) {
+        for (IFish fish : state.getFish()) {
             IEntity entity = new Entity(fish.getPos(),
                     fish.getSize(),
                     "images/icon-grupp26nobg.png"); // all fish are smurfs
             entities.add(entity);
         }
-        for(IDecoration deco : state.getDecorations()) {
+        for (IDecoration deco : state.getDecorations()) {
             IEntity entity = new Entity(deco.getPos(),
                     new Vec2<Integer>(deco.getSize(), deco.getSize()), // fix dec.getSize to return Vec2
                     "images/veryGoodAnchor.png"); // all decorations are anchors
@@ -42,14 +44,15 @@ public class ModelFacade implements IObservable {
         }
         notifyObservers();
     }
-    
+
     public ArrayList<IEntity> getEntities() {
         return new ArrayList<>(entities);
     }
-    
-    // some kind of argument from controller to know which fish to add: enum, String, int?
+
+    // some kind of argument from controller to know which fish to add: enum,
+    // String, int?
     public void addFish() {
-        aquarium.addFish(new Fish(aquarium));
+        aquarium.addFish(fishFactory.createFish("goldfish"));
         notifyObservers();
     }
 
@@ -60,21 +63,22 @@ public class ModelFacade implements IObservable {
     }
 
     public void addDecoration() {
-        aquarium.addDecoration(new Decoration(aquarium, new Vec3<>(0,0,0)));
+        aquarium.addDecoration(new Decoration(aquarium, new Vec3<>(0, 0, 0)));
     }
 
-    public void feedFish() { }
-    
+    public void feedFish() {
+    }
+
     @Override
     public void addObserver(IObserver observer) {
         observers.add(observer);
     }
-    
+
     @Override
     public void removeObserver(IObserver observer) {
         observers.remove(observer);
     }
-    
+
     @Override
     public void notifyObservers() {
         for (IObserver observer : observers) {
