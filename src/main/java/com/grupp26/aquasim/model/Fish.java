@@ -51,8 +51,8 @@ public class Fish implements IFish {
     }
 
     public void setHealth(int health) {
-        // clamp, minst 0, max 100
-        this.health = Math.max(0, Math.min(100, health));
+        // clamp, minst 0, max maxhealth
+        this.health = Math.max(0, Math.min(fishTypeData.getMaxHealth(), health));
     }
 
     public int getHunger() {

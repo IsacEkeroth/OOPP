@@ -2,22 +2,26 @@ package com.grupp26.aquasim.model;
 
 public class FishFactory {
 
-    public static Fish createFish(IAquarium aquarium, int hunger, int health, int baseSpeed, Vec3<Integer> pos) {
+    private final IFishTypeData goldfishData = new FishTypeData(
+            "Goldfish",
+            75,
+            7,
+            15,
+            (fish,direction)->new FishBehaviour(fish,direction, 100));
 
-        Fish fish = new Fish(aquarium);
+    private final IFishTypeData clownfishData = new FishTypeData(
+            "Clownfish",
+            100,
+            5,
+            25,
+            (fish,direction)->new FishBehaviour(fish,direction, 75));
 
-        // ska vi ha en fish.setAge()? kanske för ev. debugging?
+    public Fish createGoldfish(IAquarium aquarium, double initialDirection) {
+        return new Fish(aquarium, goldfishData, initialDirection);
+    }
 
-        fish.setHunger(hunger);
-
-        fish.setHealth(health);
-
-        fish.setBaseSpeed(baseSpeed);
-
-        fish.setPos(pos.getX(), pos.getY(), pos.getZ());
-
-        return fish;
-
+    public Fish createClownfish(IAquarium aquarium, double initialDirection) {
+        return new Fish(aquarium, clownfishData, initialDirection);
     }
 
 }

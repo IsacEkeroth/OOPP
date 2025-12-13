@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class ModelFacade implements IObservable {
     private final IAquarium aquarium;
+    private final FishFactory fishFactory;
     private AquariumState state;
     private ArrayList <IEntity> entities;
     private ArrayList <IObserver> observers = new ArrayList<>();
@@ -15,6 +16,7 @@ public class ModelFacade implements IObservable {
     public ModelFacade(IAquarium aquarium, IObserver observer) {
         this.aquarium = aquarium;
         this.observers.add(observer);
+        this.fishFactory = new FishFactory();
     }
     
     public void tick() {
@@ -49,7 +51,8 @@ public class ModelFacade implements IObservable {
     
     // some kind of argument from controller to know which fish to add: enum, String, int?
     public void addFish() {
-        aquarium.addFish(new Fish(aquarium));
+        Fish fish = fishFactory.createGoldfish(aquarium, Math.random() * 360);
+        aquarium.addFish(fish);
         notifyObservers();
     }
 
