@@ -3,30 +3,34 @@ package com.grupp26.aquasim.model;
 public class Fish implements IFish {
 
     private final IAquarium aquarium;
+    private final IFishTypeData fishTypeData;
+    private final int baseSpeed;
 
     private boolean isAlive;
 
+    // fiskinstansens stats
     private int age;
     private int health;
     private int hunger;
-    private int baseSpeed;
     private int speed;
-    private int bitingPower; //hur mycket du kan äta i en tugga
 
     private Vec2<Integer> size = new Vec2<>(50, 50);
     private Vec3<Integer> pos = new Vec3<Integer>(640, 360, 1);
+
     private IFishBehaviour behaviour;;
 
-    public Fish(IAquarium aquarium) {
+    public Fish(IAquarium aquarium, IFishTypeData fishTypeData) {
 
         this.isAlive = true;
         this.aquarium = aquarium;
-        this.health = 100;
+        this.fishTypeData = fishTypeData;
+
+        this.health = fishTypeData.getMaxHealth();
+        this.baseSpeed = fishTypeData.getBaseSpeed();
+        this.behaviour = new GoldFishBehaviour(this, Math.random() * 2 * Math.PI, 50); // 30 is a placeholder
+
         this.hunger = 0;
         this.age = 0;
-        this.baseSpeed = 5;
-        this.speed = baseSpeed;
-        this.behaviour = new GoldFishBehaviour(this, Math.random() * 2 * Math.PI, 50); // 30 is a placeholder
 
     }
 
@@ -61,9 +65,6 @@ public class Fish implements IFish {
         return baseSpeed;
     }
 
-    public void setBaseSpeed(int baseSpeed) {
-        this.baseSpeed = Math.max(0, baseSpeed);
-    }
 
     public Vec2<Integer> getSize() {
         return size;

@@ -1,8 +1,6 @@
 package com.grupp26.aquasim;
 
-import com.grupp26.aquasim.model.Aquarium;
-import com.grupp26.aquasim.model.Fish;
-import com.grupp26.aquasim.model.IAquarium;
+import com.grupp26.aquasim.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,12 +9,13 @@ import static org.junit.jupiter.api.Assertions.*;
 public class FishTest {
 
     private IAquarium aquarium;
+    private IFishTypeData fishTypeData;
     private Fish fish;
 
     @BeforeEach
     public void setup() {
         aquarium = new Aquarium();
-        fish = new Fish(aquarium);
+        fish = new Fish(aquarium, fishTypeData);
     }
 
     @Test
