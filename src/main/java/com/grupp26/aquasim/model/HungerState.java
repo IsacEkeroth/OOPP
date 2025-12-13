@@ -3,21 +3,21 @@ package com.grupp26.aquasim.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HungerState implements IFishState{
+public class HungerState implements IFishState {
     private IFish fish;
     private TargetMove targetmove;
     private IAquarium aquarium;
     private IEdible closestFood;
     private IFishBehaviour context;
 
-    public HungerState(IFishBehaviour context, IFish fish, TargetMove targetmove, IAquarium aquarium){
+    public HungerState(IFishBehaviour context, IFish fish, TargetMove targetmove, IAquarium aquarium) {
         this.context = context;
         this.fish = fish;
         this.targetmove = targetmove;
         this.aquarium = aquarium;
     }
 
-    private void findFood(){
+    private void findFood() {
         List<IEdible> food = new ArrayList<>(aquarium.getFood());
         closestFood = null;
         int minRange = 5000;
@@ -25,64 +25,65 @@ public class HungerState implements IFishState{
         int xaxis;
         int yaxis;
         int hypotenuse;
-        for (IEdible edible : food){
+        for (IEdible edible : food) {
             xaxis = edible.getPos().getX() - this.fish.getPos().getX();
             yaxis = edible.getPos().getY() - this.fish.getPos().getY();
-            hypotenuse = (int) Math.hypot(xaxis,yaxis);
-            if(hypotenuse < minRange){
+            hypotenuse = (int) Math.hypot(xaxis, yaxis);
+            if (hypotenuse < minRange) {
                 closestFood = edible;
                 minRange = hypotenuse;
             }
-            //check for the closest food
+            // check for the closest food
         }
-        if(closestFood != null){
+        if (closestFood != null) {
             this.targetmove.setTarget(closestFood.getPos());
-        }      
+        }
     }
 
-    private void EatClosestFood(){
+    private void EatClosestFood() {
         double dx = Math.abs(fish.getPos().getX() - closestFood.getPos().getX());
         double dy = Math.abs(fish.getPos().getY() - closestFood.getPos().getY());
 
         if (dx <= 10 && dy <= 10) {
-            // closestFood.eat(fish.getBitingPower()); 
+            // closestFood.eat(fish.getBitingPower());
             // fish.setHunger(fish.getHunger()-closestFood.getAmount());
             // basically: eat the food
         }
     }
 
-    private boolean isThereFood(){
-        for (IEdible edible : aquarium.getFood()){
-            if (!edible.isEaten()){
+    private boolean isThereFood() {
+        for (IEdible edible : aquarium.getFood()) {
+            if (!edible.isEaten()) {
                 return true;
             }
         }
-      return false; 
+        return false;
     }
 
-    private IFishState checkState(){
-        if(!fish.isAlive()){
+    private IFishState checkState() {
+        if (!fish.isAlive()) {
             return context.getDeathState();
-        }
-        else if (this.fish.getHunger() < context.getHungryAt() || aquarium.getFood() == null || aquarium.getFood().isEmpty() || !isThereFood()){
+        } else if (this.fish.getHunger() < context.getHungryAt() || aquarium.getFood() == null
+                || aquarium.getFood().isEmpty() || !isThereFood()) {
             return context.getPassiveState();
-        }
-        else{
+        } else {
             return context.getHungerState();
         }
     }
 
-
     @Override
-    public void update(){
+    public void update() {
         IFishState newState = checkState();
-        if(!newState.equals(this)){
+        if (!newState.equals(this)) {
             context.setState(newState);
-        }
-        else{
+        } else {
             findFood();
             this.targetmove.move(this.fish);
             EatClosestFood();
         }
+    }
+
+    public double getDirection() {
+        return this.targetmove.getDirection();
     }
 }
