@@ -2,32 +2,34 @@ package com.grupp26.aquasim.model;
 
 public class Fish implements IFish {
 
+    // setup data
     private final IAquarium aquarium;
-    private final IFishTypeData fishTypeData;
-    private final int baseSpeed;
-
     private boolean isAlive;
+
+    // fishdata
+    private final IFishTypeData fishTypeData;
+    private final IFishBehaviour behaviour;
+    private final int baseSpeed;
+    private final int bitingPower;
 
     // fiskinstansens stats
     private int age;
     private int health;
     private int hunger;
     private int speed;
-
     private Vec2<Integer> size = new Vec2<>(50, 50);
     private Vec3<Integer> pos = new Vec3<Integer>(640, 360, 1);
 
-    private IFishBehaviour behaviour;;
-
-    public Fish(IAquarium aquarium, IFishTypeData fishTypeData) {
+    public Fish(IAquarium aquarium, IFishTypeData fishTypeData, double initialDirection) {
 
         this.isAlive = true;
         this.aquarium = aquarium;
         this.fishTypeData = fishTypeData;
+        this.behaviour = fishTypeData.createBehaviour(this, initialDirection);
 
         this.health = fishTypeData.getMaxHealth();
         this.baseSpeed = fishTypeData.getBaseSpeed();
-        this.behaviour = new GoldFishBehaviour(this, Math.random() * 2 * Math.PI, 50); // 30 is a placeholder
+        this.bitingPower = fishTypeData.getBitingPower();
 
         this.hunger = 0;
         this.age = 0;

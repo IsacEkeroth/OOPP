@@ -4,6 +4,8 @@ public interface IFishTypeData {
 
     int getMaxHealth();
     int getBaseSpeed();
-    String getSpeciesName();
+    int getBitingPower();
 
+    String getSpeciesName();
+    IFishBehaviour createBehaviour(Fish fish, double initialDirection);
 }
