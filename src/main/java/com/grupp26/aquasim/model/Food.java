@@ -1,6 +1,6 @@
 package com.grupp26.aquasim.model;
 
-public class Food implements IEdible{
+public class Food implements IEdible {
 
     private Vec3<Integer> pos;
     private int amount;
@@ -40,7 +40,8 @@ public class Food implements IEdible{
     @Override
     public void eat(int amount) {
 
-        if (isEaten || amount <= 0) return;
+        if (isEaten || amount <= 0)
+            return;
 
         this.amount -= amount;
 
@@ -57,9 +58,8 @@ public class Food implements IEdible{
     }
 
     @Override
-    public void tick(){
+    public void tick() {
         behaviour.update();
-        //System.out.println(pos.getX()+" "+pos.getY());
     }
 
 }
