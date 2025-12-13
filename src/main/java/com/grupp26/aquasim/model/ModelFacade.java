@@ -50,10 +50,16 @@ public class ModelFacade implements IObservable {
     }
     
     // some kind of argument from controller to know which fish to add: enum, String, int?
+    // currently creates one of each type
     public void addFish() {
         Fish fish = fishFactory.createGoldfish(aquarium, Math.random() * 360);
         aquarium.addFish(fish);
         notifyObservers();
+
+        Fish twoFish = fishFactory.createClownfish(aquarium, Math.random() * 360);
+        aquarium.addFish(twoFish);
+        notifyObservers();
+
     }
 
     public void removeFish() {

@@ -5,7 +5,7 @@ public class FishFactory {
     private final IFishTypeData goldfishData = new FishTypeData(
             "Goldfish",
             75,
-            7,
+            10,
             15,
             (fish,direction)->new FishBehaviour(fish,direction, 100));
 
