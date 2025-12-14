@@ -21,12 +21,12 @@ public class Fish implements IFish {
 
         this.isAlive = true;
         this.aquarium = aquarium;
-        this.health = 100;
+        this.health = 1000;
         this.hunger = 0;
         this.age = 0;
         this.baseSpeed = 5;
         this.speed = baseSpeed;
-        this.behaviour = new GoldFishBehaviour(this, Math.random() * 2 * Math.PI, 50); // 30 is a placeholder
+        this.behaviour = new GoldFishBehaviour(this, 0, 50); // 30 is a placeholder
 
     }
 
@@ -46,7 +46,7 @@ public class Fish implements IFish {
 
     public void setHealth(int health) {
         // clamp, minst 0, max 100
-        this.health = Math.max(0, Math.min(100, health));
+        this.health = Math.max(0, Math.min(1000, health));
     }
 
     public int getHunger() {
