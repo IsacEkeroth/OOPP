@@ -28,6 +28,12 @@ public interface IFish extends ITickable {
 
     Vec3<Integer> getPos();
 
+    int getBitingPower();
+
     void setPos(int x, int y, int z);
+
+    boolean isAlive();
+
+    double getDirection();
 
 }
