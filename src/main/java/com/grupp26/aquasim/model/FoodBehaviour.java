@@ -1,6 +1,6 @@
 package com.grupp26.aquasim.model;
 
-public class FoodBehaviour implements IFoodBehaviour{
+public class FoodBehaviour implements IFoodBehaviour {
 
     private IFoodState state;
     private IFoodState staleState;
@@ -8,7 +8,7 @@ public class FoodBehaviour implements IFoodBehaviour{
     private IFoodState eatenState;
     private IAquarium aquarium;
 
-    public FoodBehaviour(IEdible food, IAquarium aquarium){
+    public FoodBehaviour(IEdible food, IAquarium aquarium) {
         this.staleState = new FoodStaleState(this, food, aquarium);
         this.sinkingState = new FoodSinkingState(this, food, aquarium);
         this.eatenState = new FoodEatenState(this, food);
@@ -38,7 +38,6 @@ public class FoodBehaviour implements IFoodBehaviour{
     @Override
     public void update() {
         this.state.update();
-        //System.out.println(this.state);
     }
 
 }

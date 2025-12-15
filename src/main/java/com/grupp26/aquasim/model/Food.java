@@ -1,7 +1,7 @@
 package com.grupp26.aquasim.model;
 
-public class Food implements IEdible{
-
+public class Food implements IEdible {
+    private Vec2<Integer> size = new Vec2<Integer>(50, 50);
     private Vec3<Integer> pos;
     private int amount;
     private boolean isEaten;
@@ -14,33 +14,29 @@ public class Food implements IEdible{
         this.behaviour = new FoodBehaviour(this, aquarium);
     }
 
-    @Override
     public void setPos(int x, int y, int z) {
         this.pos.setX(x);
         this.pos.setY(y);
         this.pos.setZ(z);
     }
 
-    @Override
     public Vec3<Integer> getPos() {
         return pos;
     }
 
-    @Override
     public void setAmount(int amount) {
         this.amount = Math.max(0, amount);
         this.isEaten = (this.amount == 0);
     }
 
-    @Override
     public int getAmount() {
         return amount;
     }
 
-    @Override
     public void eat(int amount) {
 
-        if (isEaten || amount <= 0) return;
+        if (isEaten || amount <= 0)
+            return;
 
         this.amount -= amount;
 
@@ -51,15 +47,16 @@ public class Food implements IEdible{
 
     }
 
-    @Override
     public boolean isEaten() {
         return isEaten;
     }
 
-    @Override
-    public void tick(){
+    public void tick() {
         behaviour.update();
-        //System.out.println(pos.getX()+" "+pos.getY());
+    }
+
+    public Vec2<Integer> getSize() {
+        return new Vec2<Integer>(size);
     }
 
 }

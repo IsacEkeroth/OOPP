@@ -43,4 +43,7 @@ public class GoldFishBehaviour implements IFishBehaviour {
         this.state.update();
     }
 
+    public double getDirection() {
+        return this.state.getDirection();
+    }
 }
