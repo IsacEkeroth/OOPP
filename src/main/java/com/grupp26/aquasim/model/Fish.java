@@ -2,31 +2,38 @@ package com.grupp26.aquasim.model;
 
 public class Fish implements IFish {
 
+    // setup data
     private final IAquarium aquarium;
-
     private boolean isAlive;
 
+    // fishdata
+    private final IFishTypeData fishTypeData;
+    private final IFishBehaviour behaviour;
+    private final int baseSpeed;
+    private final int bitingPower;
+
+    // fiskinstansens stats
     private int age;
     private int health;
     private int hunger;
-    private int baseSpeed;
     private int speed;
-    private int bitingPower; // hur mycket du kan äta i en tugga
 
     private Vec2<Integer> size = new Vec2<>(50, 50);
     private Vec3<Integer> pos = new Vec3<Integer>(640, 360, 1);
-    private IFishBehaviour behaviour;;
 
-    public Fish(IAquarium aquarium) {
+    public Fish(IAquarium aquarium, IFishTypeData fishTypeData, double initialDirection) {
 
         this.isAlive = true;
         this.aquarium = aquarium;
-        this.health = 1000;
+        this.fishTypeData = fishTypeData;
+        this.behaviour = fishTypeData.createBehaviour(this, initialDirection);
+
+        this.health = fishTypeData.getMaxHealth();
+        this.baseSpeed = fishTypeData.getBaseSpeed();
+        this.bitingPower = fishTypeData.getBitingPower();
+
         this.hunger = 0;
         this.age = 0;
-        this.baseSpeed = 5;
-        this.speed = baseSpeed;
-        this.behaviour = new GoldFishBehaviour(this, 0, 50); // 30 is a placeholder
 
     }
 
@@ -45,8 +52,8 @@ public class Fish implements IFish {
     }
 
     public void setHealth(int health) {
-        // clamp, minst 0, max 100
-        this.health = Math.max(0, Math.min(1000, health));
+        // clamp, minst 0, max maxhealth
+        this.health = Math.max(0, Math.min(fishTypeData.getMaxHealth(), health));
     }
 
     public int getHunger() {
@@ -59,10 +66,6 @@ public class Fish implements IFish {
 
     public int getBaseSpeed() {
         return baseSpeed;
-    }
-
-    public void setBaseSpeed(int baseSpeed) {
-        this.baseSpeed = Math.max(0, baseSpeed);
     }
 
     public Vec2<Integer> getSize() {
@@ -90,9 +93,13 @@ public class Fish implements IFish {
 
     @Override
     public void setPos(int x, int y, int z) {
-        pos.setX(x);
-        pos.setY(y);
-        pos.setZ(z);
+        if (aquarium.isValidPosition(new Vec2<>(x, y), size)) {
+            pos.setX(x);
+            pos.setY(y);
+            pos.setZ(z);
+        } else {
+            throw new IllegalArgumentException("Invalid position for fish");
+        }
     }
 
     @Override
