@@ -22,6 +22,7 @@ public class MainView extends JFrame implements IMainView {
     private final JButton addFishButton = new JButton("Add fish");
     private final JButton addFoodButton = new JButton("Feed fish");
     private final JButton removeFishButton = new JButton("Remove fish");
+    private final JButton addDecorationButton = new JButton("Add decoration");
 
     public MainView(int windowWidth, int windowHeight) {
         this.windowWidth = windowWidth;
@@ -42,13 +43,14 @@ public class MainView extends JFrame implements IMainView {
         // Vi använder absolute positioning.
         drawPanel.setLayout(null);
 
-        controlPanel.setLayout(new GridLayout(1, 3));
+        controlPanel.setLayout(new GridLayout(1, 4));
         controlPanel.add(addFishButton, 0);
         controlPanel.add(addFoodButton, 1);
         controlPanel.add(removeFishButton, 2);
+        controlPanel.add(addDecorationButton, 3);
         controlPanel.setBackground(Color.BLACK);
 
-        int buttonWidth = 300;
+        int buttonWidth = 500;
         int buttonHeight = 50;
         // Placering av controlPanel på (x, y) i drawPanel
         controlPanel.setBounds(10, windowHeight - 90, buttonWidth, buttonHeight);
@@ -106,5 +108,9 @@ public class MainView extends JFrame implements IMainView {
     @Override
     public JButton getRemoveFishButton() {
         return this.removeFishButton;
+    }
+
+    public JButton getDecorationButton() {
+        return this.addDecorationButton;
     }
 }

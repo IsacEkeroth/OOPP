@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 public interface IModelFacade extends IObservable {
     void tick();
-    
+
     ArrayList<IEntity> getEntities();
-    
+
     void addFish();
-    
+
     void removeFish();
-    
-    void addDecoration();
-    
-    void feedFish();
+
+    void addDecoration(String type, int x, int y);
+
+    void addFood(String type);
 }

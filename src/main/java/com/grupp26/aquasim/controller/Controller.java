@@ -48,6 +48,15 @@ public class Controller implements IController {
             }
         });
 
+        view.getDecorationButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // this should get the position from the mouse on a click later
+                modelFacade.addDecoration("anchor", 500, 500);
+
+            }
+        });
+
     }
 
 }
