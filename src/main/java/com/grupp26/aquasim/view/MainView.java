@@ -1,25 +1,26 @@
 package com.grupp26.aquasim.view;
 
 import com.grupp26.aquasim.model.IEntity;
-import com.grupp26.aquasim.model.ModelFacade;
+import com.grupp26.aquasim.model.IModelFacade;
+
+import javafx.embed.swing.JFXPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
-public class MainView extends JFrame implements IObserver {
+public class MainView extends JFrame implements IMainView {
 
     private static final String WINDOW_TITLE = "Aquarium-MVP";
     private int windowWidth;
     private int windowHeight;
     private DrawPanel drawPanel;
-    private ModelFacade facade;
+    private IModelFacade facade;
 
     // controlPanel för framtida knappar
     private final JPanel controlPanel = new JPanel();
     private final JButton addFishButton = new JButton("Add fish");
-    private final JButton feedFishButton = new JButton("Feed fish");
+    private final JButton addFoodButton = new JButton("Feed fish");
     private final JButton removeFishButton = new JButton("Remove fish");
     private final JButton addDecorationButton = new JButton("Add decoration");
 
@@ -44,7 +45,7 @@ public class MainView extends JFrame implements IObserver {
 
         controlPanel.setLayout(new GridLayout(1, 4));
         controlPanel.add(addFishButton, 0);
-        controlPanel.add(feedFishButton, 1);
+        controlPanel.add(addFoodButton, 1);
         controlPanel.add(removeFishButton, 2);
         controlPanel.add(addDecorationButton, 3);
         controlPanel.setBackground(Color.BLACK);
@@ -60,6 +61,10 @@ public class MainView extends JFrame implements IObserver {
         drawPanel.repaint();
 
         this.setVisible(true);
+
+        // Audio setup
+        JFXPanel jFXPanel = new JFXPanel();
+        this.add(jFXPanel);
     }
 
     public void addEntity(IRenderedEntity e) {
@@ -88,7 +93,7 @@ public class MainView extends JFrame implements IObserver {
         repaint();
     }
 
-    public void setFacade(ModelFacade facade) {
+    public void setFacade(IModelFacade facade) {
         this.facade = facade;
     }
 
@@ -96,10 +101,11 @@ public class MainView extends JFrame implements IObserver {
         return this.addFishButton;
     }
 
-    public JButton getFeedFishButton() {
-        return this.feedFishButton;
+    public JButton getAddFoodButton() {
+        return this.addFoodButton;
     }
 
+    @Override
     public JButton getRemoveFishButton() {
         return this.removeFishButton;
     }

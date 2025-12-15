@@ -34,4 +34,6 @@ public interface IFish extends ITickable {
 
     boolean isAlive();
 
+    double getDirection();
+
 }
