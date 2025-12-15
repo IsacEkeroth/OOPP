@@ -9,7 +9,7 @@ public class DecorationFactory {
 
     public DecorationFactory(IAquarium aquarium) {
 
-        int depth = 2;
+        int depth = 0;
 
         register("seaweed", () -> new TickableDecoration(aquarium, new Vec3<>(0, 0, depth)));
 

@@ -10,6 +10,13 @@ public class ModelFacade implements IModelFacade {
     private AquariumState state;
     private ArrayList<IEntity> entities;
     private ArrayList<IObserver> observers = new ArrayList<>();
+
+    // TODO -- Typerna är bara en placeholder för tillfället --
+    // TODO -- Factory method borde sköta det istället? --
+    private final String BG_TYPE = "BG";
+    private final String DECOR_TYPE = "ANCHOR";
+    private final String DECOR_TICKABLE_TYPE = "SEAWEED";
+    private final String FOOD_TYPE = "FOOD";
     private DecorationFactory decorationFactory;
     private FoodFactory foodFactory;
 
@@ -26,42 +33,49 @@ public class ModelFacade implements IModelFacade {
         state = aquarium.getState();
         entities = new ArrayList<>();
 
-        IEntity bgEntity = new Entity(new Vec3<Integer>(0, 0, 0),
+        IEntity bgEntity = new Entity(
+                new Vec3<Integer>(0, 0, 0),
                 aquarium.getAquariumSize(),
-                "images/akvarium1.jpg", true);
+                BG_TYPE,
+                "null", true);
         entities.add(bgEntity);
 
-        // store the imagepath in fish or new fishData class?
         for (IFish fish : state.getFish()) {
-            boolean isFacingRight = isDirectionRight(fish.getDirection());
-            IEntity entity = new Entity(fish.getPos(),
+            IEntity entity = new Entity(
+                    fish.getPos(),
                     fish.getSize(),
-                    "images/icon-grupp26nobg.png", isFacingRight); // all fish are smurfs
+                    fish.getType(),
+                    fish.getFishID(), !isDirectionRight(fish.getDirection())); // inverted direction since our sprites
+                                                                               // are now to the left, this should be
+                                                                               // handled by the sprite manager in the
+                                                                               // future
             entities.add(entity);
         }
         for (IDecoration deco : state.getDecorations()) {
             IEntity entity;
+
             if (deco instanceof TickableDecoration) {
                 entity = new Entity(deco.getPos(),
-                        new Vec2<Integer>(deco.getSize().getX(), deco.getSize().getY()),
-                        "images/seaweed.png", true);
+                        new Vec2<Integer>(deco.getSize().getX(), deco.getSize().getY()), DECOR_TICKABLE_TYPE,
+                        "null",
+                        true);
             } else {
 
                 entity = new Entity(deco.getPos(),
-                        new Vec2<Integer>(deco.getSize().getX(), deco.getSize().getY()),
-                        "images/veryGoodAnchor.png", true);
+                        new Vec2<Integer>(deco.getSize().getX(), deco.getSize().getY()), DECOR_TYPE, "null", true);
             }
             entities.add(entity);
 
         }
         for (IEdible food : state.getFood()) {
-            IEntity entity = new Entity(food.getPos(), food.getSize(), "images/Food.png", true);
+            IEntity entity = new Entity(food.getPos(), food.getSize(), FOOD_TYPE, "null", true);
             entities.add(entity);
         }
         notifyObservers();
     }
 
     // some kind of argument from controller to know which fish to add: enum,
+    // TODO -- Lägg till fler knappar/menyval för att välja en specifik fisk --
     // String, int?
     // currently creates one of each type
     public void addFish(int posX, int posY) {

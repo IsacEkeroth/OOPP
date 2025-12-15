@@ -11,7 +11,10 @@ public interface IEntity {
 
     void setPos(Point pos);
 
-    String getImagePath();
+    String getEntity_ID();
+
+    // Temporär
+    String getEntityType();
 
     boolean isFacingRight();
 }

@@ -9,8 +9,12 @@ public class RenderedEntity implements IRenderedEntity {
     Point pos;
     int depth;
     Point size;
+
+    String entityID;
+    String entity_type;
     BufferedImage image;
     boolean isFlipped;
+    private int currentTick;
 
     public RenderedEntity(Point pos, int depth, Point size, BufferedImage image, boolean isFlipped) {
         this.pos = pos;
@@ -20,12 +24,30 @@ public class RenderedEntity implements IRenderedEntity {
         this.isFlipped = isFlipped;
     }
 
-    public RenderedEntity(IEntity entity) {
+    public RenderedEntity(IEntity entity, int currentTick) {
         this.pos = entity.getPos();
         this.depth = entity.getDepth();
         this.size = entity.getSize();
-        this.image = SpriteManager.imageFromString(entity.getImagePath());
+
+        this.entityID = entity.getEntity_ID();
+        this.entity_type = entity.getEntityType();
+        this.currentTick = currentTick;
+        // TODO -- Kom ihåg: entity_type behöver vara state om animationen ska kunna
+        // bero på tillstånd --
+        // TODO -- Eller kanske snarare OCKSÅ ett state, man kanske behöver båda trots
+        // allt --
+        this.image = SpriteManager.getSprite(this.entity_type, this.currentTick);
         this.isFlipped = entity.isFacingRight();
+    }
+
+    @Override
+    public String getType() {
+        return this.entity_type;
+    }
+
+    @Override
+    public int getCurrentTick() {
+        return this.currentTick;
     }
 
     @Override

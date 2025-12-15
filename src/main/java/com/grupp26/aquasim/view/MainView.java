@@ -8,6 +8,7 @@ import javafx.embed.swing.JFXPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +23,11 @@ public class MainView extends JFrame implements IMainView {
 
     private JButton selectedButton = null;
     Map<ActiveMode, JButton> selectableButtons = new HashMap<ActiveMode, JButton>();
+
+    // TODO Mappar varje entityID till nuvarande tick för hela simulationen
+    // Agerar som "minne" för view
+    // Varje entityID som ska ritas är mappad till ett tick.
+    private Map<String, Integer> entityAnimationCounter = new HashMap<>();
 
     // controlPanel för framtida knappar
     private final JPanel controlPanel = new JPanel();
@@ -51,6 +57,7 @@ public class MainView extends JFrame implements IMainView {
         drawPanel = new DrawPanel(windowWidth, windowHeight);
         drawPanel.setOpaque(true);
 
+        // TODO -- Bättre att ha LayoutManager? Bör vi ändra? --
         // Denna behövdes lägga till, så vi har ingen layoutmanager.
         // Vi använder absolute positioning.
         drawPanel.setLayout(null);
@@ -64,6 +71,7 @@ public class MainView extends JFrame implements IMainView {
 
         int buttonWidth = 500;
         int buttonHeight = 50;
+        // TODO -- Ändra så vi INTE använder Absolute Positioning --
         // Placering av controlPanel på (x, y) i drawPanel
         controlPanel.setBounds(10, windowHeight - 90, buttonWidth, buttonHeight);
 
@@ -79,7 +87,7 @@ public class MainView extends JFrame implements IMainView {
         this.add(jFXPanel);
     }
 
-    public void addEntity(IRenderedEntity e) {
+    public void addRenderedEntity(IRenderedEntity e) {
         drawPanel.addEntity(e);
     }
 
@@ -99,9 +107,28 @@ public class MainView extends JFrame implements IMainView {
         drawPanel.clear();
 
         ArrayList<IEntity> modelEntities = new ArrayList<>(facade.getEntities());
+
+        // Set över aktiva IDs i denna uppdatering, så vi inte får dubbletter
+        Set<String> activeIDs = new HashSet<>();
+
         for (IEntity e : modelEntities) {
-            addEntity(new RenderedEntity(e));
+            // Hämtar ID för given entity, lägger till i mappen
+            String entityID = e.getEntity_ID();
+            activeIDs.add(entityID);
+
+            // Hämtar nuvarande tick för given entity
+            int currentTick = entityAnimationCounter.getOrDefault(entityID, 0);
+
+            IRenderedEntity renderedEntity = new RenderedEntity(e, currentTick);
+            addRenderedEntity(renderedEntity);
+
+            // Öka värdet till nästa uppdatering
+            entityAnimationCounter.put(entityID, currentTick + 1);
         }
+        // Ta bort alla ID från mappen som inte längre finns i modellen
+        // Använder HashSet:et som "mall" för att enbart behålla dom och inget annat.
+        entityAnimationCounter.keySet().retainAll(activeIDs);
+
         repaint();
     }
 

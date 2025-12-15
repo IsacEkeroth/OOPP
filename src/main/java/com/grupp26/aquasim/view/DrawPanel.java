@@ -52,15 +52,17 @@ public class DrawPanel extends JPanel {
         Point pos = entity.getPos();
         Point size = entity.getSize();
 
-        if (entity.isFlipped()) {
-            g.drawImage(entity.getImage(), (int) pos.getX(), (int) pos.getY(), (int) size.getX(), (int) size.getY(),
-                    null);
-        } else {
-            g.drawImage(
-                    entity.getImage(),
-                    (int) (pos.getX() + size.getX()), (int) pos.getY(),
-                    (int) -size.getX(), (int) size.getY(),
-                    null);
+        if (entity.getImage() != null) {
+            if (entity.isFlipped()) {
+                g.drawImage(entity.getImage(), (int) pos.getX(), (int) pos.getY(), (int) size.getX(), (int) size.getY(),
+                        null);
+            } else {
+                g.drawImage(
+                        entity.getImage(),
+                        (int) (pos.getX() + size.getX()), (int) pos.getY(),
+                        (int) -size.getX(), (int) size.getY(),
+                        null);
+            }
         }
     }
 
