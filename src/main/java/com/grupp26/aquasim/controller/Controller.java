@@ -39,7 +39,6 @@ public class Controller implements IController {
             public void actionPerformed(ActionEvent e) {
                 handleMouseState(ActiveMode.FISH);
                 mediaPlayer.notifyPlaySound("click");
-                modelFacade.addFish(mouseX, mouseY);
             }
         });
 
@@ -54,10 +53,8 @@ public class Controller implements IController {
         view.getAddFoodButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                handleMouseState(ActiveMode.FOOD);
                 mediaPlayer.notifyPlaySound("click");
-                modelFacade.addFood("base", mouseX, mouseY);
+                handleMouseState(ActiveMode.FOOD);
             }
         });
 
@@ -83,6 +80,7 @@ public class Controller implements IController {
         view.getDrawPanel().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                mediaPlayer.notifyPlaySound("click");
                 if (mouseMode == ActiveMode.FOOD) {
                     modelFacade.addFood("base", mouseX, mouseY);
                 } else if (mouseMode == ActiveMode.FISH) {

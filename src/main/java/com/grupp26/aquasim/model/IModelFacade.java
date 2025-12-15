@@ -7,11 +7,11 @@ public interface IModelFacade extends IObservable {
 
     ArrayList<IEntity> getEntities();
 
-    void addFish();
+    void addFish(int x, int y);
 
     void removeFish();
 
     void addDecoration(String type, int x, int y);
 
-    void addFood(String type);
+    void addFood(String type, int x, int y);
 }
