@@ -24,8 +24,6 @@ public class App {
         ModelFacade facade = new ModelFacade(aquarium, view);
         view.setFacade(facade);
         Controller controller = new Controller(facade, view);
-        //facade.addFish(); //Unitialized values in Fish causes runtime error
-        
 
         Timer timer = new Timer(25, new ActionListener() {
             @Override

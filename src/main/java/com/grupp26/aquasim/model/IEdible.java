@@ -1,6 +1,6 @@
 package com.grupp26.aquasim.model;
 
-public interface IEdible {
+public interface IEdible extends ITickable{
 
     void setPos(int x, int y, int z);
 

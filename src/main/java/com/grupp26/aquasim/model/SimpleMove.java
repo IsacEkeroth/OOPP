@@ -57,4 +57,14 @@ public class SimpleMove implements IMovement {
         }
         fish.setPos(newX, newY, fish.getPos().getZ());
     }
+
+    @Override
+    public double getDirection(){
+        return this.direction;
+    }
+
+    @Override 
+    public void setDirection(double direction){
+        this.direction = direction;
+    }
 }

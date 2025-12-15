@@ -154,5 +154,8 @@ public class Aquarium implements IAquarium {
                 tickDeco.tick();
             }
         }
+        for (IEdible edible : foodList){
+            edible.tick();
+        }
     }
 }
