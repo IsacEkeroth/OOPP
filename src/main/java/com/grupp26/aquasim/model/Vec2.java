@@ -9,6 +9,10 @@ public class Vec2<E> extends Vector<E> {
         this.add(y);
     }
 
+    public Vec2(Vec2<E> vec2) {
+        this(vec2.getX(), vec2.getY());
+    }
+
     public void setX(E x) {
         this.set(0, x);
     }

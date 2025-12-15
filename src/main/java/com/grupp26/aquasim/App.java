@@ -20,12 +20,20 @@ public class App {
     private static final int windowHeight = 720;
 
     public static void start() {
+        // audio
+        IAudio audio = new Audio();
+        ISoundObservable mediaPlayer = new SoundObservable();
+        mediaPlayer.addSoundObserver(audio);
+
         IMainView view = new MainView(windowWidth, windowHeight);
         IAquarium aquarium = new Aquarium();
         IModelFacade facade = new ModelFacade(aquarium, view);
         view.setFacade(facade);
-        IController controller = new Controller(facade, view); // IController useless?
-        
+
+        IController controller = new Controller(facade, view, mediaPlayer);
+
+        // maybe this sould be a part of the view?
+        mediaPlayer.notifyPlayMusic("sea");
 
         Timer timer = new Timer(25, new ActionListener() {
             @Override

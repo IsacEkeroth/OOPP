@@ -1,7 +1,7 @@
 package com.grupp26.aquasim.controller;
 
+import com.grupp26.aquasim.ISoundObservable;
 import com.grupp26.aquasim.model.IModelFacade;
-
 import com.grupp26.aquasim.view.IMainView;
 
 import java.awt.event.ActionEvent;
@@ -11,10 +11,12 @@ public class Controller implements IController {
 
     IModelFacade modelFacade;
     IMainView view;
+    ISoundObservable mediaPlayer;
 
-    public Controller(IModelFacade modelFacade, IMainView view) {
+    public Controller(IModelFacade modelFacade, IMainView view, ISoundObservable mediaPlayer) {
         this.modelFacade = modelFacade;
         this.view = view;
+        this.mediaPlayer = mediaPlayer;
         initListeners();
     }
 
@@ -25,6 +27,7 @@ public class Controller implements IController {
         view.getAddFishButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                mediaPlayer.notifyPlaySound("click");
                 modelFacade.addFish();
             }
         });
@@ -32,13 +35,17 @@ public class Controller implements IController {
         view.getRemoveFishButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                mediaPlayer.notifyPlaySound("click");
                 modelFacade.removeFish();
             }
         });
 
-        view.getFeedFishButton().addActionListener(new ActionListener() {
+        view.getAddFoodButton().addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) { modelFacade.feedFish(); }
+            public void actionPerformed(ActionEvent e) {
+                mediaPlayer.notifyPlaySound("click");
+                modelFacade.addFood("base");
+            }
         });
 
     }
