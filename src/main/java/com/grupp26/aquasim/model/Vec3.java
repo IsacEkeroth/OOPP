@@ -10,6 +10,10 @@ public class Vec3<E> extends Vector<E> {
         this.add(z);
     }
 
+    public Vec3(Vec3<E> vec3) {
+        this(vec3.getX(), vec3.getY(), vec3.getZ());
+    }
+
     public void setX(E x) {
         this.set(0, x);
     }

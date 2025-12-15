@@ -11,10 +11,12 @@ public class ModelFacade implements IObservable {
     private AquariumState state;
     private ArrayList<IEntity> entities;
     private ArrayList<IObserver> observers = new ArrayList<>();
+    private FoodFactory foodFactory;
 
     public ModelFacade(IAquarium aquarium, IObserver observer) {
         this.aquarium = aquarium;
         this.observers.add(observer);
+        this.foodFactory = new FoodFactory(aquarium);
     }
 
     public void tick() {
@@ -39,6 +41,10 @@ public class ModelFacade implements IObservable {
             IEntity entity = new Entity(deco.getPos(),
                     new Vec2<Integer>(deco.getSize(), deco.getSize()), // fix dec.getSize to return Vec2
                     "images/veryGoodAnchor.png", true); // all decorations are anchors
+            entities.add(entity);
+        }
+        for (IEdible food : state.getFood()) {
+            IEntity entity = new Entity(food.getPos(), food.getSize(), "images/Food.png");
             entities.add(entity);
         }
         notifyObservers();
@@ -69,7 +75,9 @@ public class ModelFacade implements IObservable {
         aquarium.addDecoration(new Decoration(aquarium, new Vec3<>(0, 0, 0)));
     }
 
-    public void feedFish() {
+    public void addFood(String type) {
+        aquarium.addFood(foodFactory.createFood(type));
+        notifyObservers();
     }
 
     @Override
