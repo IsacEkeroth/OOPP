@@ -26,20 +26,21 @@ public class ModelFacade implements IObservable {
 
         IEntity bgEntity = new Entity(new Vec3<Integer>(0, 0, 0),
                 aquarium.getAquariumSize(),
-                "images/akvarium1.jpg");
+                "images/akvarium1.jpg", true);
         entities.add(bgEntity);
 
         // store the imagepath in fish or new fishData class?
         for (IFish fish : state.getFish()) {
+            boolean isFacingRight = isDirectionRight(fish.getDirection());
             IEntity entity = new Entity(fish.getPos(),
                     fish.getSize(),
-                    "images/icon-grupp26nobg.png"); // all fish are smurfs
+                    "images/icon-grupp26nobg.png", isFacingRight); // all fish are smurfs
             entities.add(entity);
         }
         for (IDecoration deco : state.getDecorations()) {
             IEntity entity = new Entity(deco.getPos(),
                     new Vec2<Integer>(deco.getSize(), deco.getSize()), // fix dec.getSize to return Vec2
-                    "images/veryGoodAnchor.png"); // all decorations are anchors
+                    "images/veryGoodAnchor.png", true); // all decorations are anchors
             entities.add(entity);
         }
         for (IEdible food : state.getFood()) {
@@ -47,6 +48,10 @@ public class ModelFacade implements IObservable {
             entities.add(entity);
         }
         notifyObservers();
+    }
+
+    private boolean isDirectionRight(double direction) {
+        return Math.cos(direction) > 0;
     }
 
     public ArrayList<IEntity> getEntities() {

@@ -14,30 +14,25 @@ public class Food implements IEdible {
         this.behaviour = new FoodBehaviour(this, aquarium);
     }
 
-    @Override
     public void setPos(int x, int y, int z) {
         this.pos.setX(x);
         this.pos.setY(y);
         this.pos.setZ(z);
     }
 
-    @Override
     public Vec3<Integer> getPos() {
         return pos;
     }
 
-    @Override
     public void setAmount(int amount) {
         this.amount = Math.max(0, amount);
         this.isEaten = (this.amount == 0);
     }
 
-    @Override
     public int getAmount() {
         return amount;
     }
 
-    @Override
     public void eat(int amount) {
 
         if (isEaten || amount <= 0)
@@ -52,15 +47,12 @@ public class Food implements IEdible {
 
     }
 
-    @Override
     public boolean isEaten() {
         return isEaten;
     }
 
-    @Override
     public void tick() {
         behaviour.update();
-        // System.out.println(pos.getX()+" "+pos.getY());
     }
 
     public Vec2<Integer> getSize() {

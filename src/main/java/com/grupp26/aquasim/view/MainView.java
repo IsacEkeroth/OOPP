@@ -3,6 +3,8 @@ package com.grupp26.aquasim.view;
 import com.grupp26.aquasim.model.IEntity;
 import com.grupp26.aquasim.model.ModelFacade;
 
+import javafx.embed.swing.JFXPanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -58,6 +60,10 @@ public class MainView extends JFrame implements IObserver {
         drawPanel.repaint();
 
         this.setVisible(true);
+
+        // Audio setup
+        JFXPanel jFXPanel = new JFXPanel();
+        this.add(jFXPanel);
     }
 
     public void addEntity(IRenderedEntity e) {
