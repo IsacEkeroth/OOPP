@@ -17,4 +17,6 @@ public interface IRenderedEntity {
     int getCurrentTick();
 
     String getType();
+
+    boolean isFlipped();
 }

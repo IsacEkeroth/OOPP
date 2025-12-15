@@ -5,7 +5,6 @@ import com.grupp26.aquasim.model.IEntity;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
-
 public class RenderedEntity implements IRenderedEntity {
     Point pos;
     int depth;
@@ -14,19 +13,17 @@ public class RenderedEntity implements IRenderedEntity {
     String entityID;
     String entity_type;
     BufferedImage image;
-
+    boolean isFlipped;
     private int currentTick;
 
-
-
-
-    public RenderedEntity(Point pos, int depth, Point size, BufferedImage image) {
+    public RenderedEntity(Point pos, int depth, Point size, BufferedImage image, boolean isFlipped) {
         this.pos = pos;
         this.depth = depth;
         this.size = size;
         this.image = image;
+        this.isFlipped = isFlipped;
     }
-    
+
     public RenderedEntity(IEntity entity, int currentTick) {
         this.pos = entity.getPos();
         this.depth = entity.getDepth();
@@ -35,11 +32,13 @@ public class RenderedEntity implements IRenderedEntity {
         this.entityID = entity.getEntity_ID();
         this.entity_type = entity.getEntityType();
         this.currentTick = currentTick;
-        // TODO     -- Kom ihåg: entity_type behöver vara state om animationen ska kunna bero på tillstånd --
-        // TODO     -- Eller kanske snarare OCKSÅ ett state, man kanske behöver båda trots allt --
+        // TODO -- Kom ihåg: entity_type behöver vara state om animationen ska kunna
+        // bero på tillstånd --
+        // TODO -- Eller kanske snarare OCKSÅ ett state, man kanske behöver båda trots
+        // allt --
         this.image = SpriteManager.getSprite(this.entity_type, this.currentTick);
+        this.isFlipped = entity.isFacingRight();
     }
-
 
     @Override
     public String getType() {
@@ -75,6 +74,10 @@ public class RenderedEntity implements IRenderedEntity {
     public BufferedImage getImage() {
         // this is a reference which might be bad
         return image;
+    }
+
+    public boolean isFlipped() {
+        return isFlipped;
     }
 
 }

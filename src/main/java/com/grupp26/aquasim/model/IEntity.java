@@ -4,16 +4,17 @@ import java.awt.*;
 
 public interface IEntity {
     Point getSize();
-    
+
     int getDepth();
-    
+
     Point getPos();
-    
+
     void setPos(Point pos);
-    
+
     String getEntity_ID();
 
     // Temporär
     String getEntityType();
 
+    boolean isFacingRight();
 }

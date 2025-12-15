@@ -4,87 +4,135 @@ import com.grupp26.aquasim.view.IObserver;
 
 import java.util.ArrayList;
 
-public class ModelFacade implements IObservable {
+public class ModelFacade implements IModelFacade {
     private final IAquarium aquarium;
+    private final FishFactory fishFactory;
     private AquariumState state;
-    private ArrayList <IEntity> entities;
-    private ArrayList <IObserver> observers = new ArrayList<>();
+    private ArrayList<IEntity> entities;
+    private ArrayList<IObserver> observers = new ArrayList<>();
 
-    // TODO     -- Typerna är bara en placeholder för tillfället --
-    // TODO     -- Factory method borde sköta det istället? --
+    // TODO -- Typerna är bara en placeholder för tillfället --
+    // TODO -- Factory method borde sköta det istället? --
     private final String FISH_TYPE = "FISH";
     private final String BG_TYPE = "BG";
     private final String DECOR_TYPE = "DECOR";
+    private final String FOOD_TYPE = "FOOD";
+    private DecorationFactory decorationFactory;
+    private FoodFactory foodFactory;
 
     public ModelFacade(IAquarium aquarium, IObserver observer) {
         this.aquarium = aquarium;
         this.observers.add(observer);
+        this.fishFactory = new FishFactory();
+        this.decorationFactory = new DecorationFactory(aquarium);
+        this.foodFactory = new FoodFactory(aquarium);
     }
-    
+
     public void tick() {
         aquarium.tick();
         state = aquarium.getState();
         entities = new ArrayList<>();
-        
+
         IEntity bgEntity = new Entity(
                 new Vec3<Integer>(0, 0, 0),
                 aquarium.getAquariumSize(),
                 BG_TYPE,
-                "null");
+                "null", true);
         entities.add(bgEntity);
 
-        for(IFish fish : state.getFish()) {
+        for (IFish fish : state.getFish()) {
             IEntity entity = new Entity(
                     fish.getPos(),
                     fish.getSize(),
                     FISH_TYPE,
-                    fish.getFishID());
+                    fish.getFishID(), !isDirectionRight(fish.getDirection())); // inverted direction since our sprites
+                                                                               // are now to the left, this should be
+                                                                               // handled by the sprite manager in the
+                                                                               // future
             entities.add(entity);
         }
-        for(IDecoration deco : state.getDecorations()) {
-            IEntity entity = new Entity(
-                    deco.getPos(),
-                    new Vec2<Integer>(deco.getSize(), deco.getSize()), // fix dec.getSize to return Vec2
-                    DECOR_TYPE,
-                    "null");
+        for (IDecoration deco : state.getDecorations()) {
+            IEntity entity;
+
+            if (deco instanceof TickableDecoration) {
+                entity = new Entity(deco.getPos(),
+                        new Vec2<Integer>(deco.getSize().getX(), deco.getSize().getY()), DECOR_TYPE,
+                        "null",
+                        true);
+            } else {
+
+                entity = new Entity(deco.getPos(),
+                        new Vec2<Integer>(deco.getSize().getX(), deco.getSize().getY()), "null",
+                        DECOR_TYPE, true);
+            }
+            entities.add(entity);
+
+        }
+        for (IEdible food : state.getFood()) {
+            IEntity entity = new Entity(food.getPos(), food.getSize(), FOOD_TYPE, "null", true);
             entities.add(entity);
         }
-        notifyObservers();
-    }
-    
-    public ArrayList<IEntity> getEntities() {
-        return new ArrayList<>(entities);
-    }
-    
-    // some kind of argument from controller to know which fish to add: enum, String, int?
-    // TODO     -- Lägg till fler knappar/menyval för att välja en specifik fisk --
-    public void addFish() {
-        aquarium.addFish(new Fish(aquarium));
         notifyObservers();
     }
 
+    // some kind of argument from controller to know which fish to add: enum,
+    // TODO -- Lägg till fler knappar/menyval för att välja en specifik fisk --
+    // String, int?
+    // currently creates one of each type
+    public void addFish(int posX, int posY) {
+        Fish fish = fishFactory.createGoldfish(aquarium, Math.random() * 360);
+        fish.setPos(posX, posY, fish.getPos().getZ());
+        aquarium.addFish(fish);
+
+        notifyObservers();
+
+        Fish twoFish = fishFactory.createClownfish(aquarium, Math.random() * 360);
+        twoFish.setPos(posX, posY, twoFish.getPos().getZ());
+        aquarium.addFish(twoFish);
+        notifyObservers();
+
+    }
+
+    private boolean isDirectionRight(double direction) {
+        return Math.cos(direction) > 0;
+    }
+
+    public ArrayList<IEntity> getEntities() {
+        return new ArrayList<>(entities);
+    }
+
+    @Override
     public void removeFish() {
         // Temporary call to removeLastFish() --> Delete later
         aquarium.removeLastFish();
         notifyObservers();
     }
 
-    public void addDecoration() {
-        aquarium.addDecoration(new Decoration(aquarium, new Vec3<>(0,0,0)));
+    public void addDecoration(String type, int x, int y) {
+        IDecoration decoration = decorationFactory.createDecoration(type);
+        decoration.setPos(x, y, decoration.getPos().getZ());
+        aquarium.addDecoration(decoration);
+        notifyObservers();
     }
 
-    public void feedFish() { }
-    
+    public void addFood(String type, int posX, int posY) {
+        IEdible food = foodFactory.createFood(type);
+        food.setPos(posX, posY, food.getPos().getZ());
+        aquarium.addFood(food);
+
+        notifyObservers();
+    }
+
     @Override
     public void addObserver(IObserver observer) {
         observers.add(observer);
     }
-    
+
     @Override
     public void removeObserver(IObserver observer) {
         observers.remove(observer);
     }
-    
+
     @Override
     public void notifyObservers() {
         for (IObserver observer : observers) {

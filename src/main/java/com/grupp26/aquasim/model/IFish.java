@@ -20,16 +20,20 @@ public interface IFish extends ITickable {
 
     int getBaseSpeed();
 
-    void setBaseSpeed(int baseSpeed);
-
     Vec2<Integer> getSize();
 
     int getSpeed();
 
     Vec3<Integer> getPos();
 
+    int getBitingPower();
+
     void setPos(int x, int y, int z);
 
     String getFishID();
+
+    boolean isAlive();
+
+    double getDirection();
 
 }

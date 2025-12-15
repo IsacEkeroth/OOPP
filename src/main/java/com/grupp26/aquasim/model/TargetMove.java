@@ -63,8 +63,14 @@ public class TargetMove implements IMovement {
         return this.target;
     }
 
+    @Override
     public double getDirection(){
         return this.direction;
+    }
+
+    @Override 
+    public void setDirection(double direction){
+        this.direction = direction;
     }
 
 }

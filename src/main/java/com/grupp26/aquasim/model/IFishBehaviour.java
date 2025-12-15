@@ -1,13 +1,19 @@
 package com.grupp26.aquasim.model;
 
-public interface IBehaviour {
+public interface IFishBehaviour {
     int getHungryAt();
-    //every fish needs hunger?
-    
+    // every fish needs hunger?
+
     void update();
 
     void setState(IFishState newState);
+
     IFishState getPassiveState();
+
     IFishState getHungerState();
-    //state pattern
+
+    IFishState getDeathState();
+    // state pattern
+
+    double getDirection();
 }
