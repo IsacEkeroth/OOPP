@@ -49,7 +49,7 @@ public class MainView extends JFrame implements IObserver {
         controlPanel.add(addDecorationButton, 3);
         controlPanel.setBackground(Color.BLACK);
 
-        int buttonWidth = 400;
+        int buttonWidth = 500;
         int buttonHeight = 50;
         // Placering av controlPanel på (x, y) i drawPanel
         controlPanel.setBounds(10, windowHeight - 90, buttonWidth, buttonHeight);
