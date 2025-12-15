@@ -1,21 +1,21 @@
 package com.grupp26.aquasim.model;
 
-import com.grupp26.aquasim.view.RenderedEntity;
 import com.grupp26.aquasim.view.IObserver;
 
-import java.awt.*;
 import java.util.ArrayList;
 
-public class ModelFacade implements IObservable {
+public class ModelFacade implements IModelFacade {
     private final IAquarium aquarium;
     private AquariumState state;
     private ArrayList<IEntity> entities;
     private ArrayList<IObserver> observers = new ArrayList<>();
+    private DecorationFactory decorationFactory;
     private FoodFactory foodFactory;
 
     public ModelFacade(IAquarium aquarium, IObserver observer) {
         this.aquarium = aquarium;
         this.observers.add(observer);
+        this.decorationFactory = new DecorationFactory(aquarium);
         this.foodFactory = new FoodFactory(aquarium);
     }
 
@@ -26,27 +26,42 @@ public class ModelFacade implements IObservable {
 
         IEntity bgEntity = new Entity(new Vec3<Integer>(0, 0, 0),
                 aquarium.getAquariumSize(),
-                "images/akvarium1.jpg");
+                "images/akvarium1.jpg", true);
         entities.add(bgEntity);
 
         // store the imagepath in fish or new fishData class?
         for (IFish fish : state.getFish()) {
+            boolean isFacingRight = isDirectionRight(fish.getDirection());
             IEntity entity = new Entity(fish.getPos(),
                     fish.getSize(),
-                    "images/icon-grupp26nobg.png"); // all fish are smurfs
+                    "images/icon-grupp26nobg.png", isFacingRight); // all fish are smurfs
             entities.add(entity);
         }
         for (IDecoration deco : state.getDecorations()) {
-            IEntity entity = new Entity(deco.getPos(),
-                    new Vec2<Integer>(deco.getSize(), deco.getSize()), // fix dec.getSize to return Vec2
-                    "images/veryGoodAnchor.png"); // all decorations are anchors
+            IEntity entity;
+            if (deco instanceof TickableDecoration) {
+                entity = new Entity(deco.getPos(),
+                        new Vec2<Integer>(deco.getSize().getX(), deco.getSize().getY()),
+                        "images/seaweed.png", true);
+            } else {
+
+                entity = new Entity(deco.getPos(),
+                        new Vec2<Integer>(deco.getSize().getX(), deco.getSize().getY()),
+                        "images/veryGoodAnchor.png", true);
+            }
             entities.add(entity);
+
         }
         for (IEdible food : state.getFood()) {
-            IEntity entity = new Entity(food.getPos(), food.getSize(), "images/Food.png");
+            IEntity entity = new Entity(food.getPos(), food.getSize(), "images/Food.png", true);
             entities.add(entity);
         }
+
         notifyObservers();
+    }
+
+    private boolean isDirectionRight(double direction) {
+        return Math.cos(direction) > 0;
     }
 
     public ArrayList<IEntity> getEntities() {
@@ -62,20 +77,25 @@ public class ModelFacade implements IObservable {
         notifyObservers();
     }
 
+    @Override
     public void removeFish() {
         // Temporary call to removeLastFish() --> Delete later
         aquarium.removeLastFish();
         notifyObservers();
     }
 
-    public void addDecoration() {
-        aquarium.addDecoration(new Decoration(aquarium, new Vec3<>(0, 0, 0)));
+    public void addDecoration(String type, int x, int y) {
+        IDecoration decoration = decorationFactory.createDecoration(type);
+        decoration.setPos(x, y, decoration.getPos().getZ());
+        aquarium.addDecoration(decoration);
+        notifyObservers();
     }
 
     public void addFood(String type, int posX, int posY) {
         IEdible food = foodFactory.createFood(type);
         food.setPos(posX, posY, food.getPos().getZ());
         aquarium.addFood(food);
+
         notifyObservers();
     }
 

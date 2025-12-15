@@ -1,8 +1,8 @@
 package com.grupp26.aquasim.controller;
 
-import com.grupp26.aquasim.model.ModelFacade;
-
-import com.grupp26.aquasim.view.MainView;
+import com.grupp26.aquasim.ISoundObservable;
+import com.grupp26.aquasim.model.IModelFacade;
+import com.grupp26.aquasim.view.IMainView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,15 +16,17 @@ public class Controller implements IController {
     // down to the right
     private static final int MOUSE_OFFSET = 25;
 
-    ModelFacade modelFacade;
-    MainView view;
+    IModelFacade modelFacade;
+    IMainView view;
     int mouseX;
     int mouseY;
     ActiveMode mouseMode = ActiveMode.NONE;
+    ISoundObservable mediaPlayer;
 
-    public Controller(ModelFacade modelFacade, MainView view) {
+    public Controller(IModelFacade modelFacade, IMainView view, ISoundObservable mediaPlayer) {
         this.modelFacade = modelFacade;
         this.view = view;
+        this.mediaPlayer = mediaPlayer;
         initListeners();
     }
 
@@ -36,12 +38,15 @@ public class Controller implements IController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 handleMouseState(ActiveMode.FISH);
+                mediaPlayer.notifyPlaySound("click");
+                modelFacade.addFish(mouseX, mouseY);
             }
         });
 
         view.getRemoveFishButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                mediaPlayer.notifyPlaySound("click");
                 modelFacade.removeFish();
             }
         });
@@ -51,6 +56,18 @@ public class Controller implements IController {
             public void actionPerformed(ActionEvent e) {
 
                 handleMouseState(ActiveMode.FOOD);
+                mediaPlayer.notifyPlaySound("click");
+                modelFacade.addFood("base", mouseX, mouseY);
+            }
+        });
+
+        view.getDecorationButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // this should get the position from the mouse on a click later
+                modelFacade.addDecoration("anchor", 500, 500);
+                // adds two just to show both
+                modelFacade.addDecoration("seaweed", 300, 500);
             }
         });
 
