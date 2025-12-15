@@ -83,13 +83,9 @@ public class ModelFacade implements IModelFacade {
         fish.setPos(posX, posY, fish.getPos().getZ());
         aquarium.addFish(fish);
 
-        notifyObservers();
-
         Fish twoFish = fishFactory.createClownfish(aquarium, Math.random() * 360);
         twoFish.setPos(posX, posY, twoFish.getPos().getZ());
         aquarium.addFish(twoFish);
-        notifyObservers();
-
     }
 
     private boolean isDirectionRight(double direction) {
@@ -104,22 +100,18 @@ public class ModelFacade implements IModelFacade {
     public void removeFish() {
         // Temporary call to removeLastFish() --> Delete later
         aquarium.removeLastFish();
-        notifyObservers();
     }
 
     public void addDecoration(String type, int x, int y) {
         IDecoration decoration = decorationFactory.createDecoration(type);
         decoration.setPos(x, y, decoration.getPos().getZ());
         aquarium.addDecoration(decoration);
-        notifyObservers();
     }
 
     public void addFood(String type, int posX, int posY) {
         IEdible food = foodFactory.createFood(type);
         food.setPos(posX, posY, food.getPos().getZ());
         aquarium.addFood(food);
-
-        notifyObservers();
     }
 
     @Override
