@@ -19,11 +19,20 @@ public class App {
     private static final int windowHeight = 720;
 
     public static void start() {
+        // audio
+        IAudio audio = new Audio();
+        ISoundObservable mediaPlayer = new SoundObservable();
+        mediaPlayer.addSoundObserver(audio);
+
         MainView view = new MainView(windowWidth, windowHeight);
         Aquarium aquarium = new Aquarium();
         ModelFacade facade = new ModelFacade(aquarium, view);
         view.setFacade(facade);
-        Controller controller = new Controller(facade, view);
+
+        Controller controller = new Controller(facade, view, mediaPlayer);
+
+        // maybe this sould be a part of the view?
+        mediaPlayer.notifyPlayMusic("sea");
 
         Timer timer = new Timer(25, new ActionListener() {
             @Override
