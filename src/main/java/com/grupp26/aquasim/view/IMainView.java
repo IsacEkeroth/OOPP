@@ -6,10 +6,15 @@ import javax.swing.*;
 
 public interface IMainView extends IObserver {
     void setFacade(IModelFacade facade);
-    
+
     JButton getAddFishButton();
-    
+
     JButton getFeedFishButton();
-    
+
     JButton getRemoveFishButton();
+
+    JButton getAddFoodButton();
+
+    JButton getDecorationButton();
+
 }
