@@ -13,22 +13,26 @@ public class SpriteManager {
     private static final HashMap<String, AnimationSequence> ANIMATION_MAP = new HashMap<>();
 
     private static final String FISH_SHEET_PATH = "images/fish_spritesheet_64.png";
-    private static final String DECOR_SHEET_PATH = "images/veryGoodAnchor.jpg";
+    // private static final String DECOR_SHEET_PATH = "images/veryGoodAnchor.jpg";
+    private static final String ANCHOR_PATH = "images/veryGoodAnchor.png";
+    private static final String SEAWEED_PATH = "images/seaweed.png";
     private static final String BACKGROUND_PATH = "images/akvarium1.jpg";
+    private static final String FOOD_PATH = "images/food.png";
 
     private static final int SPRITE_FRAME_WIDTH = 64;
     private static final int SPRITE_FRAME_HEIGHT = 64;
 
     static {
-        ANIMATION_MAP.put("FISH", new AnimationSequence(1,4, 10));
+        ANIMATION_MAP.put("GOLDFISH", new AnimationSequence(1, 4, 10));
+        ANIMATION_MAP.put("CLOWNFISH", new AnimationSequence(9, 4, 10));
 
         // Förladda bilder
         imageFromString(FISH_SHEET_PATH);
         imageFromString(BACKGROUND_PATH);
+        imageFromString(FOOD_PATH);
+        imageFromString(SEAWEED_PATH);
+        imageFromString(ANCHOR_PATH);
     }
-
-
-
 
     public static BufferedImage imageFromString(String path) {
         if (CACHE.containsKey(path)) {
@@ -47,15 +51,13 @@ public class SpriteManager {
             errorGraphics.setColor(Color.MAGENTA);
             errorGraphics.fillRect(0, 0, 100, 100);
             errorGraphics.dispose();
-            
+
             CACHE.put(path, img);
         }
         return img;
     }
 
-
-
-    // TODO     -- Hitta en bättre lösning än switch cases? --
+    // TODO -- Hitta en bättre lösning än switch cases? --
     public static BufferedImage getSprite(String entityType, int totalTicks) {
         String type = entityType.toUpperCase();
         // Fall 1: animerad typ
@@ -66,27 +68,33 @@ public class SpriteManager {
         switch (type) {
             case "BG":
                 return imageFromString(BACKGROUND_PATH);
-            case "DECOR":
-                return imageFromString(DECOR_SHEET_PATH);
+            case "ANCHOR":
+                return imageFromString(ANCHOR_PATH);
+            case "SEAWEED":
+                return imageFromString(SEAWEED_PATH);
+            case "FOOD":
+                return imageFromString(FOOD_PATH);
             default:
                 // borde hanteras
                 return null;
         }
     }
 
-
-    // TODO     -- Kanske byta namn på totalTicks? lite oklart --
+    // TODO -- Kanske byta namn på totalTicks? lite oklart --
     public static BufferedImage getAnimatedFrame(String entityType, int totalTicks) {
         AnimationSequence seq = ANIMATION_MAP.get(entityType);
         // Temporärt, nu ligger allt som kan animeras i fish_sheet_path
-        // Kommer behöva flera val här också beroende på om det är en DECOR, etc, likt getSprite
+        // Kommer behöva flera val här också beroende på om det är en DECOR, etc, likt
+        // getSprite
         BufferedImage spriteSheet = imageFromString(FISH_SHEET_PATH);
 
         // Temporärt, behöver hanteras
-        if (spriteSheet == null) return null;
+        if (spriteSheet == null)
+            return null;
 
         // Dela totalTicks med hastigheten på animationen
-        // Ex) Om ticks är 15 och speed är 10, blir animationTick 1. (Vi stannar på frame 1 i 10 ticks).
+        // Ex) Om ticks är 15 och speed är 10, blir animationTick 1. (Vi stannar på
+        // frame 1 i 10 ticks).
         int slowedTick = totalTicks / seq.TICKS_PER_FRAME;
         int currentFrameIndex = slowedTick % seq.MAX_FRAMES;
 
@@ -96,8 +104,6 @@ public class SpriteManager {
         // bör antagligen hantera ifall den blir null?
         return spriteSheet.getSubimage(x, y, SPRITE_FRAME_WIDTH, SPRITE_FRAME_HEIGHT);
     }
-
-
 
     private static class AnimationSequence {
         final int ROWINDEX;
@@ -110,8 +116,5 @@ public class SpriteManager {
             this.TICKS_PER_FRAME = ticksPerFrame;
         }
     }
-
-
-
 
 }

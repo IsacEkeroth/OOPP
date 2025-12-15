@@ -1,13 +1,6 @@
 package com.grupp26.aquasim.model;
 
 public interface IFish extends ITickable {
-    // comment = private attributes
-    // has the following
-    // int age;
-    // int speed;
-    // Vector<Integer> pos; // x, y, z
-    // IAi ai;
-
     IAquarium getAquarium();
 
     int getAge();
@@ -36,4 +29,5 @@ public interface IFish extends ITickable {
 
     double getDirection();
 
+    String getType();
 }

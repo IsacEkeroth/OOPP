@@ -10,10 +10,10 @@ public class FoodFactory {
     public FoodFactory(IAquarium aquarium) {
         int centerX = aquarium.getAquariumSize().getX() / 2;
         int centerY = 50;
-        int centerZ = 1;
+        int depth = 1;
 
         // Register register food types
-        register("base", () -> new Food(new Vec3<>(centerX, centerY, centerZ), 50, aquarium));
+        register("base", () -> new Food(new Vec3<>(centerX, centerY, depth), 50, aquarium));
     }
 
     public void register(String type, Supplier<IEdible> FoodConstructor) {

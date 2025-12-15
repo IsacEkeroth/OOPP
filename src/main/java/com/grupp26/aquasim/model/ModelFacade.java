@@ -13,9 +13,9 @@ public class ModelFacade implements IModelFacade {
 
     // TODO -- Typerna är bara en placeholder för tillfället --
     // TODO -- Factory method borde sköta det istället? --
-    private final String FISH_TYPE = "FISH";
     private final String BG_TYPE = "BG";
-    private final String DECOR_TYPE = "DECOR";
+    private final String DECOR_TYPE = "ANCHOR";
+    private final String DECOR_TICKABLE_TYPE = "SEAWEED";
     private final String FOOD_TYPE = "FOOD";
     private DecorationFactory decorationFactory;
     private FoodFactory foodFactory;
@@ -44,7 +44,7 @@ public class ModelFacade implements IModelFacade {
             IEntity entity = new Entity(
                     fish.getPos(),
                     fish.getSize(),
-                    FISH_TYPE,
+                    fish.getType(),
                     fish.getFishID(), !isDirectionRight(fish.getDirection())); // inverted direction since our sprites
                                                                                // are now to the left, this should be
                                                                                // handled by the sprite manager in the
@@ -56,14 +56,13 @@ public class ModelFacade implements IModelFacade {
 
             if (deco instanceof TickableDecoration) {
                 entity = new Entity(deco.getPos(),
-                        new Vec2<Integer>(deco.getSize().getX(), deco.getSize().getY()), DECOR_TYPE,
+                        new Vec2<Integer>(deco.getSize().getX(), deco.getSize().getY()), DECOR_TICKABLE_TYPE,
                         "null",
                         true);
             } else {
 
                 entity = new Entity(deco.getPos(),
-                        new Vec2<Integer>(deco.getSize().getX(), deco.getSize().getY()), "null",
-                        DECOR_TYPE, true);
+                        new Vec2<Integer>(deco.getSize().getX(), deco.getSize().getY()), DECOR_TYPE, "null", true);
             }
             entities.add(entity);
 

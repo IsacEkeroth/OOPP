@@ -20,7 +20,7 @@ public class Fish implements IFish {
     private String id;
 
     private Vec2<Integer> size = new Vec2<>(50, 50);
-    private Vec3<Integer> pos = new Vec3<Integer>(640, 360, 1);
+    private Vec3<Integer> pos = new Vec3<Integer>(640, 360, 2);
 
     public Fish(IAquarium aquarium, IFishTypeData fishTypeData, double initialDirection) {
 
@@ -130,5 +130,9 @@ public class Fish implements IFish {
 
     public double getDirection() {
         return behaviour.getDirection();
+    }
+
+    public String getType() {
+        return fishTypeData.getSpeciesName();
     }
 }
