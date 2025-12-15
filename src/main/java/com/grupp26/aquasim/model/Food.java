@@ -14,12 +14,14 @@ public class Food implements IEdible {
         this.behaviour = new FoodBehaviour(this, aquarium);
     }
 
+    @Override
     public void setPos(int x, int y, int z) {
         this.pos.setX(x);
         this.pos.setY(y);
         this.pos.setZ(z);
     }
 
+    @Override
     public Vec3<Integer> getPos() {
         return pos;
     }
@@ -51,10 +53,12 @@ public class Food implements IEdible {
         return isEaten;
     }
 
+    @Override
     public void tick() {
         behaviour.update();
     }
 
+    @Override
     public Vec2<Integer> getSize() {
         return new Vec2<Integer>(size);
     }
