@@ -6,7 +6,7 @@ import com.grupp26.aquasim.view.IObserver;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class ModelFacade implements IObservable {
+public class ModelFacade implements IModelFacade {
     private final IAquarium aquarium;
     private AquariumState state;
     private ArrayList<IEntity> entities;
@@ -65,12 +65,14 @@ public class ModelFacade implements IObservable {
         notifyObservers();
     }
 
+    @Override
     public void removeFish() {
         // Temporary call to removeLastFish() --> Delete later
         aquarium.removeLastFish();
         notifyObservers();
     }
 
+    @Override
     public void addDecoration() {
         aquarium.addDecoration(new Decoration(aquarium, new Vec3<>(0, 0, 0)));
     }

@@ -1,22 +1,21 @@
 package com.grupp26.aquasim.view;
 
 import com.grupp26.aquasim.model.IEntity;
-import com.grupp26.aquasim.model.ModelFacade;
+import com.grupp26.aquasim.model.IModelFacade;
 
 import javafx.embed.swing.JFXPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
-public class MainView extends JFrame implements IObserver {
+public class MainView extends JFrame implements IMainView {
 
     private static final String WINDOW_TITLE = "Aquarium-MVP";
     private int windowWidth;
     private int windowHeight;
     private DrawPanel drawPanel;
-    private ModelFacade facade;
+    private IModelFacade facade;
 
     // controlPanel för framtida knappar
     private final JPanel controlPanel = new JPanel();
@@ -92,7 +91,7 @@ public class MainView extends JFrame implements IObserver {
         repaint();
     }
 
-    public void setFacade(ModelFacade facade) {
+    public void setFacade(IModelFacade facade) {
         this.facade = facade;
     }
 
@@ -104,6 +103,7 @@ public class MainView extends JFrame implements IObserver {
         return this.addFoodButton;
     }
 
+    @Override
     public JButton getRemoveFishButton() {
         return this.removeFishButton;
     }
