@@ -4,7 +4,7 @@ public class Decoration implements IDecoration {
 
     private final IAquarium aquarium;
 
-    private int size;
+    private Vec2<Integer> size = new Vec2<Integer>(100, 100);
 
     private Vec3<Integer> pos;
 
@@ -17,15 +17,19 @@ public class Decoration implements IDecoration {
     }
 
     @Override
-    public int getSize() {
-        return size;
+    public Vec2<Integer> getSize() {
+        return new Vec2<Integer>(size.getX(), size.getY());
     }
 
     @Override
     public void setPos(int x, int y, int z) {
-        pos.setX(x);
-        pos.setY(y);
-        pos.setZ(z);
+        if (aquarium.isValidPosition(new Vec2<>(x, y), size)) {
+            pos.setX(x);
+            pos.setY(y);
+            pos.setZ(z);
+        } else {
+            throw new IllegalArgumentException("Invalid position for decoration");
+        }
     }
 
     @Override

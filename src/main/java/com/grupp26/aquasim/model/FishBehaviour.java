@@ -43,4 +43,7 @@ public class FishBehaviour implements IFishBehaviour {
         this.state.update();
     }
 
+    public double getDirection() {
+        return this.state.getDirection();
+    }
 }

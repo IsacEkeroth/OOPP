@@ -17,6 +17,7 @@ public class Fish implements IFish {
     private int health;
     private int hunger;
     private int speed;
+
     private Vec2<Integer> size = new Vec2<>(50, 50);
     private Vec3<Integer> pos = new Vec3<Integer>(640, 360, 1);
 
@@ -67,7 +68,6 @@ public class Fish implements IFish {
         return baseSpeed;
     }
 
-
     public Vec2<Integer> getSize() {
         return size;
     }
@@ -83,19 +83,23 @@ public class Fish implements IFish {
     }
 
     @Override
-    public int getBitingPower(){
+    public int getBitingPower() {
         return bitingPower;
     }
-      
-    public boolean isAlive(){
+
+    public boolean isAlive() {
         return isAlive;
     }
 
     @Override
     public void setPos(int x, int y, int z) {
-        pos.setX(x);
-        pos.setY(y);
-        pos.setZ(z);
+        if (aquarium.isValidPosition(new Vec2<>(x, y), size)) {
+            pos.setX(x);
+            pos.setY(y);
+            pos.setZ(z);
+        } else {
+            throw new IllegalArgumentException("Invalid position for fish");
+        }
     }
 
     @Override
@@ -116,5 +120,9 @@ public class Fish implements IFish {
         speed = Math.max(1, baseSpeed + (hunger / 20));
         this.behaviour.update();
 
+    }
+
+    public double getDirection() {
+        return behaviour.getDirection();
     }
 }
