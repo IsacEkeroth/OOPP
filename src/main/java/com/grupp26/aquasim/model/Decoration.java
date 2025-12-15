@@ -27,6 +27,8 @@ public class Decoration implements IDecoration {
             pos.setX(x);
             pos.setY(y);
             pos.setZ(z);
+        } else {
+            throw new IllegalArgumentException("Invalid position for decoration");
         }
     }
 

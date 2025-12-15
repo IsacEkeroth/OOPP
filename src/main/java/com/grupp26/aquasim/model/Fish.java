@@ -84,6 +84,8 @@ public class Fish implements IFish {
             pos.setX(x);
             pos.setY(y);
             pos.setZ(z);
+        } else {
+            throw new IllegalArgumentException("Invalid position for fish");
         }
     }
 
