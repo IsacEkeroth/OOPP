@@ -1,5 +1,6 @@
 package com.grupp26.aquasim.view;
 
+import com.grupp26.aquasim.controller.ActiveMode;
 import com.grupp26.aquasim.model.IModelFacade;
 
 import javax.swing.*;
@@ -14,5 +15,9 @@ public interface IMainView extends IObserver {
     JButton getAddFoodButton();
 
     JButton getDecorationButton();
+
+    DrawPanel getDrawPanel();
+
+    void updateActiveButton(ActiveMode mode);
 
 }

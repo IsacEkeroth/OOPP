@@ -6,11 +6,21 @@ import com.grupp26.aquasim.view.IMainView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseMotionListener;
 
 public class Controller implements IController {
+    // offset to make it feel more resposive, placing it at the mouse instead of
+    // down to the right
+    private static final int MOUSE_OFFSET = 25;
 
     IModelFacade modelFacade;
     IMainView view;
+    int mouseX;
+    int mouseY;
+    ActiveMode mouseMode = ActiveMode.NONE;
     ISoundObservable mediaPlayer;
 
     public Controller(IModelFacade modelFacade, IMainView view, ISoundObservable mediaPlayer) {
@@ -27,8 +37,8 @@ public class Controller implements IController {
         view.getAddFishButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                handleMouseState(ActiveMode.FISH);
                 mediaPlayer.notifyPlaySound("click");
-                modelFacade.addFish();
             }
         });
 
@@ -44,7 +54,7 @@ public class Controller implements IController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 mediaPlayer.notifyPlaySound("click");
-                modelFacade.addFood("base");
+                handleMouseState(ActiveMode.FOOD);
             }
         });
 
@@ -58,6 +68,37 @@ public class Controller implements IController {
             }
         });
 
+        view.getDrawPanel().addMouseMotionListener((MouseMotionListener) new MouseMotionAdapter() {
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                mouseX = e.getX() - MOUSE_OFFSET;
+                mouseY = e.getY() - MOUSE_OFFSET;
+            }
+        });
+
+        view.getDrawPanel().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                mediaPlayer.notifyPlaySound("click");
+                if (mouseMode == ActiveMode.FOOD) {
+                    modelFacade.addFood("base", mouseX, mouseY);
+                } else if (mouseMode == ActiveMode.FISH) {
+                    modelFacade.addFish(mouseX, mouseY);
+                }
+            }
+        });
+    }
+
+    private void handleMouseState(ActiveMode mode) {
+        if (mouseMode == mode) {
+            mouseMode = ActiveMode.NONE;
+            view.updateActiveButton(ActiveMode.NONE);
+            return;
+        }
+
+        mouseMode = mode;
+        view.updateActiveButton(mode);
     }
 
 }

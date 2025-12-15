@@ -1,5 +1,6 @@
 package com.grupp26.aquasim.view;
 
+import com.grupp26.aquasim.controller.ActiveMode;
 import com.grupp26.aquasim.model.IEntity;
 import com.grupp26.aquasim.model.IModelFacade;
 
@@ -8,6 +9,8 @@ import javafx.embed.swing.JFXPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainView extends JFrame implements IMainView {
 
@@ -17,17 +20,26 @@ public class MainView extends JFrame implements IMainView {
     private DrawPanel drawPanel;
     private IModelFacade facade;
 
+    private JButton selectedButton = null;
+    Map<ActiveMode, JButton> selectableButtons = new HashMap<ActiveMode, JButton>();
+
     // controlPanel för framtida knappar
     private final JPanel controlPanel = new JPanel();
     private final JButton addFishButton = new JButton("Add fish");
-    private final JButton addFoodButton = new JButton("Feed fish");
+    private final JButton addFoodButton = new JButton("Food mode");
     private final JButton removeFishButton = new JButton("Remove fish");
     private final JButton addDecorationButton = new JButton("Add decoration");
 
     public MainView(int windowWidth, int windowHeight) {
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
+        registerButtons();
         initComponents();
+    }
+
+    private void registerButtons() {
+        selectableButtons.put(ActiveMode.FISH, this.getAddFishButton());
+        selectableButtons.put(ActiveMode.FOOD, this.getAddFoodButton());
     }
 
     private void initComponents() {
@@ -108,6 +120,30 @@ public class MainView extends JFrame implements IMainView {
     @Override
     public JButton getRemoveFishButton() {
         return this.removeFishButton;
+    }
+
+    public DrawPanel getDrawPanel() {
+        return this.drawPanel;
+    }
+
+    private void setActive(JButton button) {
+        button.setForeground(Color.GREEN);
+    }
+
+    private void setInActive(JButton button) {
+        button.setForeground(Color.BLACK);
+    }
+
+    public void updateActiveButton(ActiveMode mode) {
+        selectedButton = selectableButtons.get(mode);
+
+        for (JButton button : selectableButtons.values()) {
+            setInActive(button);
+        }
+
+        if (mode != ActiveMode.NONE) {
+            setActive(selectedButton);
+        }
     }
 
     public JButton getDecorationButton() {

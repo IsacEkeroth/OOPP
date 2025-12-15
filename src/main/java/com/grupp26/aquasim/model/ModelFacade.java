@@ -70,8 +70,10 @@ public class ModelFacade implements IModelFacade {
 
     // some kind of argument from controller to know which fish to add: enum,
     // String, int?
-    public void addFish() {
-        aquarium.addFish(new Fish(aquarium));
+    public void addFish(int posX, int posY) {
+        IFish fish = new Fish(aquarium);
+        fish.setPos(posX, posY, fish.getPos().getZ());
+        aquarium.addFish(fish);
         notifyObservers();
     }
 
@@ -89,8 +91,11 @@ public class ModelFacade implements IModelFacade {
         notifyObservers();
     }
 
-    public void addFood(String type) {
-        aquarium.addFood(foodFactory.createFood(type));
+    public void addFood(String type, int posX, int posY) {
+        IEdible food = foodFactory.createFood(type);
+        food.setPos(posX, posY, food.getPos().getZ());
+        aquarium.addFood(food);
+
         notifyObservers();
     }
 
