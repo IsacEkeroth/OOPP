@@ -9,10 +9,12 @@ public class DecorationFactory {
 
     public DecorationFactory(IAquarium aquarium) {
 
-        int centerZ = 2;
+        int depth = 2;
+
+        register("seaweed", () -> new TickableDecoration(aquarium, new Vec3<>(0, 0, depth)));
 
         register("anchor",
-                () -> new Decoration(aquarium, new Vec3<>(0, 0, centerZ)));
+                () -> new Decoration(aquarium, new Vec3<>(0, 0, depth)));
     }
 
     public void register(String type, Supplier<IDecoration> decorationConstructor) {

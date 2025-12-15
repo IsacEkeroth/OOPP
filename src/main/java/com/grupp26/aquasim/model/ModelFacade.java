@@ -38,17 +38,25 @@ public class ModelFacade implements IModelFacade {
             entities.add(entity);
         }
         for (IDecoration deco : state.getDecorations()) {
-            IEntity entity = new Entity(
-                    deco.getPos(),
-                    new Vec2<Integer>(deco.getSize().getX(), deco.getSize().getY()),
-                    "images/veryGoodAnchor.png",
-                    true); // all decorations are anchors
+            IEntity entity;
+            if (deco instanceof TickableDecoration) {
+                entity = new Entity(deco.getPos(),
+                        new Vec2<Integer>(deco.getSize().getX(), deco.getSize().getY()),
+                        "images/seaweed.png", true);
+            } else {
+
+                entity = new Entity(deco.getPos(),
+                        new Vec2<Integer>(deco.getSize().getX(), deco.getSize().getY()),
+                        "images/veryGoodAnchor.png", true);
+            }
             entities.add(entity);
+
         }
         for (IEdible food : state.getFood()) {
             IEntity entity = new Entity(food.getPos(), food.getSize(), "images/Food.png", true);
             entities.add(entity);
         }
+
         notifyObservers();
     }
 

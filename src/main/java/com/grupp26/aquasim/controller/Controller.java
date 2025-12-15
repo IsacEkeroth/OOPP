@@ -53,7 +53,8 @@ public class Controller implements IController {
             public void actionPerformed(ActionEvent e) {
                 // this should get the position from the mouse on a click later
                 modelFacade.addDecoration("anchor", 500, 500);
-
+                // adds two just to show both
+                modelFacade.addDecoration("seaweed", 300, 500);
             }
         });
 

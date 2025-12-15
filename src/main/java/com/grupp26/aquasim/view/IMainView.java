@@ -9,8 +9,6 @@ public interface IMainView extends IObserver {
 
     JButton getAddFishButton();
 
-    JButton getFeedFishButton();
-
     JButton getRemoveFishButton();
 
     JButton getAddFoodButton();
