@@ -20,8 +20,6 @@ public interface IFish extends ITickable {
 
     int getBaseSpeed();
 
-    void setBaseSpeed(int baseSpeed);
-
     Vec2<Integer> getSize();
 
     int getSpeed();

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class ModelFacade implements IModelFacade {
     private final IAquarium aquarium;
+    private final FishFactory fishFactory;
     private AquariumState state;
     private ArrayList<IEntity> entities;
     private ArrayList<IObserver> observers = new ArrayList<>();
@@ -15,6 +16,7 @@ public class ModelFacade implements IModelFacade {
     public ModelFacade(IAquarium aquarium, IObserver observer) {
         this.aquarium = aquarium;
         this.observers.add(observer);
+        this.fishFactory = new FishFactory();
         this.decorationFactory = new DecorationFactory(aquarium);
         this.foodFactory = new FoodFactory(aquarium);
     }
@@ -56,8 +58,24 @@ public class ModelFacade implements IModelFacade {
             IEntity entity = new Entity(food.getPos(), food.getSize(), "images/Food.png", true);
             entities.add(entity);
         }
+        notifyObservers();
+    }
+
+    // some kind of argument from controller to know which fish to add: enum,
+    // String, int?
+    // currently creates one of each type
+    public void addFish(int posX, int posY) {
+        Fish fish = fishFactory.createGoldfish(aquarium, Math.random() * 360);
+        fish.setPos(posX, posY, fish.getPos().getZ());
+        aquarium.addFish(fish);
 
         notifyObservers();
+
+        Fish twoFish = fishFactory.createClownfish(aquarium, Math.random() * 360);
+        twoFish.setPos(posX, posY, twoFish.getPos().getZ());
+        aquarium.addFish(twoFish);
+        notifyObservers();
+
     }
 
     private boolean isDirectionRight(double direction) {
@@ -66,15 +84,6 @@ public class ModelFacade implements IModelFacade {
 
     public ArrayList<IEntity> getEntities() {
         return new ArrayList<>(entities);
-    }
-
-    // some kind of argument from controller to know which fish to add: enum,
-    // String, int?
-    public void addFish(int posX, int posY) {
-        IFish fish = new Fish(aquarium);
-        fish.setPos(posX, posY, fish.getPos().getZ());
-        aquarium.addFish(fish);
-        notifyObservers();
     }
 
     @Override

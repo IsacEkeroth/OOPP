@@ -1,6 +1,6 @@
 package com.grupp26.aquasim.model;
 
-public class GoldFishBehaviour implements IFishBehaviour {
+public class FishBehaviour implements IFishBehaviour {
     private IAquarium aquarium;
 
     private IFishState state;
@@ -9,7 +9,7 @@ public class GoldFishBehaviour implements IFishBehaviour {
     private IFishState deathState;
     private int hungryAt;
 
-    public GoldFishBehaviour(IFish fish, double initialDirection, int hungryAt) {
+    public FishBehaviour(IFish fish, double initialDirection, int hungryAt) {
         this.hungryAt = hungryAt;
         this.aquarium = fish.getAquarium();
 
