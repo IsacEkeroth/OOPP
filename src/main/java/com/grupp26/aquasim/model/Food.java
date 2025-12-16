@@ -6,18 +6,22 @@ public class Food implements IEdible {
     private int amount;
     private boolean isEaten;
     private IFoodBehaviour behaviour;
+    private IAquarium aquarium;
 
     public Food(Vec3<Integer> pos, int amount, IAquarium aquarium) {
         this.pos = pos;
         this.amount = amount;
         this.isEaten = false;
         this.behaviour = new FoodBehaviour(this, aquarium);
+        this.aquarium = aquarium;
     }
-
+    
+    @Override
     public void setPos(int x, int y, int z) {
-        this.pos.setX(x);
-        this.pos.setY(y);
-        this.pos.setZ(z);
+        Vec2<Integer> clampedPos = aquarium.clampPosition(new Vec2<Integer>(x, y), size);
+        pos.setX(clampedPos.getX());
+        pos.setY(clampedPos.getY());
+        pos.setZ(z);
     }
 
     public Vec3<Integer> getPos() {

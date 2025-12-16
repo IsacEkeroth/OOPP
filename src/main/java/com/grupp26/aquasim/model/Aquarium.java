@@ -19,7 +19,7 @@ public class Aquarium implements IAquarium {
     // Do we want more attributes? Light level, cleanliness, glass-cleanliness?
 
     public Aquarium(int width, int height) {
-        aquariumSize = new Vec2<>(width, height);
+        aquariumSize = new Vec2<>(width, height - 25);
         defaultAttributes();
     }
 
@@ -76,6 +76,13 @@ public class Aquarium implements IAquarium {
         } else {
             return false;
         }
+    }
+    
+    @Override
+    public Vec2<Integer> clampPosition(Vec2<Integer> pos, Vec2<Integer> size) {
+        int clampedX = Math.max(0, Math.min(aquariumSize.getX() - size.getX(), pos.getX()));
+        int clampedY = Math.max(0, Math.min(aquariumSize.getY() - size.getY(), pos.getY()));
+        return new Vec2<Integer>(clampedX, clampedY);
     }
 
     @Override
