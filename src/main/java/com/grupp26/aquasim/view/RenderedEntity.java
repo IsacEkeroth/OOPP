@@ -6,43 +6,23 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 public class RenderedEntity implements IRenderedEntity {
-    Point pos;
-    int depth;
-    Point size;
-
-    String entityID;
-    String entity_type;
     BufferedImage image;
-    boolean isFlipped;
     private int currentTick;
-
-    public RenderedEntity(Point pos, int depth, Point size, BufferedImage image, boolean isFlipped) {
-        this.pos = pos;
-        this.depth = depth;
-        this.size = size;
-        this.image = image;
-        this.isFlipped = isFlipped;
-    }
+    IEntity entity;
 
     public RenderedEntity(IEntity entity, int currentTick) {
-        this.pos = entity.getPos();
-        this.depth = entity.getDepth();
-        this.size = entity.getSize();
-
-        this.entityID = entity.getEntity_ID();
-        this.entity_type = entity.getEntityType();
+        this.entity = entity;
         this.currentTick = currentTick;
         // TODO -- Kom ihåg: entity_type behöver vara state om animationen ska kunna
         // bero på tillstånd --
         // TODO -- Eller kanske snarare OCKSÅ ett state, man kanske behöver båda trots
         // allt --
-        this.image = SpriteManager.getSprite(this.entity_type, this.currentTick);
-        this.isFlipped = entity.isFacingRight();
+        this.image = SpriteManager.getSprite(this.entity.getEntityType(), this.currentTick);
     }
 
     @Override
     public String getType() {
-        return this.entity_type;
+        return entity.getEntityType();
     }
 
     @Override
@@ -52,21 +32,20 @@ public class RenderedEntity implements IRenderedEntity {
 
     @Override
     public Point getPos() {
-        return new Point(pos);
+        return entity.getPos();
     }
 
     public void setPos(Point pos) {
-        this.pos.x = (int) pos.getX();
-        this.pos.y = (int) pos.getY();
+        entity.setPos(pos);
     }
 
     public int getDepth() {
-        return depth;
+        return entity.getDepth();
     }
 
     @Override
     public Point getSize() {
-        return new Point(size);
+        return entity.getSize();
 
     }
 
@@ -77,7 +56,7 @@ public class RenderedEntity implements IRenderedEntity {
     }
 
     public boolean isFlipped() {
-        return isFlipped;
+        return entity.isFacingRight();
     }
 
 }
