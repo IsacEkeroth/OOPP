@@ -28,6 +28,7 @@ public class ModelFacade implements IModelFacade {
         this.foodFactory = new FoodFactory(aquarium);
     }
 
+    @Override
     public void tick() {
         aquarium.tick();
         state = aquarium.getState();
@@ -78,6 +79,7 @@ public class ModelFacade implements IModelFacade {
     // TODO -- Lägg till fler knappar/menyval för att välja en specifik fisk --
     // String, int?
     // currently creates one of each type
+    @Override
     public void addFish(int posX, int posY) {
         Fish fish = fishFactory.createGoldfish(aquarium, Math.random() * 360);
         fish.setPos(posX, posY, fish.getPos().getZ());
@@ -96,6 +98,7 @@ public class ModelFacade implements IModelFacade {
         return Math.cos(direction) > 0;
     }
 
+    @Override
     public ArrayList<IEntity> getEntities() {
         return new ArrayList<>(entities);
     }
@@ -107,6 +110,7 @@ public class ModelFacade implements IModelFacade {
         notifyObservers();
     }
 
+    @Override
     public void addDecoration(String type, int x, int y) {
         IDecoration decoration = decorationFactory.createDecoration(type);
         decoration.setPos(x, y, decoration.getPos().getZ());
@@ -114,6 +118,7 @@ public class ModelFacade implements IModelFacade {
         notifyObservers();
     }
 
+    @Override
     public void addFood(String type, int posX, int posY) {
         IEdible food = foodFactory.createFood(type);
         food.setPos(posX, posY, food.getPos().getZ());
