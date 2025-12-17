@@ -56,28 +56,21 @@ public class MainView extends JFrame implements IMainView {
 
         drawPanel = new DrawPanel(windowWidth, windowHeight);
         drawPanel.setOpaque(true);
-
-        // TODO -- Bättre att ha LayoutManager? Bör vi ändra? --
-        // Denna behövdes lägga till, så vi har ingen layoutmanager.
-        // Vi använder absolute positioning.
-        drawPanel.setLayout(null);
+        drawPanel.setLayout(new BorderLayout());
 
         controlPanel.setLayout(new GridLayout(1, 4));
+        controlPanel.setOpaque(false);
         controlPanel.add(addFishButton, 0);
         controlPanel.add(addFoodButton, 1);
         controlPanel.add(removeFishButton, 2);
         controlPanel.add(addDecorationButton, 3);
-        controlPanel.setBackground(Color.BLACK);
 
-        int buttonWidth = 500;
-        int buttonHeight = 50;
-        // TODO -- Ändra så vi INTE använder Absolute Positioning --
-        // Placering av controlPanel på (x, y) i drawPanel
-        controlPanel.setBounds(10, windowHeight - 90, buttonWidth, buttonHeight);
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0,0));
+        buttonPanel.setOpaque(false);
+        buttonPanel.add(controlPanel);
 
-        // Lägger controlPanel PÅ drawPanel
+        drawPanel.add(buttonPanel, BorderLayout.SOUTH);
         this.add(drawPanel);
-        drawPanel.add(controlPanel);
         drawPanel.repaint();
 
         this.setVisible(true);

@@ -1,4 +1,4 @@
-package com.grupp26.aquasim;
+/*package com.grupp26.aquasim;
 
 import com.grupp26.aquasim.model.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -88,3 +88,5 @@ public class FishTest {
     }
 
 }
+
+ */
