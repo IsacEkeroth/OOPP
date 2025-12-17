@@ -102,7 +102,7 @@ public class MainView extends JFrame implements IMainView {
         fishSelectionPanel.add(goldFishButton);
         fishSelectionPanel.add(clownFishButton);
 
-        fishSelectionPanel.setBounds(10, windowHeight - 350, 200, 250);
+        fishSelectionPanel.setBounds(10, windowHeight - 110, 250, 50);
         fishSelectionPanel.setVisible(false); // Gör den osynlig, så den kan togglas rätt sen
         drawPanel.add(fishSelectionPanel, BorderLayout.SOUTH);
     }
