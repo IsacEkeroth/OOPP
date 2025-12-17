@@ -19,6 +19,8 @@ public class ModelFacade implements IModelFacade {
     private final String FOOD_TYPE = "FOOD";
     private DecorationFactory decorationFactory;
     private FoodFactory foodFactory;
+    
+    private final ISimulationLoop simLoop;
 
     public ModelFacade(IAquarium aquarium, IObserver observer) {
         this.aquarium = aquarium;
@@ -26,6 +28,7 @@ public class ModelFacade implements IModelFacade {
         this.fishFactory = new FishFactory();
         this.decorationFactory = new DecorationFactory(aquarium);
         this.foodFactory = new FoodFactory(aquarium);
+        this.simLoop = new SimulationLoop(25, this::tick);
     }
 
     @Override
