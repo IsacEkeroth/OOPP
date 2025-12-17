@@ -2,6 +2,7 @@ package com.grupp26.aquasim.controller;
 
 import com.grupp26.aquasim.ISoundObservable;
 import com.grupp26.aquasim.model.IModelFacade;
+import com.grupp26.aquasim.view.FishSelectionListener;
 import com.grupp26.aquasim.view.IMainView;
 
 import java.awt.event.ActionEvent;
@@ -15,6 +16,9 @@ public class Controller implements IController {
     // offset to make it feel more resposive, placing it at the mouse instead of
     // down to the right
     private static final int MOUSE_OFFSET = 25;
+    private final String NO_FISH_TYPE = "";
+
+    private String selectedFishType = NO_FISH_TYPE;
 
     IModelFacade modelFacade;
     IMainView view;
@@ -33,12 +37,12 @@ public class Controller implements IController {
     // Controller reggar sig själv som lyssnare på addFish-knappen i view
     private void initListeners() {
 
-        // Anonym ActionListener
+        // Borde ändra namn nu kanske? Denna öppnar bara menyn
         view.getAddFishButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                handleMouseState(ActiveMode.FISH);
                 mediaPlayer.notifyPlaySound("click");
+                handleMouseState(ActiveMode.NONE);
             }
         });
 
@@ -84,21 +88,38 @@ public class Controller implements IController {
                 if (mouseMode == ActiveMode.FOOD) {
                     modelFacade.addFood("base", mouseX, mouseY);
                 } else if (mouseMode == ActiveMode.FISH) {
-                    modelFacade.addFish(mouseX, mouseY);
+                    modelFacade.addFish(selectedFishType, mouseX, mouseY);
+                    //handleMouseState(ActiveMode.NONE); // Kanske avaktivera muspekaren efter fisken skapats?
+                }
+            }
+        });
+
+
+        // Toggle-logiken för menyn av specifika fiskarter
+        view.addFishMenuListener(new FishSelectionListener() {
+            @Override
+            public void onFishSelected(String fishType) {
+                mediaPlayer.notifyPlaySound("click");
+                //handleMouseState(ActiveMode.FISH, fishType);
+                // OM vi redan valt denna fisktyp, avaktivera menyn
+                if (mouseMode == ActiveMode.FISH && selectedFishType.equals(fishType)) {
+                    handleMouseState(ActiveMode.NONE);
+                } else {
+                    // Annars, aktivera fiskmenyn
+                    handleMouseState(ActiveMode.FISH, fishType);
                 }
             }
         });
     }
 
     private void handleMouseState(ActiveMode mode) {
-        if (mouseMode == mode) {
-            mouseMode = ActiveMode.NONE;
-            view.updateActiveButton(ActiveMode.NONE);
-            return;
-        }
+        handleMouseState(mode, NO_FISH_TYPE);
+    }
+    private void handleMouseState(ActiveMode mode, String fishType) {
+            mouseMode = mode;
+            selectedFishType = fishType;
 
-        mouseMode = mode;
-        view.updateActiveButton(mode);
+            view.updateActiveButton(mode);
     }
 
 }

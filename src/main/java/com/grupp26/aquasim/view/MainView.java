@@ -29,12 +29,16 @@ public class MainView extends JFrame implements IMainView {
     // Varje entityID som ska ritas är mappad till ett tick.
     private Map<String, Integer> entityAnimationCounter = new HashMap<>();
 
-    // controlPanel för framtida knappar
+
     private final JPanel controlPanel = new JPanel();
     private final JButton addFishButton = new JButton("Add fish");
-    private final JButton addFoodButton = new JButton("Food mode");
+    private final JButton addFoodButton = new JButton("Add food");
     private final JButton removeFishButton = new JButton("Remove fish");
     private final JButton addDecorationButton = new JButton("Add decoration");
+    private final JButton goldFishButton = new JButton("GoldFish");
+    private final JButton clownFishButton = new JButton("ClownFish");
+
+    private JPanel fishSelectionPanel;
 
     public MainView(int windowWidth, int windowHeight) {
         this.windowWidth = windowWidth;
@@ -58,6 +62,8 @@ public class MainView extends JFrame implements IMainView {
         drawPanel.setOpaque(true);
         drawPanel.setLayout(new BorderLayout());
 
+        initFishSelectionPanel();
+
         controlPanel.setLayout(new GridLayout(1, 4));
         controlPanel.setOpaque(false);
         controlPanel.add(addFishButton, 0);
@@ -78,7 +84,52 @@ public class MainView extends JFrame implements IMainView {
         // Audio setup
         JFXPanel jFXPanel = new JFXPanel();
         this.add(jFXPanel);
+
+        setUpViewListeners();
+
     }
+
+    // TODO     -- FishSelectionPanel behöver nog också en layoutManager, för knapparna är just nu för stora --
+    private void initFishSelectionPanel() {
+        //JPanel selectionOrganizer = new JPanel(new FlowLayout());
+
+
+
+        fishSelectionPanel = new JPanel();
+        fishSelectionPanel.setLayout(new GridLayout(1, 2, 0, 0));
+        fishSelectionPanel.setOpaque(false);
+
+        fishSelectionPanel.add(goldFishButton);
+        fishSelectionPanel.add(clownFishButton);
+
+        fishSelectionPanel.setBounds(10, windowHeight - 350, 200, 250);
+        fishSelectionPanel.setVisible(false); // Gör den osynlig, så den kan togglas rätt sen
+        drawPanel.add(fishSelectionPanel, BorderLayout.SOUTH);
+    }
+
+
+    // Är detta lite skumt? borde ligga i Controller?
+    private void setUpViewListeners() {
+        // Lambda syntax istället för Anonym inre klass
+        addFishButton.addActionListener(e -> {
+            fishSelectionPanel.setVisible(!fishSelectionPanel.isVisible());
+            drawPanel.repaint();
+        });
+    }
+
+
+
+    public void addFishMenuListener(FishSelectionListener listener) {
+        for (Component comp : fishSelectionPanel.getComponents()) {
+            if (comp instanceof JButton) {
+                JButton button = (JButton) comp;
+                button.addActionListener(e -> {
+                    listener.onFishSelected(button.getText());
+                });
+            }
+        }
+    }
+
 
     public void addRenderedEntity(IRenderedEntity e) {
         drawPanel.addEntity(e);

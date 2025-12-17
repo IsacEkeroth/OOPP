@@ -20,4 +20,6 @@ public interface IMainView extends IObserver {
 
     void updateActiveButton(ActiveMode mode);
 
+    public void addFishMenuListener(FishSelectionListener listener);
+
 }

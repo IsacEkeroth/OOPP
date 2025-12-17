@@ -7,7 +7,7 @@ public interface IModelFacade extends IObservable {
 
     ArrayList<IEntity> getEntities();
 
-    void addFish(int x, int y);
+    void addFish(String fishType, int x, int y);
 
     void removeFish();
 
