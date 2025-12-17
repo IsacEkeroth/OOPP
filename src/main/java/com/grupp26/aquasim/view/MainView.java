@@ -24,6 +24,8 @@ public class MainView extends JFrame implements IMainView {
     private JButton selectedButton = null;
     Map<ActiveMode, JButton> selectableButtons = new HashMap<ActiveMode, JButton>();
 
+    private Map<String, JButton> fishButtons = new HashMap<>();
+
     // TODO Mappar varje entityID till nuvarande tick för hela simulationen
     // Agerar som "minne" för view
     // Varje entityID som ska ritas är mappad till ett tick.
@@ -38,7 +40,7 @@ public class MainView extends JFrame implements IMainView {
     private final JButton goldFishButton = new JButton("GoldFish");
     private final JButton clownFishButton = new JButton("ClownFish");
 
-    private JPanel fishSelectionPanel;
+    private JPanel fishMenuPanel;      // Borde nog vara final också?
 
     public MainView(int windowWidth, int windowHeight) {
         this.windowWidth = windowWidth;
@@ -48,8 +50,11 @@ public class MainView extends JFrame implements IMainView {
     }
 
     private void registerButtons() {
-        selectableButtons.put(ActiveMode.FISH, this.getAddFishButton());
+        selectableButtons.put(ActiveMode.FISH_MENU, this.getAddFishButton());
         selectableButtons.put(ActiveMode.FOOD, this.getAddFoodButton());
+
+        fishButtons.put("GoldFish", this.getGoldFishButton());
+        fishButtons.put("ClownFish", this.getClownFishButton());
     }
 
     private void initComponents() {
@@ -89,22 +94,20 @@ public class MainView extends JFrame implements IMainView {
 
     }
 
-    // TODO     -- FishSelectionPanel behöver nog också en layoutManager, för knapparna är just nu för stora --
+
     private void initFishSelectionPanel() {
-        //JPanel selectionOrganizer = new JPanel(new FlowLayout());
+        fishMenuPanel = new JPanel();
+        fishMenuPanel.setLayout(new GridLayout(1, 2, 0, 0));
+        fishMenuPanel.setOpaque(false);
 
+        // Vore kanske egentligen bättre med en lista som loopas igenom med add(), så man slipper lägga till en knapp
+        // här varje gång. Med en lista hade vi bara behövt lägga till en knapp längst upp.
+        fishMenuPanel.add(goldFishButton);
+        fishMenuPanel.add(clownFishButton);
 
-
-        fishSelectionPanel = new JPanel();
-        fishSelectionPanel.setLayout(new GridLayout(1, 2, 0, 0));
-        fishSelectionPanel.setOpaque(false);
-
-        fishSelectionPanel.add(goldFishButton);
-        fishSelectionPanel.add(clownFishButton);
-
-        fishSelectionPanel.setBounds(10, windowHeight - 110, 250, 50);
-        fishSelectionPanel.setVisible(false); // Gör den osynlig, så den kan togglas rätt sen
-        drawPanel.add(fishSelectionPanel, BorderLayout.SOUTH);
+        fishMenuPanel.setBounds(10, windowHeight - 110, 250, 50);
+        fishMenuPanel.setVisible(false); // Gör den osynlig, så den kan togglas rätt sen
+        drawPanel.add(fishMenuPanel, BorderLayout.SOUTH);
     }
 
 
@@ -112,15 +115,14 @@ public class MainView extends JFrame implements IMainView {
     private void setUpViewListeners() {
         // Lambda syntax istället för Anonym inre klass
         addFishButton.addActionListener(e -> {
-            fishSelectionPanel.setVisible(!fishSelectionPanel.isVisible());
+            fishMenuPanel.setVisible(!fishMenuPanel.isVisible());
             drawPanel.repaint();
         });
     }
 
 
-
     public void addFishMenuListener(FishSelectionListener listener) {
-        for (Component comp : fishSelectionPanel.getComponents()) {
+        for (Component comp : fishMenuPanel.getComponents()) {
             if (comp instanceof JButton) {
                 JButton button = (JButton) comp;
                 button.addActionListener(e -> {
@@ -184,6 +186,14 @@ public class MainView extends JFrame implements IMainView {
         return this.addFishButton;
     }
 
+    public JButton getGoldFishButton() {
+        return this.goldFishButton;
+    }
+
+    public JButton getClownFishButton() {
+        return clownFishButton;
+    }
+
     public JButton getAddFoodButton() {
         return this.addFoodButton;
     }
@@ -205,14 +215,24 @@ public class MainView extends JFrame implements IMainView {
         button.setForeground(Color.BLACK);
     }
 
-    public void updateActiveButton(ActiveMode mode) {
+    public void updateActiveButton(ActiveMode mode, String fishName) {
         selectedButton = selectableButtons.get(mode);
 
         for (JButton button : selectableButtons.values()) {
             setInActive(button);
         }
+        for (JButton button : fishButtons.values()) {
+            setInActive(button);
+        }
 
-        if (mode != ActiveMode.NONE) {
+        if (mode == ActiveMode.PLACING_FISH) {
+            // Så man ser att menyn är aktiv
+            setActive(selectableButtons.get(ActiveMode.FISH_MENU));
+
+            if (fishButtons.containsKey(fishName)) {
+                setActive(fishButtons.get(fishName));
+            }
+        } else if (selectedButton != null) {
             setActive(selectedButton);
         }
     }

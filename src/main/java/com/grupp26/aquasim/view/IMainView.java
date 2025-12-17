@@ -18,7 +18,7 @@ public interface IMainView extends IObserver {
 
     DrawPanel getDrawPanel();
 
-    void updateActiveButton(ActiveMode mode);
+    void updateActiveButton(ActiveMode mode, String fishName);
 
     public void addFishMenuListener(FishSelectionListener listener);
 

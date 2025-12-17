@@ -33,7 +33,7 @@ public class Controller implements IController {
         this.mediaPlayer = mediaPlayer;
         initListeners();
     }
-
+    // TODO     -- Pga knapparna ska släckas och lysa vid klick har det blivit en del logik här, vi skulle kunna skita i det --
     // Controller reggar sig själv som lyssnare på addFish-knappen i view
     private void initListeners() {
 
@@ -42,7 +42,12 @@ public class Controller implements IController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 mediaPlayer.notifyPlaySound("click");
-                handleMouseState(ActiveMode.NONE);
+                if (mouseMode == ActiveMode.FISH_MENU || mouseMode == ActiveMode.PLACING_FISH) {
+                    handleMouseState(ActiveMode.NONE);
+                }
+                else {
+                    handleMouseState(ActiveMode.FISH_MENU);
+                }
             }
         });
 
@@ -58,7 +63,12 @@ public class Controller implements IController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 mediaPlayer.notifyPlaySound("click");
-                handleMouseState(ActiveMode.FOOD);
+                if (mouseMode == ActiveMode.FOOD) {
+                    handleMouseState(ActiveMode.NONE);
+                }
+                else {
+                    handleMouseState(ActiveMode.FOOD);
+                }
             }
         });
 
@@ -87,26 +97,26 @@ public class Controller implements IController {
                 mediaPlayer.notifyPlaySound("click");
                 if (mouseMode == ActiveMode.FOOD) {
                     modelFacade.addFood("base", mouseX, mouseY);
-                } else if (mouseMode == ActiveMode.FISH) {
+
+                } else if (mouseMode == ActiveMode.PLACING_FISH) {
                     modelFacade.addFish(selectedFishType, mouseX, mouseY);
-                    //handleMouseState(ActiveMode.NONE); // Kanske avaktivera muspekaren efter fisken skapats?
                 }
             }
         });
 
 
-        // Toggle-logiken för menyn av specifika fiskarter
+        // Observera, ingen getter här. För att slippa loopa igenom fishMenu,
+        // som är en JPanel, för att få knapparna ur den.
         view.addFishMenuListener(new FishSelectionListener() {
             @Override
             public void onFishSelected(String fishType) {
                 mediaPlayer.notifyPlaySound("click");
-                //handleMouseState(ActiveMode.FISH, fishType);
                 // OM vi redan valt denna fisktyp, avaktivera menyn
-                if (mouseMode == ActiveMode.FISH && selectedFishType.equals(fishType)) {
+                if (mouseMode == ActiveMode.PLACING_FISH && selectedFishType.equals(fishType)) {
                     handleMouseState(ActiveMode.NONE);
                 } else {
                     // Annars, aktivera fiskmenyn
-                    handleMouseState(ActiveMode.FISH, fishType);
+                    handleMouseState(ActiveMode.PLACING_FISH, fishType);
                 }
             }
         });
@@ -119,7 +129,7 @@ public class Controller implements IController {
             mouseMode = mode;
             selectedFishType = fishType;
 
-            view.updateActiveButton(mode);
+            view.updateActiveButton(mode, fishType);
     }
 
 }
