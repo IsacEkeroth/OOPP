@@ -25,7 +25,7 @@ public class PassiveState implements IFishState {
     private IFishState checkState() {
         if (!fish.isAlive()) {
             return context.getDeathState();
-        } else if (this.fish.getHunger() > context.getHungryAt() && aquarium.getFood() != null
+        } else if (this.fish.getHunger() >= context.getHungryAt() && aquarium.getFood() != null
                 && !aquarium.getFood().isEmpty() && isThereFood()) {
             return context.getHungerState();
             // if there is food in the aquarium and you are hungry, enter hungry mode
