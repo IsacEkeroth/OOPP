@@ -1,5 +1,15 @@
 package com.grupp26.aquasim.model;
 
+/**
+ * Represents the state where the food-object sinks.
+ * <p>
+ *     In this state the vertical movement of the food is calculated based on the food's amount
+ *     to simulate gravity. <br>
+ *     The class is responsible for monitoring if the food has reached the bottom of the aquarium
+ *     or if it has been eaten, initiating a transition to {@link FoodStaleState} or
+ *     {@link FoodEatenState} accordingly.
+ * </p>
+ */
 public class FoodSinkingState implements IFoodState{
     private IEdible food;
     private IFoodBehaviour context;

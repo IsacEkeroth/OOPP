@@ -2,11 +2,18 @@ package com.grupp26.aquasim.model;
 
 import java.awt.*;
 
+/**
+ * Represents the base-entity for an object in the simulation with all its properties/data.
+ * <p>
+ * The class functions as a data container for all common attributes.
+ * It is the foundation for all object that exists within the Aquarium
+ * and is to be rendered by the View.
+ * </p>
+ */
 public class Entity implements IEntity {
     Point pos;
     int depth;
     Point size;
-    String imagePath;
     boolean isFacingRight;
 
     String entity_type;

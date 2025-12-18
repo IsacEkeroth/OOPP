@@ -13,6 +13,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The main view for the aquarium simulator that handles the graphical window and user interface.
+ * <p>
+ * The class is responsible for initiating and arranging components as {@link DrawPanel},
+ * buttons, control panels and menus.
+ *
+ */
 public class MainView extends JFrame implements IMainView {
 
     private static final String WINDOW_TITLE = "Aquarium-MVP";

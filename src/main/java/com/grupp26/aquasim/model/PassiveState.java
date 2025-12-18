@@ -1,5 +1,14 @@
 package com.grupp26.aquasim.model;
 
+/**
+ * Handles the fish behaviour when the fish is in a passive state.
+ * <p>
+ *     In this state the fish moves according to a standard-pattern via {@link SimpleMove},
+ *     without actively searching for food. <br>
+ *     The class consistently monitors the hunger-level of the fish and the environmental resources
+ *     to determine when a transition to a different state should happen.
+ * </p>
+ */
 public class PassiveState implements IFishState {
     private IFish fish;
     private SimpleMove simplemove;

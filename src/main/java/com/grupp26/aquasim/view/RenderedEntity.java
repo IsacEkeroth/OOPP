@@ -5,6 +5,14 @@ import com.grupp26.aquasim.model.IEntity;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
+/**
+ *
+ * A representation of an Entity which is optimized for rendering in the view.
+ * <p>
+ * This class extracts necessary information from the games model {@link IEntity}
+ * and links this information with the correct graphic from {@link SpriteManager}.
+ *
+ */
 public class RenderedEntity implements IRenderedEntity {
     Point pos;
     int depth;

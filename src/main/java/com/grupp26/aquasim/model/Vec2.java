@@ -2,6 +2,15 @@ package com.grupp26.aquasim.model;
 
 import java.util.Vector;
 
+/**
+ * A generic container class representing a two-dimensional vector or coordinate.
+ * <p>
+ *     This class extends {@link java.util.Vector} and is designed to store exactly
+ *     two elements of type {@code E}. It is primarily used to represent sizes, positions,
+ *     or directions within a two-dimensional plane in the simulation.
+ * </p>
+ * @param <E> The type of elements stored in the vector.
+ */
 public class Vec2<E> extends Vector<E> {
     public Vec2(E x, E y) {
         super(2);

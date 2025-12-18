@@ -1,5 +1,19 @@
 package com.grupp26.aquasim.model;
 
+/**
+ * Implements a "seeking" movement strategy for fishes.
+ * <p>
+ *     The class calculates the shortest path to a specific target through vector-algebra. <br>
+ *     It handles logic to stop the fish overshooting it's target by controlling if the
+ *     distance to the target is less than the fish's actual speed.
+ *     <p>
+ *         The strategy also includes collision detection to make sure the fish stay within
+ *         the bounds of the aquarium.
+ *
+ *     </p>
+ *
+ * </p>
+ */
 public class TargetMove implements IMovement {
 
     private final IAquarium aquarium;

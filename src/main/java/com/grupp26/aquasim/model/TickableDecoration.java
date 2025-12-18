@@ -1,5 +1,12 @@
 package com.grupp26.aquasim.model;
 
+/**
+ * Represents an interactive decoration that affects the environment with every tick.
+ * <p>
+ *     By implementing {@link ITickable}, this type of decoration can execute logic
+ *     continuously during the simulation to influence the aquarium's state.
+ * </p>
+ */
 public class TickableDecoration extends Decoration implements ITickable {
 
     private final IAquarium aquarium;

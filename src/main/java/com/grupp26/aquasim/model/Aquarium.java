@@ -2,6 +2,16 @@ package com.grupp26.aquasim.model;
 
 import java.util.ArrayList;
 
+/**
+ * Represents the aquarium and works as a primary container for all entities
+ * in this simulation/game and all environment conditions.
+ * <p>
+ * The class is responsible for handling the lifecycle (add/remove methods) of fishes,
+ * decorations and food.
+ * Also it provides environment parameters as temperature, PH-value and oxygen level.
+ * It also defines the bounds for the simulations coordinate-system.
+ * </p>
+ */
 public class Aquarium implements IAquarium {
     private final ArrayList<IFish> fishList = new ArrayList<>();
     private final ArrayList<IDecoration> decorationList = new ArrayList<>();

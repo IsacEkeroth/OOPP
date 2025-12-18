@@ -3,6 +3,15 @@ package com.grupp26.aquasim.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles the fish behaviour and navigation logic when the fish is in a hungry state.
+ * <p>
+ *     The class is responsible for targeting the closest {@link IEdible}-object within the aquarium
+ *     and directing the fish toward it with using {@link TargetMove}. <br>
+ *     It also handles the logic for food consumption and monitors state transitions based on
+ *     hunger levels and if there is any food in the aquarium at all.
+ * </p>
+ */
 public class HungerState implements IFishState {
     private IFish fish;
     private TargetMove targetmove;
@@ -40,7 +49,7 @@ public class HungerState implements IFishState {
         }
     }
 
-    private void EatClosestFood() {
+    private void eatClosestFood() {
         double dx = Math.abs(fish.getPos().getX() - closestFood.getPos().getX());
         double dy = Math.abs(fish.getPos().getY() - closestFood.getPos().getY());
 
@@ -79,7 +88,7 @@ public class HungerState implements IFishState {
         } else {
             findFood();
             this.targetmove.move(this.fish);
-            EatClosestFood();
+            eatClosestFood();
         }
     }
 

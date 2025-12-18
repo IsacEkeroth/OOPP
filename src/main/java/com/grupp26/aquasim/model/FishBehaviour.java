@@ -1,5 +1,13 @@
 package com.grupp26.aquasim.model;
 
+/**
+ * Handles the logic for a fish behaviour and movement pattern through State Design Pattern.
+ * <p>
+ * The class functions as context in a State Design Pattern and delegates the decisions
+ * to different {@link IFishState}-implementations (passive, hunger, death).
+ * It is responsible for initiating the different states and provides a uniform
+ * method, {@link #update()}, for updating the fish state.
+ */
 public class FishBehaviour implements IFishBehaviour {
     private IAquarium aquarium;
 

@@ -8,6 +8,14 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 
+/**
+ *
+ * Handles loading, caching and animation of the game graphics.
+ * <p>
+ * The class works as a central hub that contains both static images and
+ * specific frames for animated sprites through extracting sub-pictures from sprite sheets.
+ *
+ */
 public class SpriteManager {
     private static final HashMap<String, BufferedImage> CACHE = new HashMap<>();
     private static final HashMap<String, AnimationSequence> ANIMATION_MAP = new HashMap<>();
@@ -57,7 +65,17 @@ public class SpriteManager {
         return img;
     }
 
-
+    /**
+     * Gets an image for a specific entity type.
+     * <p>
+     * If the entity is animated, a correct frame is returned based on the
+     * totalTicks for that entity.
+     * If it's not animated a static image will be returned instead.
+     *
+     * @param entityType Actual type of entity.
+     * @param totalTicks The games total runtime in ticks for calculating animation-frame.
+     * @return A BufferedImage which represents the actual entity.
+     */
     public static BufferedImage getSprite(String entityType, int totalTicks) {
         String type = entityType.toUpperCase();
         // Fall 1: animerad typ

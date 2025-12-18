@@ -1,5 +1,16 @@
 package com.grupp26.aquasim.model;
 
+/**
+ * Implements a basic movement strategy for fishes using a simulated swimming motion.
+ * <p>
+ *     The class uses trigonometrical functions to create a "wiggle"-effect relative to
+ *     a main direction. <br>
+ *     It also handles collision detection against the aquarium boundaries by
+ *     reflecting the movement vector upon contact. <br>
+ *     This makes the fish "bounce" off the
+ *     aquarium boundary and change it's trajectory.
+ * </p>
+ */
 public class SimpleMove implements IMovement {
 
     private final IAquarium aquarium;

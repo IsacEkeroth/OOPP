@@ -1,5 +1,13 @@
 package com.grupp26.aquasim.model;
 
+/**
+ * Represents a eatable entity in the aquarium.
+ * <p>
+ *     The class handles the foods value and its state (isEaten). <br>
+ *     Just like the fish, a food delegates its movements or logic to a {@link IFoodBehaviour}
+ *     and works as a resource that the fish can interact with.
+ * </p>
+ */
 public class Food implements IEdible {
     private Vec2<Integer> size = new Vec2<Integer>(50, 50);
     private Vec3<Integer> pos;

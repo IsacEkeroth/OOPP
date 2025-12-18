@@ -4,6 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
+/**
+ * A factory-class that is responsible for creating and handling different types of food objects.
+ * <p>
+ *     The class implements a registry-based Factory Pattern that centralizes the logic for
+ *     instantiation of food. <br>
+ *     By using {@link Supplier}-functions it decouples the creation logic from the rest of the
+ *     model, enabling easy expansion of new food types and other {@link IEdible} elements.
+ *
+ * </p>
+ */
 public class FoodFactory {
     private final Map<String, Supplier<IEdible>> registry = new HashMap<>();
 

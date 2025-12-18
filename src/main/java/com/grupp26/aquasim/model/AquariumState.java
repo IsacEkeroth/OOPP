@@ -2,6 +2,16 @@ package com.grupp26.aquasim.model;
 
 import java.util.ArrayList;
 
+/**
+ * Represents the current state of an {@link Aquarium}.
+ * <p>
+ * This class gathers all relevant data for an Aquarium, like fishes, decorations, food, etc.
+ * at a specific time.
+ * <p>
+ * It's main purpose is to transfer data from the Model to the View in a read-only fashion.
+ * This way the Views representation of the state is disconnected from the models internal logic.
+ * </p>
+ */
 public class AquariumState {
     ArrayList<IFish> fish = new ArrayList<>();
     ArrayList<IDecoration> decorations = new ArrayList<>();

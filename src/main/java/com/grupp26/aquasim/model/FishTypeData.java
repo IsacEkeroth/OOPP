@@ -2,6 +2,14 @@ package com.grupp26.aquasim.model;
 
 import java.util.function.BiFunction;
 
+/**
+ * A data container that defines the specific properties and behaviours
+ * for a specific fish species.
+ * <p>
+ *     The class works as a blueprint that stores unchangeable data like: name of the species,
+ *     health, speed, etc.
+ * </p>
+ */
 public class FishTypeData implements IFishTypeData {
 
     private final String speciesName;
@@ -10,6 +18,7 @@ public class FishTypeData implements IFishTypeData {
     private final int bitingPower;
 
     // BiFunction måste tydligen användas för att låta godtycklig fishbehaviour passeras utan ytterligare kodkomplexitet
+    // TODO     -- Ta bort BiFunction? Så läggs en fisks Behaviour i FishTypeData? --
     private final BiFunction<IFish, Double, IFishBehaviour> behaviourFactory;
 
     public FishTypeData(String speciesName, int maxHealth, int baseSpeed, int bitingPower, BiFunction<IFish, Double, IFishBehaviour> behaviourFactory) {

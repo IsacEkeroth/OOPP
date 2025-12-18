@@ -4,6 +4,17 @@ import com.grupp26.aquasim.view.IObserver;
 
 import java.util.ArrayList;
 
+/**
+ * This class is the central hub between the Model and external layers like View and Controller.
+ * <p>
+ *     The class is responsible to coordinate the state of the simulation through
+ *     handling update-cycles (ticks), converting internal domain-objects to View-manageable
+ *     {@link IEntity}-objects. <br>
+ *     It also handles add/remove of fishes, food, decorations via their respective factories. <br>
+ *     Using the Observer Design Pattern, this class notifies its observers whenever the model
+ *     changes.
+ * </p>
+ */
 public class ModelFacade implements IModelFacade {
     private final IAquarium aquarium;
     private final FishFactory fishFactory;
@@ -11,8 +22,6 @@ public class ModelFacade implements IModelFacade {
     private ArrayList<IEntity> entities;
     private ArrayList<IObserver> observers = new ArrayList<>();
 
-    // TODO -- Typerna är bara en placeholder för tillfället --
-    // TODO -- Factory method borde sköta det istället? --
     private final String BG_TYPE = "BG";
     private final String DECOR_TYPE = "ANCHOR";
     private final String DECOR_TICKABLE_TYPE = "SEAWEED";

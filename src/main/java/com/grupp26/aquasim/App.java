@@ -14,6 +14,16 @@ import com.grupp26.aquasim.controller.Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Orchestrates the initialization and setup of the AquaSim application.
+ * <p>
+ *     This class is responsible for booting the simulation by instantiating
+ *     the core components (Model, View, Controller, and Audio) and establishing
+ *     the connections between them. <br>
+ *     It also manages the main simulation loop
+ *     using a {@link javax.swing.Timer}.
+ * </p>
+ */
 public class App {
 
     private static final int windowWidth = 1280;
