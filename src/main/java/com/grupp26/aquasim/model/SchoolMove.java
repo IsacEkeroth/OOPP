@@ -2,6 +2,14 @@ package com.grupp26.aquasim.model;
 
 import java.util.List;
 
+/**
+ * Movement behavior for fish that swim in a school.
+ * <p>
+ *     This class implements schooling behavior, where fish adjust their direction
+ *     based on the center of the school, avoid walls, and exhibit slight random
+ *     wiggle when inside the school.
+ * </p>
+ */
 public class SchoolMove implements IMovement{
     private final IAquarium aquarium;
     private double direction;
@@ -23,11 +31,11 @@ public class SchoolMove implements IMovement{
         this.direction = direction;
     }
     
-    // boids components
-    // separation
-    // alignment
-    // cohesion
-
+    /**
+     * Calculates and updates the fish's position based on schooling behavior.
+     *
+     * @param fish The fish to be moved.
+     */
     @Override
     public void move(IFish fish) {
         // Deciding direction based on school center
@@ -75,7 +83,8 @@ public class SchoolMove implements IMovement{
         fish.setPos(fish.getPos().getX() + moveX, fish.getPos().getY() + moveY, fish.getPos().getZ());
     }
     
-    // Makes sure turns are done via the shortest angle path
+    // Makes sure turns are done via the shortest angle path, from 'from' to 'to'
+    // turnFactor determines how much of the turn is completed (0 = no turn, 1 = instant turn)
     private double shortestAnglePath(double from, double to, double turnFactor) {
         double diff = to - from;
         // if diff < -180 degrees, add 360 to take the shorter path
@@ -85,6 +94,7 @@ public class SchoolMove implements IMovement{
         return from + diff * turnFactor;
     }
     
+    // Calculate the center position of the school
     private Vec2<Double> getSchoolCenter(IFish fish) {
         List<IFish> schoolMembers = School.getInstance().getMembers();
         
@@ -104,11 +114,20 @@ public class SchoolMove implements IMovement{
         return new Vec2<>(totalX / count, totalY / count);
     }
     
+    /**
+     * Gets the current direction of the fish.
+     *
+     * @return The direction in radians.
+     */
     @Override
     public double getDirection(){
         return this.direction;
     }
-    
+    /**
+     * Sets the current direction of the fish.
+     *
+     * @param direction The new direction in radians.
+     */
     @Override
     public void setDirection(double direction){
         this.direction = direction;
