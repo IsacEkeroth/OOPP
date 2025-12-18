@@ -4,15 +4,15 @@ public class FishFactory {
 
     private final IFishTypeData goldfishData = new FishTypeData(
             "Goldfish",
-            75,
-            10,
+            1000,
+            5,
             15,
             (fish,direction)->new FishBehaviour(fish,direction, 100));
 
     private final IFishTypeData clownfishData = new FishTypeData(
             "Clownfish",
-            100,
-            5,
+            1000,
+            6,
             25,
             (fish,direction)->new FishBehaviour(fish,direction, 75));
 

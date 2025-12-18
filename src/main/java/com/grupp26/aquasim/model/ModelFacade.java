@@ -26,6 +26,7 @@ public class ModelFacade implements IModelFacade {
         this.fishFactory = new FishFactory();
         this.decorationFactory = new DecorationFactory(aquarium);
         this.foodFactory = new FoodFactory(aquarium);
+        School.reset(); // ensures singleton is reset when a new model is created
     }
 
     public void tick() {
