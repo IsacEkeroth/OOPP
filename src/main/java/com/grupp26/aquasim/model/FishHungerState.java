@@ -3,14 +3,14 @@ package com.grupp26.aquasim.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HungerState implements IFishState {
+public class FishHungerState implements IFishState {
     private IFish fish;
     private TargetMove targetmove;
     private IAquarium aquarium;
     private IEdible closestFood;
     private IFishBehaviour context;
 
-    public HungerState(IFishBehaviour context, IFish fish, TargetMove targetmove, IAquarium aquarium) {
+    public FishHungerState(IFishBehaviour context, IFish fish, TargetMove targetmove, IAquarium aquarium) {
         this.context = context;
         this.fish = fish;
         this.targetmove = targetmove;
@@ -60,10 +60,23 @@ public class HungerState implements IFishState {
         return false;
     }
 
+    private boolean areTherePartners() {
+        for (IFish fish : aquarium.getinLoveFish(this.fish)) {
+            if (!fish.isAlive() && this.fish.isInLove()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private IFishState checkState() {
         if (!fish.isAlive()) {
             return context.getDeathState();
-        } else if (this.fish.getHunger() < context.getHungryAt() || aquarium.getFood() == null
+        } 
+        else if (areTherePartners()){
+            return context.getLoveSeekingState();
+        }
+        else if (this.fish.getHunger() < context.getHungryAt() || aquarium.getFood() == null
                 || aquarium.getFood().isEmpty() || !isThereFood()) {
             return context.getPassiveState();
         } else {

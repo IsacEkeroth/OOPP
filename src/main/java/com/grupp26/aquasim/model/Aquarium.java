@@ -146,6 +146,22 @@ public class Aquarium implements IAquarium {
     }
 
     @Override
+    public ArrayList<IFish> getinLoveFish(IFish seeker) {
+        ArrayList<IFish> result = new ArrayList<>();
+
+        for (IFish fish : fishList) {
+            if (fish != seeker && fish.isAlive() && fish.isInLove() && fish.getType().equals(seeker.getType())) {
+                result.add(fish);
+            }
+            // returnera en lista på möjliga partner
+        }
+        return result;
+    }
+
+
+
+
+    @Override
     public void tick() {
         for (IFish fish : fishList) {
             fish.tick();

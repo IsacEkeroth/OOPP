@@ -5,6 +5,7 @@ public class Fish implements IFish {
     // setup data
     private final IAquarium aquarium;
     private boolean isAlive;
+    private boolean isInLove;
 
     // fishdata
     private final IFishTypeData fishTypeData;
@@ -25,6 +26,7 @@ public class Fish implements IFish {
     public Fish(IAquarium aquarium, IFishTypeData fishTypeData, double initialDirection) {
 
         this.isAlive = true;
+        this.isInLove = true;
         this.aquarium = aquarium;
         this.fishTypeData = fishTypeData;
         this.behaviour = fishTypeData.createBehaviour(this, initialDirection);
@@ -88,8 +90,19 @@ public class Fish implements IFish {
         return bitingPower;
     }
 
+    @Override
     public boolean isAlive() {
         return isAlive;
+    }
+
+    @Override
+    public boolean isInLove() {
+        return isInLove;
+    }
+
+    @Override
+    public void setLove(boolean love) {
+        this.isInLove = love;
     }
 
     @Override

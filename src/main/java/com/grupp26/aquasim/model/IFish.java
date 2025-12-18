@@ -30,4 +30,8 @@ public interface IFish extends ITickable {
     double getDirection();
 
     String getType();
+
+    void setLove(boolean love);
+
+    boolean isInLove();
 }

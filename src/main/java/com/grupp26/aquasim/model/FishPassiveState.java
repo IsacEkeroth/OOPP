@@ -1,12 +1,12 @@
 package com.grupp26.aquasim.model;
 
-public class PassiveState implements IFishState {
+public class FishPassiveState implements IFishState {
     private IFish fish;
     private SimpleMove simplemove;
     private IFishBehaviour context;
     private IAquarium aquarium;
 
-    public PassiveState(IFishBehaviour context, IFish fish, SimpleMove simplemove, IAquarium aquarium) {
+    public FishPassiveState(IFishBehaviour context, IFish fish, SimpleMove simplemove, IAquarium aquarium) {
         this.context = context;
         this.fish = fish;
         this.simplemove = simplemove;
@@ -22,10 +22,24 @@ public class PassiveState implements IFishState {
         return false;
     }
 
+    private boolean areTherePartners() {
+        for (IFish fish : aquarium.getinLoveFish(this.fish)) {
+            if (fish.isAlive() && this.fish.isInLove()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private IFishState checkState() {
         if (!fish.isAlive()) {
             return context.getDeathState();
-        } else if (this.fish.getHunger() > context.getHungryAt() && aquarium.getFood() != null
+        
+        }
+        else if (areTherePartners()){
+            return context.getLoveSeekingState();
+        }
+        else if (this.fish.getHunger() > context.getHungryAt() && aquarium.getFood() != null
                 && !aquarium.getFood().isEmpty() && isThereFood()) {
             return context.getHungerState();
             // if there is food in the aquarium and you are hungry, enter hungry mode
