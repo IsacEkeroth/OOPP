@@ -22,13 +22,9 @@ public class MainView extends JFrame implements IMainView {
     private IModelFacade facade;
 
     private JButton selectedButton = null;
+    // TODO     -- Ska denna vara package private? --
     Map<ActiveMode, JButton> selectableButtons = new HashMap<ActiveMode, JButton>();
-
     private Map<String, JButton> fishButtons = new HashMap<>();
-
-    // TODO Mappar varje entityID till nuvarande tick för hela simulationen
-    // Agerar som "minne" för view
-    // Varje entityID som ska ritas är mappad till ett tick.
     private Map<String, Integer> entityAnimationCounter = new HashMap<>();
 
 
