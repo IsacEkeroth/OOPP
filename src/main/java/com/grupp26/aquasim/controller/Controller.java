@@ -34,12 +34,9 @@ public class Controller implements IController {
         initListeners();
     }
 
-    // TODO -- Pga knapparna ska släckas och lysa vid klick har det blivit en del
-    // logik här, vi skulle kunna skita i det --
     // Controller reggar sig själv som lyssnare på addFish-knappen i view
     private void initListeners() {
 
-        // Borde ändra namn nu kanske? Denna öppnar bara menyn
         view.getAddFishButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

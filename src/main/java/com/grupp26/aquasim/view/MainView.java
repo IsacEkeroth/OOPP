@@ -20,8 +20,8 @@ public class MainView extends JFrame implements IMainView {
     private IModelFacade facade;
 
     private JButton selectedButton = null;
-    // TODO -- Ska denna vara package private? --
-    Map<ActiveMode, JButton> selectableButtons = new HashMap<ActiveMode, JButton>();
+
+    private Map<ActiveMode, JButton> selectableButtons = new HashMap<ActiveMode, JButton>();
     private Map<String, JButton> fishButtons = new HashMap<>();
     private Map<String, Integer> entityAnimationCounter = new HashMap<>();
 
@@ -205,26 +205,35 @@ public class MainView extends JFrame implements IMainView {
         for (JButton button : selectableButtons.values()) {
             setInActive(button);
         }
-        for (JButton button : fishButtons.values()) {
+
+        if (selectedButton != null) {
+            setActive(selectedButton);
+        }
+
+        // handle fish selection menu
+        handleMenu(mode, fishName, fishButtons, fishMenuPanel);
+    }
+
+    private void handleMenu(ActiveMode mode, String type, Map<String, JButton> menuButtons, JPanel panel) {
+
+        for (JButton button : menuButtons.values()) {
             setInActive(button);
         }
 
         if (mode == ActiveMode.PLACING_FISH) {
             setActive(selectableButtons.get(ActiveMode.FISH_MENU));
 
-            if (fishButtons.containsKey(fishName)) {
-                setActive(fishButtons.get(fishName));
+            if (menuButtons.containsKey(type)) {
+                setActive(menuButtons.get(type));
             }
 
-        } else if (selectedButton != null) {
-            setActive(selectedButton);
         }
 
         if (mode == ActiveMode.FISH_MENU) {
-            fishMenuPanel.setVisible(!fishMenuPanel.isVisible());
+            panel.setVisible(!panel.isVisible());
             setInActive(selectedButton);
         } else if (mode != ActiveMode.PLACING_FISH) {
-            fishMenuPanel.setVisible(false);
+            panel.setVisible(false);
         }
     }
 
