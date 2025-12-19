@@ -3,7 +3,7 @@ package com.grupp26.aquasim.model;
 public class FishFactory {
     private IAquarium aquarium;
 
-    FishFactory(IAquarium aquarium) {
+    public FishFactory(IAquarium aquarium) {
         this.aquarium = aquarium;
     }
 
