@@ -1,5 +1,13 @@
 package com.grupp26.aquasim.model;
 
+/**
+ * Represents a eatable entity in the aquarium.
+ * <p>
+ *     The class handles the foods value and its state (isEaten). <br>
+ *     Just like the fish, a food delegates its movements or logic to a {@link IFoodBehaviour}
+ *     and works as a resource that the fish can interact with.
+ * </p>
+ */
 public class Food implements IEdible {
     private Vec2<Integer> size = new Vec2<Integer>(50, 50);
     private Vec3<Integer> pos;
@@ -7,6 +15,8 @@ public class Food implements IEdible {
     private boolean isEaten;
     private IFoodBehaviour behaviour;
     private IAquarium aquarium;
+
+    private String TYPE = "FOOD";
 
     public Food(Vec3<Integer> pos, int amount, IAquarium aquarium) {
         this.pos = pos;
@@ -38,7 +48,7 @@ public class Food implements IEdible {
     public int getAmount() {
         return amount;
     }
-    
+
     @Override
     public void eatenBy(IFish fish) {
         int nutritionGained = Math.min(amount, fish.getBitingPower());
@@ -59,6 +69,11 @@ public class Food implements IEdible {
     @Override
     public Vec2<Integer> getSize() {
         return new Vec2<>(size);
+    }
+
+    @Override
+    public String getType() {
+        return TYPE;
     }
 
 }

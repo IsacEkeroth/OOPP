@@ -1,5 +1,14 @@
 package com.grupp26.aquasim.model;
 
+/**
+ * Represents the terminal state of a fish after its health has been depleted.
+ * <p>
+ *     In this state, the fish is considered deceased and all active behaviors,
+ *    such as movement and hunger-tracking, are disabled. <br>
+ *    This state serves as a final point in the fish's lifecycle where no further
+ *    transitions are possible.
+ * </p>
+ */
 public class FishDeathState implements IFishState {
     private IFish fish;
     private IAquarium aquarium;

@@ -1,5 +1,14 @@
 package com.grupp26.aquasim.model;
 
+/**
+ * A factory responsible for creating different types of instances of fish.
+ * <p>
+ * The class centralises the configuration of different species of fish through defining
+ * their physiological attributes and behaviours.
+ * <br> This hides the complexity at instantiation and makes sure that all fish of a
+ * given species is created with the correct base values.
+ * </p>
+ */
 public class FishFactory {
     private IAquarium aquarium;
 

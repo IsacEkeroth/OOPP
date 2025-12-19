@@ -2,6 +2,15 @@ package com.grupp26.aquasim.model;
 
 import java.util.Vector;
 
+/**
+ * A generic container class representing a three-dimensional vector or coordinate.
+ * <p>
+ *     This class extends {@link java.util.Vector} and is designed to store exactly
+ *     three elements of type {@code E}. In this simulation, the Z-axis is primarily
+ *     used to manage <b>depth</b>, determining the rendering order of entities.
+ * </p>
+ * @param <E> The type of elements stored in the vector.
+ */
 public class Vec3<E> extends Vector<E> {
     public Vec3(E x, E y, E z) {
         super(3);

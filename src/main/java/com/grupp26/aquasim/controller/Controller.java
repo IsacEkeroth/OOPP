@@ -15,6 +15,16 @@ import java.awt.event.MouseMotionListener;
 
 import com.grupp26.aquasim.view.DecorationSelectionListener;
 
+/**
+ * The controller in the MVC-architecture which handles user interactions.
+ * <p>
+ * This class applies javas built-in {@link java.awt.event.ActionEvent} and
+ * {@link java.awt.event.MouseAdapter} to listen for UI events.
+ * <p>
+ * The class is responsible for listening to events from {@link IMainView}, interpret
+ * these and call appropriate methods in {@link IModelFacade} to update the models state.
+ *
+ */
 public class Controller implements IController {
     // offset to make it feel more resposive, placing it at the mouse instead of
     // down to the right

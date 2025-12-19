@@ -8,6 +8,14 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 
+/**
+ *
+ * Handles loading, caching and animation of the game graphics.
+ * <p>
+ * The class works as a central hub that contains both static images and
+ * specific frames for animated sprites through extracting sub-pictures from sprite sheets.
+ *
+ */
 public class SpriteManager {
     private static final HashMap<String, BufferedImage> CACHE = new HashMap<>();
     private static final HashMap<String, AnimationSequence> ANIMATION_MAP = new HashMap<>();

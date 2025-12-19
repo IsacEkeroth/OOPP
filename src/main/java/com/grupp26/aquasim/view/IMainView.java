@@ -5,6 +5,15 @@ import com.grupp26.aquasim.model.IModelFacade;
 
 import javax.swing.*;
 
+/**
+ * Defines the external interface for the games main view.
+ * <p>
+ * This interface specifies the methods which are needed to control the user interface,
+ * handle interaction-listeners and provides access to the central UI-components.
+ * <p>
+ * Inheriting from {@link IObserver} guarantees that the view can answer on any state changes
+ * in the model.
+ */
 public interface IMainView extends IObserver {
     void setFacade(IModelFacade facade);
 

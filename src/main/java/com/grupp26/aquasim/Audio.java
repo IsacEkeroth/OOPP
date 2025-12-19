@@ -7,6 +7,14 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Handles audio playback for the simulation using the JavaFX Media API.
+ * <p>
+ *     This class acts as a wrapper around JavaFX's multimedia capabilities,
+ *     providing a simplified interface for loading, caching, and playing
+ *     audio assets.
+ * </p>
+ */
 public class Audio implements IAudio {
     private Map<String, Media> cache = new HashMap<String, Media>();
 
