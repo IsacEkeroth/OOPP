@@ -45,6 +45,7 @@ public class PassiveState implements IFishState {
         // check state, if no switch, continue swimming
     }
 
+    @Override
     public double getDirection() {
         return passiveMove.getDirection();
     }

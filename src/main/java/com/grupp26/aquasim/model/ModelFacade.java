@@ -3,7 +3,6 @@ package com.grupp26.aquasim.model;
 import com.grupp26.aquasim.view.IObserver;
 
 import java.util.ArrayList;
-
 public class ModelFacade implements IModelFacade {
     private final IAquarium aquarium;
     private final FishFactory fishFactory;
@@ -19,6 +18,9 @@ public class ModelFacade implements IModelFacade {
     private final String FOOD_TYPE = "FOOD";
     private DecorationFactory decorationFactory;
     private FoodFactory foodFactory;
+    
+    private final ISimulationLoop simLoop;
+    private final int SIMULATION_DELAY = 25; // milliseconds
 
     public ModelFacade(IAquarium aquarium, IObserver observer) {
         this.aquarium = aquarium;
@@ -27,8 +29,10 @@ public class ModelFacade implements IModelFacade {
         this.decorationFactory = new DecorationFactory(aquarium);
         this.foodFactory = new FoodFactory(aquarium);
         School.reset(); // ensures singleton is reset when a new model is created
+        this.simLoop = new SimulationLoop(SIMULATION_DELAY, this::tick);
     }
 
+    @Override
     public void tick() {
         aquarium.tick();
         state = aquarium.getState();
@@ -79,24 +83,22 @@ public class ModelFacade implements IModelFacade {
     // TODO -- Lägg till fler knappar/menyval för att välja en specifik fisk --
     // String, int?
     // currently creates one of each type
+    @Override
     public void addFish(int posX, int posY) {
         Fish fish = fishFactory.createGoldfish(aquarium, Math.random() * 360);
         fish.setPos(posX, posY, fish.getPos().getZ());
         aquarium.addFish(fish);
 
-        notifyObservers();
-
         Fish twoFish = fishFactory.createClownfish(aquarium, Math.random() * 360);
         twoFish.setPos(posX, posY, twoFish.getPos().getZ());
         aquarium.addFish(twoFish);
-        notifyObservers();
-
     }
 
     private boolean isDirectionRight(double direction) {
         return Math.cos(direction) > 0;
     }
 
+    @Override
     public ArrayList<IEntity> getEntities() {
         return new ArrayList<>(entities);
     }
@@ -105,22 +107,20 @@ public class ModelFacade implements IModelFacade {
     public void removeFish() {
         // Temporary call to removeLastFish() --> Delete later
         aquarium.removeLastFish();
-        notifyObservers();
     }
 
+    @Override
     public void addDecoration(String type, int x, int y) {
         IDecoration decoration = decorationFactory.createDecoration(type);
         decoration.setPos(x, y, decoration.getPos().getZ());
         aquarium.addDecoration(decoration);
-        notifyObservers();
     }
 
+    @Override
     public void addFood(String type, int posX, int posY) {
         IEdible food = foodFactory.createFood(type);
         food.setPos(posX, posY, food.getPos().getZ());
         aquarium.addFood(food);
-
-        notifyObservers();
     }
 
     @Override

@@ -83,6 +83,7 @@ public class HungerState implements IFishState {
         }
     }
 
+    @Override
     public double getDirection() {
         return this.targetmove.getDirection();
     }

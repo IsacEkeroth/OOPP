@@ -8,6 +8,7 @@ public class Aquarium implements IAquarium {
     private final ArrayList<IEdible> foodList = new ArrayList<>();
 
     private final Vec2<Integer> aquariumSize;
+    private int HEIGHT_OFFSET = 25; // Adjustable offset to account for window borders
 
     // Considered ph as a double first, but x10 it instead to keep them all as int
     // Maybe all should be double for more precision? or x10 like ph?
@@ -19,7 +20,7 @@ public class Aquarium implements IAquarium {
     // Do we want more attributes? Light level, cleanliness, glass-cleanliness?
 
     public Aquarium(int width, int height) {
-        aquariumSize = new Vec2<>(width, height - 25);
+        aquariumSize = new Vec2<>(width, height - HEIGHT_OFFSET);
         defaultAttributes();
     }
 
