@@ -2,6 +2,9 @@ package com.grupp26.aquasim.model;
 
 import javax.swing.Timer;
 
+/**
+ * Simulation loop using a Swing Timer to periodically execute a given action.
+ */
 public class SimulationLoop implements ISimulationLoop {
     private final Timer timer;
     

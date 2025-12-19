@@ -3,7 +3,6 @@ package com.grupp26.aquasim.model;
 import com.grupp26.aquasim.view.IObserver;
 
 import java.util.ArrayList;
-
 public class ModelFacade implements IModelFacade {
     private final IAquarium aquarium;
     private final FishFactory fishFactory;
@@ -21,6 +20,7 @@ public class ModelFacade implements IModelFacade {
     private FoodFactory foodFactory;
     
     private final ISimulationLoop simLoop;
+    private final int SIMULATION_DELAY = 25; // milliseconds
 
     public ModelFacade(IAquarium aquarium, IObserver observer) {
         this.aquarium = aquarium;
@@ -28,7 +28,7 @@ public class ModelFacade implements IModelFacade {
         this.fishFactory = new FishFactory();
         this.decorationFactory = new DecorationFactory(aquarium);
         this.foodFactory = new FoodFactory(aquarium);
-        this.simLoop = new SimulationLoop(25, this::tick);
+        this.simLoop = new SimulationLoop(SIMULATION_DELAY, this::tick);
     }
 
     @Override
