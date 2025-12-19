@@ -210,15 +210,16 @@ public class MainView extends JFrame implements IMainView {
         }
 
         if (mode == ActiveMode.PLACING_FISH) {
-            // Så man ser att menyn är aktiv
             setActive(selectableButtons.get(ActiveMode.FISH_MENU));
 
             if (fishButtons.containsKey(fishName)) {
                 setActive(fishButtons.get(fishName));
             }
+
         } else if (selectedButton != null) {
             setActive(selectedButton);
         }
+
         if (mode == ActiveMode.FISH_MENU) {
             fishMenuPanel.setVisible(!fishMenuPanel.isVisible());
             setInActive(selectedButton);

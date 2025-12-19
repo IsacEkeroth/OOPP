@@ -44,12 +44,7 @@ public class Controller implements IController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 mediaPlayer.notifyPlaySound("click");
-                // handleMouseState(ActiveMode.NONE);
                 handleMouseState(ActiveMode.FISH_MENU);
-                // if (mouseMode == ActiveMode.PLACING_FISH) {
-                // }
-                // view.getFishMenuPanel().setVisible(!view.getFishMenuPanel().isVisible());
-
             }
         });
 
@@ -71,7 +66,6 @@ public class Controller implements IController {
                 } else {
                     handleMouseState(ActiveMode.FOOD);
                 }
-                // view.getFishMenuPanel().setVisible(false);
             }
         });
 
@@ -107,8 +101,6 @@ public class Controller implements IController {
             }
         });
 
-        // Observera, ingen getter här. För att slippa loopa igenom fishMenu,
-        // som är en JPanel, för att få knapparna ur den.
         view.addFishMenuListener(new FishSelectionListener() {
             @Override
             public void onFishSelected(String fishType) {
