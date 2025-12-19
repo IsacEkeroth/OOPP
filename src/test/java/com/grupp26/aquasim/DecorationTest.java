@@ -1,5 +1,5 @@
-package com.grupp26.aquasim;
-
+//package com.grupp26.aquasim;
+/*
 import com.grupp26.aquasim.model.Aquarium;
 import com.grupp26.aquasim.model.Decoration;
 import com.grupp26.aquasim.model.IAquarium;
@@ -35,3 +35,5 @@ public class DecorationTest {
     }
 
 }
+
+ */

@@ -18,6 +18,10 @@ public interface IMainView extends IObserver {
 
     DrawPanel getDrawPanel();
 
-    void updateActiveButton(ActiveMode mode);
+    void updateActiveButton(ActiveMode mode, String fishName);
+
+    void addFishMenuListener(FishSelectionListener listener);
+
+    JPanel getFishMenuPanel();
 
 }
