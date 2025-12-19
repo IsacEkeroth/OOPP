@@ -8,6 +8,8 @@ public class Food implements IEdible {
     private IFoodBehaviour behaviour;
     private IAquarium aquarium;
 
+    private String TYPE = "FOOD";
+
     public Food(Vec3<Integer> pos, int amount, IAquarium aquarium) {
         this.pos = pos;
         this.amount = amount;
@@ -38,7 +40,7 @@ public class Food implements IEdible {
     public int getAmount() {
         return amount;
     }
-    
+
     @Override
     public void eatenBy(IFish fish) {
         int nutritionGained = Math.min(amount, fish.getBitingPower());
@@ -59,6 +61,11 @@ public class Food implements IEdible {
     @Override
     public Vec2<Integer> getSize() {
         return new Vec2<>(size);
+    }
+
+    @Override
+    public String getType() {
+        return TYPE;
     }
 
 }

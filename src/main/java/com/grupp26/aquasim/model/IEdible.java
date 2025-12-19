@@ -11,9 +11,11 @@ public interface IEdible extends ITickable {
     int getAmount();
 
     Vec2<Integer> getSize();
-    
+
     void eatenBy(IFish fish);
 
     boolean isEaten();
+
+    String getType();
 
 }

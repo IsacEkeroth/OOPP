@@ -14,8 +14,6 @@ public class ModelFacade implements IModelFacade {
     // TODO -- Typerna är bara en placeholder för tillfället --
     // TODO -- Factory method borde sköta det istället? --
     private final String BG_TYPE = "BG";
-    private final String FOOD_TYPE = "FOOD";
-    private final String LOVE_FOOD_TYPE = "LOVE_FOOD";
     private DecorationFactory decorationFactory;
     private FoodFactory foodFactory;
 
@@ -46,15 +44,20 @@ public class ModelFacade implements IModelFacade {
         entities.add(bgEntity);
 
         for (IFish fish : state.getFish()) {
-            IEntity entity = new Entity(
-                    fish.getPos(),
-                    fish.getSize(),
-                    fish.getType(),
-                    fish.getFishID(), !isDirectionRight(fish.getDirection())); // inverted direction since our sprites
-                                                                               // are now to the left, this should be
-                                                                               // handled by the sprite manager in the
-                                                                               // future
-            entities.add(entity);
+            if (fish.isAlive()) {
+                IEntity entity = new Entity(
+                        fish.getPos(),
+                        fish.getSize(),
+                        fish.getType(),
+                        fish.getFishID(), !isDirectionRight(fish.getDirection())); // inverted direction since our
+                                                                                   // sprites
+                                                                                   // are now to the left, this should
+                                                                                   // be
+                                                                                   // handled by the sprite manager in
+                                                                                   // the
+                                                                                   // future
+                entities.add(entity);
+            }
         }
         for (IDecoration deco : state.getDecorations()) {
             IEntity entity = new Entity(deco.getPos(),
@@ -65,14 +68,11 @@ public class ModelFacade implements IModelFacade {
             entities.add(entity);
         }
         for (IEdible food : state.getFood()) {
-            IEntity entity;
-            if (food instanceof LoveFood) {
-                entity = new Entity(food.getPos(), food.getSize(), LOVE_FOOD_TYPE, "null", true);
-            } else {
-
-                entity = new Entity(food.getPos(), food.getSize(), FOOD_TYPE, "null", true);
+            if (!food.isEaten()) {
+                IEntity entity = new Entity(food.getPos(), food.getSize(), food.getType(), "null", true);
+                entities.add(entity);
             }
-            entities.add(entity);
+
         }
         notifyObservers();
     }
