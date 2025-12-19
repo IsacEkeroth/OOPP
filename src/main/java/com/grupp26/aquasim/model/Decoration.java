@@ -1,5 +1,8 @@
 package com.grupp26.aquasim.model;
 
+/**
+ * Represents a decoration object within the aquarium.
+ */
 public class Decoration implements IDecoration {
     private final String TYPE = "ANCHOR";
 

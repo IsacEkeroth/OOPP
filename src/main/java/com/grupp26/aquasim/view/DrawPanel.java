@@ -10,6 +10,16 @@ import javax.swing.JPanel;
 
 import java.util.Map;
 
+/**
+ * This class is responsible for the actual rendering of all objects.
+ * <p>
+ * The class handles the draw-order through organizing {@link IRenderedEntity}-objects
+ * in different {@link #layers} of depth.
+ * <p>
+ * This makes sure objects are drawn in the correct order (background -> foreground).
+ * </p>
+ *
+ */
 public class DrawPanel extends JPanel {
     Map<Integer, ArrayList<IRenderedEntity>> layers = new HashMap<>();
 
