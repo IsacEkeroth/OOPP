@@ -32,4 +32,12 @@ public interface IMainView extends IObserver {
 
     void addFoodMenuListener(FoodSelectionListener listener);
 
+    JPanel getDecorationMenuPanel();
+
+    JButton getAnchorButton();
+
+    JButton getSeaweedButton();
+
+    void addDecorationMenuListener(DecorationSelectionListener listener);
+
 }

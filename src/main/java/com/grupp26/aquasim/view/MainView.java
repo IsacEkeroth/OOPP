@@ -3,6 +3,7 @@ package com.grupp26.aquasim.view;
 import com.grupp26.aquasim.controller.ActiveMode;
 import com.grupp26.aquasim.model.IEntity;
 import com.grupp26.aquasim.model.IModelFacade;
+import com.grupp26.aquasim.view.DecorationSelectionListener;
 
 import javafx.embed.swing.JFXPanel;
 
@@ -24,6 +25,7 @@ public class MainView extends JFrame implements IMainView {
     private Map<ActiveMode, JButton> selectableButtons = new HashMap<ActiveMode, JButton>();
     private Map<String, JButton> fishButtons = new HashMap<>();
     private Map<String, JButton> foodButtons = new HashMap<>();
+    private Map<String, JButton> decorationButtons = new HashMap<>();
     private Map<String, Integer> entityAnimationCounter = new HashMap<>();
 
     private final JPanel controlPanel = new JPanel();
@@ -38,8 +40,12 @@ public class MainView extends JFrame implements IMainView {
     private final JButton baseFoodButton = new JButton("Base");
     private final JButton loveFoodButton = new JButton("Lovefood");
 
+    private final JButton anchorButton = new JButton("Anchor");
+    private final JButton seaweedButton = new JButton("Seaweed");
+
     private final JPanel fishMenuPanel = new JPanel();
     private final JPanel foodMenuPanel = new JPanel();
+    private final JPanel decorationMenuPanel = new JPanel();
 
     public MainView(int windowWidth, int windowHeight) {
         this.windowWidth = windowWidth;
@@ -51,12 +57,16 @@ public class MainView extends JFrame implements IMainView {
     private void registerButtons() {
         selectableButtons.put(ActiveMode.FISH_MENU, this.getAddFishButton());
         selectableButtons.put(ActiveMode.FOOD_MENU, this.getAddFoodButton());
+        selectableButtons.put(ActiveMode.DECORATION_MENU, this.getDecorationButton());
 
         fishButtons.put("GoldFish", this.getGoldFishButton());
         fishButtons.put("ClownFish", this.getClownFishButton());
 
         foodButtons.put("Base", this.getBaseFoodButton());
         foodButtons.put("Lovefood", this.getLoveFoodButton());
+
+        decorationButtons.put("Anchor", this.getAnchorButton());
+        decorationButtons.put("Seaweed", this.getSeaweedButton());
     }
 
     private void initComponents() {
@@ -71,6 +81,7 @@ public class MainView extends JFrame implements IMainView {
 
         initFishSelectionPanel();
         initFoodSelectionPanel();
+        initDecorationSelectionPanel();
 
         controlPanel.setLayout(new GridLayout(1, 4));
         controlPanel.setOpaque(false);
@@ -103,6 +114,16 @@ public class MainView extends JFrame implements IMainView {
         foodMenuPanel.setBounds(10, windowHeight - 170, 250, 50);
         foodMenuPanel.setVisible(false);
         drawPanel.add(foodMenuPanel, BorderLayout.SOUTH);
+    }
+
+    private void initDecorationSelectionPanel() {
+        decorationMenuPanel.setLayout(new GridLayout(1, 2, 0, 0));
+        decorationMenuPanel.setOpaque(false);
+        decorationMenuPanel.add(anchorButton);
+        decorationMenuPanel.add(seaweedButton);
+        decorationMenuPanel.setBounds(10, windowHeight - 230, 250, 50);
+        decorationMenuPanel.setVisible(false);
+        drawPanel.add(decorationMenuPanel, BorderLayout.SOUTH);
     }
 
     public JPanel getFoodMenuPanel() {
@@ -223,6 +244,18 @@ public class MainView extends JFrame implements IMainView {
         }
     }
 
+    public JPanel getDecorationMenuPanel() {
+        return this.decorationMenuPanel;
+    }
+
+    public JButton getAnchorButton() {
+        return this.anchorButton;
+    }
+
+    public JButton getSeaweedButton() {
+        return this.seaweedButton;
+    }
+
     public DrawPanel getDrawPanel() {
         return this.drawPanel;
     }
@@ -252,6 +285,11 @@ public class MainView extends JFrame implements IMainView {
                 setInActive(button);
         }
 
+        for (JButton button : decorationButtons.values()) {
+            if (button != null)
+                setInActive(button);
+        }
+
         // hide menus
         if (mode == ActiveMode.FISH_MENU) {
             boolean show = !fishMenuPanel.isVisible();
@@ -277,6 +315,18 @@ public class MainView extends JFrame implements IMainView {
             if (foodButtons.containsKey(type)) {
                 setActive(foodButtons.get(type));
             }
+        } else if (mode == ActiveMode.DECORATION_MENU) {
+            boolean show = !decorationMenuPanel.isVisible();
+            showOnlyMenu(show ? decorationMenuPanel : null);
+            if (show) {
+                setActive(addDecorationButton);
+            }
+        } else if (mode == ActiveMode.PLACING_DECORATION) {
+            showOnlyMenu(decorationMenuPanel);
+            setActive(addDecorationButton);
+            if (decorationButtons.containsKey(type)) {
+                setActive(decorationButtons.get(type));
+            }
         } else {
             showOnlyMenu(null);
         }
@@ -285,6 +335,7 @@ public class MainView extends JFrame implements IMainView {
     private void showOnlyMenu(JPanel menuToShow) {
         fishMenuPanel.setVisible(false);
         foodMenuPanel.setVisible(false);
+        decorationMenuPanel.setVisible(false);
         if (menuToShow != null) {
             menuToShow.setVisible(true);
         }
@@ -292,5 +343,14 @@ public class MainView extends JFrame implements IMainView {
 
     public JButton getDecorationButton() {
         return this.addDecorationButton;
+    }
+
+    @Override
+    public void addDecorationMenuListener(DecorationSelectionListener listener) {
+        for (Component comp : decorationMenuPanel.getComponents()) {
+            if (comp instanceof JButton button) {
+                button.addActionListener(e -> listener.onDecorationSelected(button.getText()));
+            }
+        }
     }
 }
