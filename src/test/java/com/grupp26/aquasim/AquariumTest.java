@@ -15,10 +15,11 @@ public class AquariumTest {
     
     private final int width = 800;
     private final int height = 600;
+    private final int HEIGHT_OFFSET = 25; // must correspond to offset in Aquarium class
     
     @BeforeEach
     public void setup() {
-        aquarium = new Aquarium(width, height);
+        aquarium = new Aquarium(width, height + HEIGHT_OFFSET);
     }
     
     @Test
@@ -64,8 +65,26 @@ public class AquariumTest {
     }
     
     // Add clampTest when implemented
-//    @Test
-//    public void testClampedPosition() {}
+    @Test
+    public void testClampedPosition() {
+        Vec2<Integer> objSize = new Vec2<>(50, 50);
+        
+        // Negative clamps to 0
+        Vec2<Integer> negPos = aquarium.clampPosition(new Vec2<>(-10, -10), objSize);
+        assertEquals(0, negPos.getX());
+        assertEquals(0, negPos.getY());
+        
+        // Exceeding aquarium size clamps to aquariumsize - objSize
+        Vec2<Integer> exceedPos = aquarium.clampPosition(new Vec2<>(width + 10, height + 10), objSize);
+        assertEquals(width - objSize.getX(), exceedPos.getX());
+        assertEquals(height - objSize.getY(), exceedPos.getY());
+        
+        // Inside aquarium remains unchanged
+        Vec2<Integer> insidePos = aquarium.clampPosition(new Vec2<>(width/2, height/2), objSize);
+        assertEquals(width/2, insidePos.getX());
+        assertEquals(height/2, insidePos.getY());
+    }
+    
     
     @Test
     public void testAddRemoveFish() {
