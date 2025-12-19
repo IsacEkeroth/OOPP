@@ -1,5 +1,14 @@
 package com.grupp26.aquasim.model;
 
+/**
+ * Represents a single instance of a fish in the simulation.
+ *<p>
+ * The class handles the properties of the fish like health, hunger, age, etc.
+ * It uses composition for handling different specific movement patterns through
+ * {@link IFishBehaviour} and gets it's base attributes from {@link IFishTypeData}.
+ *</p>
+ *
+ */
 public class Fish implements IFish {
 
     // setup data

@@ -2,6 +2,14 @@ package com.grupp26.aquasim.model;
 
 import java.util.function.BiFunction;
 
+/**
+ * A data container that defines the specific properties and behaviours
+ * for a specific fish species.
+ * <p>
+ *     The class works as a blueprint that stores unchangeable data like: name of the species,
+ *     health, speed, etc.
+ * </p>
+ */
 public class FishTypeData implements IFishTypeData {
 
     private final String speciesName;

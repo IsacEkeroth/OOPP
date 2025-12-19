@@ -5,6 +5,14 @@ import com.grupp26.aquasim.model.IEntity;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
+/**
+ *
+ * A representation of an Entity which is optimized for rendering in the view.
+ * <p>
+ * This class extracts necessary information from the games model {@link IEntity}
+ * and links this information with the correct graphic from {@link SpriteManager}.
+ *
+ */
 public class RenderedEntity implements IRenderedEntity {
     BufferedImage image;
     private int currentTick;
@@ -13,10 +21,6 @@ public class RenderedEntity implements IRenderedEntity {
     public RenderedEntity(IEntity entity, int currentTick) {
         this.entity = entity;
         this.currentTick = currentTick;
-        // TODO -- Kom ihåg: entity_type behöver vara state om animationen ska kunna
-        // bero på tillstånd --
-        // TODO -- Eller kanske snarare OCKSÅ ett state, man kanske behöver båda trots
-        // allt --
         this.image = SpriteManager.getSprite(this.entity.getEntityType(), this.currentTick);
     }
 
