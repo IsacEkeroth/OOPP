@@ -1,5 +1,10 @@
 package com.grupp26.aquasim.model;
-
+/**
+ * FishMatingState represents the state of a fish when it is mating.
+ * <p>
+ *     In this state, the fish will perform mating behaviors and eventually give birth to offspring.
+ * </p>
+ */
 public class FishMatingState implements IFishState {
     private IFish fish;
     private IAquarium aquarium;
@@ -7,7 +12,7 @@ public class FishMatingState implements IFishState {
     private FishFactory factory;
     private int matingCounter; // räkna ned från ett nummer, om de parat klart är den 0
     private int moveStage; // ha koll på hur vi rör oss under rörelsen
-
+    
     public FishMatingState(IFishBehaviour context, IFish fish, IAquarium aquarium) {
         this.context = context;
         this.fish = fish;
