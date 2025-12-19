@@ -11,8 +11,8 @@ public class FoodSinkingState implements IFoodState{
         this.aquarium = aquarium;
     }
 
-    private boolean hasReachedBottom() {
-        return (food.getPos().getY() > aquarium.getAquariumSize().getY() - food.getSize().getY());
+    private boolean hasReachedBottom(){
+        return (food.getPos().getY() >= aquarium.getAquariumSize().getY() - food.getSize().getY());
     }
 
     private IFoodState checkState() {
