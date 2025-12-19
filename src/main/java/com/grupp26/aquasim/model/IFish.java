@@ -34,4 +34,8 @@ public interface IFish extends ITickable {
     void setLove(boolean love);
 
     boolean isInLove();
+
+    boolean canSpawnChild();
+
+    void setSpawnChild(boolean can);
 }

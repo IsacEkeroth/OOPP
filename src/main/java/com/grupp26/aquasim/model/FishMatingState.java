@@ -19,10 +19,14 @@ public class FishMatingState implements IFishState {
 
     private void giveBirth(){
         if(fish.getType().equals("Goldfish")){
-            aquarium.addFish(factory.createGoldfish(aquarium, 0));
+            IFish fishA = factory.createGoldfish(aquarium, 0);
+            fishA.setPos(this.fish.getPos().getX(), this.fish.getPos().getY(), this.fish.getPos().getZ());
+            aquarium.addFishToBuffer(fishA);
         }
         if(fish.getType().equals("Clownfish")){
-            aquarium.addFish(factory.createClownfish(aquarium, 0));
+            IFish fishB = factory.createClownfish(aquarium, 0);
+            fishB.setPos(this.fish.getPos().getX(), this.fish.getPos().getY(), this.fish.getPos().getZ());
+            aquarium.addFishToBuffer(fishB);
         }
     }
 
@@ -55,7 +59,7 @@ public class FishMatingState implements IFishState {
             action();
             if(matingCounter<=0){
                 matingCounter=0;
-                // giveBirth();
+                giveBirth();
             }
         }
         else{

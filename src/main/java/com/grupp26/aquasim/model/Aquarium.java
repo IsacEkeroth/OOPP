@@ -6,6 +6,7 @@ public class Aquarium implements IAquarium {
     private final ArrayList<IFish> fishList = new ArrayList<>();
     private final ArrayList<IDecoration> decorationList = new ArrayList<>();
     private final ArrayList<IEdible> foodList = new ArrayList<>();
+    private final ArrayList<IFish> fishBuffer = new ArrayList<>();
 
     private final Vec2<Integer> aquariumSize;
 
@@ -158,6 +159,10 @@ public class Aquarium implements IAquarium {
         return result;
     }
 
+    @Override
+    public void addFishToBuffer(IFish fish){
+        this.fishBuffer.add(fish);
+    }
 
 
 
@@ -174,5 +179,7 @@ public class Aquarium implements IAquarium {
         for (IEdible edible : foodList) {
             edible.tick();
         }
+        fishList.addAll(fishBuffer);
+        fishBuffer.clear();
     }
 }
