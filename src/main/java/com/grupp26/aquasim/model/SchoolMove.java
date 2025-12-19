@@ -15,7 +15,7 @@ public class SchoolMove implements IMovement{
     private double direction;
     
     // Schooling
-    private final double schoolRadius = 100.0;
+    private final double schoolRadius = 125.0;
     private final double turnFactor = 0.2; // how sharp the fish turns towards the school center
                                           // (0 = no turn, 1 = instant turn)
     
@@ -24,7 +24,7 @@ public class SchoolMove implements IMovement{
     
     // Wall avoidance
     int wallMargin = 50; // how close to the wall before avoidance starts
-    double wallTurnFactor = 0.2; // how sharp the fish turns away from walls
+    double wallTurnFactor = 0.1; // how sharp the fish turns away from walls
                                 // (0 = no turn, 1 = instant turn)
     public SchoolMove(IAquarium aquarium, double direction) {
         this.aquarium = aquarium;

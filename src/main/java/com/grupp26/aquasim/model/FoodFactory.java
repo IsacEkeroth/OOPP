@@ -23,8 +23,8 @@ public class FoodFactory {
         int depth = 1;
 
         // Register register food types
-        register("base", () -> new Food(new Vec3<>(centerX, centerY, depth), 50, aquarium));
-        register("lovefood", () -> new LoveFood(new Vec3<>(centerX, centerY, depth), 50, aquarium));
+        register("base", () -> new Food(new Vec3<>(centerX, centerY, depth), 2000, aquarium));
+        register("lovefood", () -> new LoveFood(new Vec3<>(centerX, centerY, depth), 1000, aquarium));
     }
 
     public void register(String type, Supplier<IEdible> FoodConstructor) {
