@@ -33,4 +33,20 @@ public interface IMainView extends IObserver {
 
     JPanel getFishMenuPanel();
 
+    JButton getBaseFoodButton();
+
+    JButton getLoveFoodButton();
+
+    JPanel getFoodMenuPanel();
+
+    void addFoodMenuListener(FoodSelectionListener listener);
+
+    JPanel getDecorationMenuPanel();
+
+    JButton getAnchorButton();
+
+    JButton getSeaweedButton();
+
+    void addDecorationMenuListener(DecorationSelectionListener listener);
+
 }

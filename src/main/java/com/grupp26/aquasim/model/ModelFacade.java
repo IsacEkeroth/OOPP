@@ -124,14 +124,14 @@ public class ModelFacade implements IModelFacade {
 
     @Override
     public void addDecoration(String type, int x, int y) {
-        IDecoration decoration = decorationFactory.createDecoration(type);
+        IDecoration decoration = decorationFactory.createDecoration(type.toLowerCase());
         decoration.setPos(x, y, decoration.getPos().getZ());
         aquarium.addDecoration(decoration);
     }
 
     @Override
     public void addFood(String type, int posX, int posY) {
-        IEdible food = foodFactory.createFood(type);
+        IEdible food = foodFactory.createFood(type.toLowerCase());
         food.setPos(posX, posY, food.getPos().getZ());
         aquarium.addFood(food);
     }
