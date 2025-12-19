@@ -20,6 +20,8 @@ public interface IMainView extends IObserver {
 
     void updateActiveButton(ActiveMode mode, String fishName);
 
-    public void addFishMenuListener(FishSelectionListener listener);
+    void addFishMenuListener(FishSelectionListener listener);
+
+    JPanel getFishMenuPanel();
 
 }

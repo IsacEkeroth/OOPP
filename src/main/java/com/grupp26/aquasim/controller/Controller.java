@@ -33,7 +33,9 @@ public class Controller implements IController {
         this.mediaPlayer = mediaPlayer;
         initListeners();
     }
-    // TODO     -- Pga knapparna ska släckas och lysa vid klick har det blivit en del logik här, vi skulle kunna skita i det --
+
+    // TODO -- Pga knapparna ska släckas och lysa vid klick har det blivit en del
+    // logik här, vi skulle kunna skita i det --
     // Controller reggar sig själv som lyssnare på addFish-knappen i view
     private void initListeners() {
 
@@ -42,16 +44,17 @@ public class Controller implements IController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 mediaPlayer.notifyPlaySound("click");
-                if (mouseMode == ActiveMode.FISH_MENU || mouseMode == ActiveMode.PLACING_FISH) {
-                    handleMouseState(ActiveMode.NONE);
-                }
-                else {
-                    handleMouseState(ActiveMode.FISH_MENU);
-                }
+                // handleMouseState(ActiveMode.NONE);
+                handleMouseState(ActiveMode.FISH_MENU);
+                // if (mouseMode == ActiveMode.PLACING_FISH) {
+                // }
+                // view.getFishMenuPanel().setVisible(!view.getFishMenuPanel().isVisible());
+
             }
         });
 
         view.getRemoveFishButton().addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 mediaPlayer.notifyPlaySound("click");
@@ -65,10 +68,10 @@ public class Controller implements IController {
                 mediaPlayer.notifyPlaySound("click");
                 if (mouseMode == ActiveMode.FOOD) {
                     handleMouseState(ActiveMode.NONE);
-                }
-                else {
+                } else {
                     handleMouseState(ActiveMode.FOOD);
                 }
+                // view.getFishMenuPanel().setVisible(false);
             }
         });
 
@@ -104,7 +107,6 @@ public class Controller implements IController {
             }
         });
 
-
         // Observera, ingen getter här. För att slippa loopa igenom fishMenu,
         // som är en JPanel, för att få knapparna ur den.
         view.addFishMenuListener(new FishSelectionListener() {
@@ -125,11 +127,12 @@ public class Controller implements IController {
     private void handleMouseState(ActiveMode mode) {
         handleMouseState(mode, NO_FISH_TYPE);
     }
-    private void handleMouseState(ActiveMode mode, String fishType) {
-            mouseMode = mode;
-            selectedFishType = fishType;
 
-            view.updateActiveButton(mode, fishType);
+    private void handleMouseState(ActiveMode mode, String fishType) {
+        mouseMode = mode;
+        selectedFishType = fishType;
+
+        view.updateActiveButton(mode, fishType);
     }
 
 }

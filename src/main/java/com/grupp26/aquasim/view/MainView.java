@@ -8,10 +8,8 @@ import javafx.embed.swing.JFXPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.Desktop.Action;
 import java.util.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainView extends JFrame implements IMainView {
 
@@ -22,11 +20,10 @@ public class MainView extends JFrame implements IMainView {
     private IModelFacade facade;
 
     private JButton selectedButton = null;
-    // TODO     -- Ska denna vara package private? --
+    // TODO -- Ska denna vara package private? --
     Map<ActiveMode, JButton> selectableButtons = new HashMap<ActiveMode, JButton>();
     private Map<String, JButton> fishButtons = new HashMap<>();
     private Map<String, Integer> entityAnimationCounter = new HashMap<>();
-
 
     private final JPanel controlPanel = new JPanel();
     private final JButton addFishButton = new JButton("Add fish");
@@ -36,7 +33,7 @@ public class MainView extends JFrame implements IMainView {
     private final JButton goldFishButton = new JButton("GoldFish");
     private final JButton clownFishButton = new JButton("ClownFish");
 
-    private JPanel fishMenuPanel;      // Borde nog vara final också?
+    private JPanel fishMenuPanel; // Borde nog vara final också?
 
     public MainView(int windowWidth, int windowHeight) {
         this.windowWidth = windowWidth;
@@ -72,7 +69,7 @@ public class MainView extends JFrame implements IMainView {
         controlPanel.add(removeFishButton, 2);
         controlPanel.add(addDecorationButton, 3);
 
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0,0));
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         buttonPanel.setOpaque(false);
         buttonPanel.add(controlPanel);
 
@@ -85,19 +82,17 @@ public class MainView extends JFrame implements IMainView {
         // Audio setup
         JFXPanel jFXPanel = new JFXPanel();
         this.add(jFXPanel);
-
-        setUpViewListeners();
-
     }
-
 
     private void initFishSelectionPanel() {
         fishMenuPanel = new JPanel();
         fishMenuPanel.setLayout(new GridLayout(1, 2, 0, 0));
         fishMenuPanel.setOpaque(false);
 
-        // Vore kanske egentligen bättre med en lista som loopas igenom med add(), så man slipper lägga till en knapp
-        // här varje gång. Med en lista hade vi bara behövt lägga till en knapp längst upp.
+        // Vore kanske egentligen bättre med en lista som loopas igenom med add(), så
+        // man slipper lägga till en knapp
+        // här varje gång. Med en lista hade vi bara behövt lägga till en knapp längst
+        // upp.
         fishMenuPanel.add(goldFishButton);
         fishMenuPanel.add(clownFishButton);
 
@@ -106,17 +101,11 @@ public class MainView extends JFrame implements IMainView {
         drawPanel.add(fishMenuPanel, BorderLayout.SOUTH);
     }
 
-
-    // Är detta lite skumt? borde ligga i Controller?
-    private void setUpViewListeners() {
-        // Lambda syntax istället för Anonym inre klass
-        addFishButton.addActionListener(e -> {
-            fishMenuPanel.setVisible(!fishMenuPanel.isVisible());
-            drawPanel.repaint();
-        });
+    public JPanel getFishMenuPanel() {
+        return this.fishMenuPanel;
     }
 
-
+    @Override
     public void addFishMenuListener(FishSelectionListener listener) {
         for (Component comp : fishMenuPanel.getComponents()) {
             if (comp instanceof JButton) {
@@ -127,7 +116,6 @@ public class MainView extends JFrame implements IMainView {
             }
         }
     }
-
 
     public void addRenderedEntity(IRenderedEntity e) {
         drawPanel.addEntity(e);
@@ -230,6 +218,12 @@ public class MainView extends JFrame implements IMainView {
             }
         } else if (selectedButton != null) {
             setActive(selectedButton);
+        }
+        if (mode == ActiveMode.FISH_MENU) {
+            fishMenuPanel.setVisible(!fishMenuPanel.isVisible());
+            setInActive(selectedButton);
+        } else if (mode != ActiveMode.PLACING_FISH) {
+            fishMenuPanel.setVisible(false);
         }
     }
 
