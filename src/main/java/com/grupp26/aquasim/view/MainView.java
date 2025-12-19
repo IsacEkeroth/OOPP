@@ -243,19 +243,6 @@ public class MainView extends JFrame implements IMainView {
             if (button != null)
                 setInActive(button);
         }
-        if (selectedButton != null) {
-            setActive(selectedButton);
-        }
-        // handle mutually exclusive menus
-        // Hide both menus by default
-        fishMenuPanel.setVisible(false);
-        foodMenuPanel.setVisible(false);
-
-        // Reset all button states
-        for (JButton button : selectableButtons.values()) {
-            if (button != null)
-                setInActive(button);
-        }
         for (JButton button : fishButtons.values()) {
             if (button != null)
                 setInActive(button);
@@ -265,58 +252,41 @@ public class MainView extends JFrame implements IMainView {
                 setInActive(button);
         }
 
-        // Fish menu logic
+        // hide menus
         if (mode == ActiveMode.FISH_MENU) {
-            // Toggle fish menu visibility
             boolean show = !fishMenuPanel.isVisible();
-            fishMenuPanel.setVisible(show);
+            showOnlyMenu(show ? fishMenuPanel : null);
             if (show) {
                 setActive(addFishButton);
             }
         } else if (mode == ActiveMode.PLACING_FISH) {
-            fishMenuPanel.setVisible(true);
+            showOnlyMenu(fishMenuPanel);
             setActive(addFishButton);
             if (fishButtons.containsKey(type)) {
                 setActive(fishButtons.get(type));
             }
-        }
-        // Food menu logic
-        else if (mode == ActiveMode.FOOD_MENU) {
+        } else if (mode == ActiveMode.FOOD_MENU) {
             boolean show = !foodMenuPanel.isVisible();
-            foodMenuPanel.setVisible(show);
+            showOnlyMenu(show ? foodMenuPanel : null);
             if (show) {
                 setActive(addFoodButton);
             }
         } else if (mode == ActiveMode.PLACING_FOOD) {
-            foodMenuPanel.setVisible(true);
+            showOnlyMenu(foodMenuPanel);
             setActive(addFoodButton);
             if (foodButtons.containsKey(type)) {
                 setActive(foodButtons.get(type));
             }
+        } else {
+            showOnlyMenu(null);
         }
     }
 
-    private void handleMenu(ActiveMode mode, String type, Map<String, JButton> menuButtons, JPanel panel,
-            ActiveMode placingMode, ActiveMode menuMode) {
-        for (JButton button : menuButtons.values()) {
-            if (button != null)
-                setInActive(button);
-        }
-        if (mode == placingMode) {
-            JButton menuButton = selectableButtons.get(menuMode);
-            if (menuButton != null)
-                setActive(menuButton);
-            if (menuButtons.containsKey(type)) {
-                JButton typeButton = menuButtons.get(type);
-                if (typeButton != null)
-                    setActive(typeButton);
-            }
-        }
-        if (mode == menuMode) {
-            panel.setVisible(!panel.isVisible());
-            setInActive(selectedButton);
-        } else if (mode != placingMode) {
-            panel.setVisible(false);
+    private void showOnlyMenu(JPanel menuToShow) {
+        fishMenuPanel.setVisible(false);
+        foodMenuPanel.setVisible(false);
+        if (menuToShow != null) {
+            menuToShow.setVisible(true);
         }
     }
 
