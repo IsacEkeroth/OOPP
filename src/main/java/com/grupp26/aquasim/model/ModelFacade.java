@@ -15,6 +15,7 @@ public class ModelFacade implements IModelFacade {
     // TODO -- Factory method borde sköta det istället? --
     private final String BG_TYPE = "BG";
     private final String FOOD_TYPE = "FOOD";
+    private final String LOVE_FOOD_TYPE = "LOVE_FOOD";
     private DecorationFactory decorationFactory;
     private FoodFactory foodFactory;
 
@@ -64,7 +65,13 @@ public class ModelFacade implements IModelFacade {
             entities.add(entity);
         }
         for (IEdible food : state.getFood()) {
-            IEntity entity = new Entity(food.getPos(), food.getSize(), FOOD_TYPE, "null", true);
+            IEntity entity;
+            if (food instanceof LoveFood) {
+                entity = new Entity(food.getPos(), food.getSize(), LOVE_FOOD_TYPE, "null", true);
+            } else {
+
+                entity = new Entity(food.getPos(), food.getSize(), FOOD_TYPE, "null", true);
+            }
             entities.add(entity);
         }
         notifyObservers();

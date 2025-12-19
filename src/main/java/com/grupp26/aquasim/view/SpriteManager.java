@@ -18,6 +18,7 @@ public class SpriteManager {
     private static final String SEAWEED_PATH = "images/seaweed.png";
     private static final String BACKGROUND_PATH = "images/akvarium1.jpg";
     private static final String FOOD_PATH = "images/food.png";
+    private static final String LOVE_FOOD_PATH = "images/lovefood.png";
 
     private static final int SPRITE_FRAME_WIDTH = 64;
     private static final int SPRITE_FRAME_HEIGHT = 64;
@@ -30,6 +31,7 @@ public class SpriteManager {
         imageFromString(FISH_SHEET_PATH);
         imageFromString(BACKGROUND_PATH);
         imageFromString(FOOD_PATH);
+        imageFromString(LOVE_FOOD_PATH);
         imageFromString(SEAWEED_PATH);
         imageFromString(ANCHOR_PATH);
     }
@@ -57,13 +59,13 @@ public class SpriteManager {
         return img;
     }
 
-
     public static BufferedImage getSprite(String entityType, int totalTicks) {
         String type = entityType.toUpperCase();
         // Fall 1: animerad typ
         if (ANIMATION_MAP.containsKey(type)) {
             return getAnimatedFrame(type, totalTicks);
         }
+
         // Fall 2: Statisk typ
         switch (type) {
             case "BG":
@@ -74,12 +76,13 @@ public class SpriteManager {
                 return imageFromString(SEAWEED_PATH);
             case "FOOD":
                 return imageFromString(FOOD_PATH);
+            case "LOVE_FOOD":
+                return imageFromString(LOVE_FOOD_PATH);
             default:
                 // borde hanteras
                 return null;
         }
     }
-
 
     public static BufferedImage getAnimatedFrame(String entityType, int totalTicks) {
         AnimationSequence seq = ANIMATION_MAP.get(entityType);
