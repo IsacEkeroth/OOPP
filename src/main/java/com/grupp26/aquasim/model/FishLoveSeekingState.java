@@ -54,10 +54,12 @@ public class FishLoveSeekingState implements IFishState {
         double dx = Math.abs(fish.getPos().getX() - closestPartner.getPos().getX());
         double dy = Math.abs(fish.getPos().getY() - closestPartner.getPos().getY());
 
-        if (dx <= 10 && dy <= 10 && !fish.canSpawnChild()) {
-            fish.setLove(false); //för att stoppa andra fiskar att "hoppa in"
-            closestPartner.setLove(false);
-            closestPartner.setSpawnChild(true);
+        if (dx <= 10 && dy <= 10) {
+            if(!fish.canSpawnChild()){
+                fish.setLove(false); //för att stoppa andra fiskar att "hoppa in"
+                closestPartner.setLove(false);
+                closestPartner.setSpawnChild(true);
+            }
             return true;
         }
         return false;

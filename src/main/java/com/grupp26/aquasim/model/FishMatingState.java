@@ -18,15 +18,19 @@ public class FishMatingState implements IFishState {
     }
 
     private void giveBirth(){
-        if(fish.getType().equals("Goldfish")){
-            IFish fishA = factory.createGoldfish(aquarium, 0);
-            fishA.setPos(this.fish.getPos().getX(), this.fish.getPos().getY(), this.fish.getPos().getZ());
-            aquarium.addFishToBuffer(fishA);
-        }
-        if(fish.getType().equals("Clownfish")){
-            IFish fishB = factory.createClownfish(aquarium, 0);
-            fishB.setPos(this.fish.getPos().getX(), this.fish.getPos().getY(), this.fish.getPos().getZ());
-            aquarium.addFishToBuffer(fishB);
+        if(fish.canSpawnChild()){
+            if(fish.getType().equals("Goldfish")){
+                IFish fishA = factory.createGoldfish(aquarium, 0);
+                fishA.setPos(this.fish.getPos().getX(), this.fish.getPos().getY(), this.fish.getPos().getZ());
+                aquarium.addFishToBuffer(fishA);
+                this.fish.setSpawnChild(false); //nollsätta
+            }
+            if(fish.getType().equals("Clownfish")){
+                IFish fishB = factory.createClownfish(aquarium, 0);
+                fishB.setPos(this.fish.getPos().getX(), this.fish.getPos().getY(), this.fish.getPos().getZ());
+                aquarium.addFishToBuffer(fishB);
+                this.fish.setSpawnChild(false); //nollsätta
+            }
         }
     }
 

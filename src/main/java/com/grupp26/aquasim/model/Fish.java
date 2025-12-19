@@ -27,7 +27,7 @@ public class Fish implements IFish {
     public Fish(IAquarium aquarium, IFishTypeData fishTypeData, double initialDirection) {
 
         this.isAlive = true;
-        this.isInLove = true;
+        this.isInLove = false;
         this.canSpawnChild = false;
         this.aquarium = aquarium;
         this.fishTypeData = fishTypeData;
