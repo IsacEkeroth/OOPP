@@ -109,13 +109,10 @@ public class Fish implements IFish {
 
     @Override
     public void setPos(int x, int y, int z) {
-        if (aquarium.isValidPosition(new Vec2<>(x, y), size)) {
-            pos.setX(x);
-            pos.setY(y);
-            pos.setZ(z);
-        } else {
-            throw new IllegalArgumentException("Invalid position for fish");
-        }
+        Vec2<Integer> clampedPos = aquarium.clampPosition(new Vec2<Integer>(x, y), size);
+        pos.setX(clampedPos.getX());
+        pos.setY(clampedPos.getY());
+        pos.setZ(z);
     }
 
     @Override
@@ -138,7 +135,7 @@ public class Fish implements IFish {
             this.isAlive = false;
         }
 
-        speed = Math.max(1, baseSpeed + (hunger / 20));
+        speed = Math.max(1, baseSpeed + (hunger / 50));
         this.behaviour.update();
 
     }

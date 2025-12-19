@@ -6,13 +6,12 @@ public class FoodBehaviour implements IFoodBehaviour {
     private IFoodState staleState;
     private IFoodState sinkingState;
     private IFoodState eatenState;
-    private IAquarium aquarium;
 
     public FoodBehaviour(IEdible food, IAquarium aquarium) {
         this.staleState = new FoodStaleState(this, food, aquarium);
         this.sinkingState = new FoodSinkingState(this, food, aquarium);
         this.eatenState = new FoodEatenState(this, food);
-        this.state = staleState;
+        this.state = sinkingState;
     }
 
     @Override

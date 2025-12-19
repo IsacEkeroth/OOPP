@@ -29,7 +29,7 @@ public class FishHungerState implements IFishState {
             xaxis = edible.getPos().getX() - this.fish.getPos().getX();
             yaxis = edible.getPos().getY() - this.fish.getPos().getY();
             hypotenuse = (int) Math.hypot(xaxis, yaxis);
-            if (hypotenuse < minRange) {
+            if (!edible.isEaten() && hypotenuse < minRange) {
                 closestFood = edible;
                 minRange = hypotenuse;
             }
@@ -44,10 +44,8 @@ public class FishHungerState implements IFishState {
         double dx = Math.abs(fish.getPos().getX() - closestFood.getPos().getX());
         double dy = Math.abs(fish.getPos().getY() - closestFood.getPos().getY());
 
-        if (dx <= 10 && dy <= 10) {
-            // closestFood.eat(fish.getBitingPower());
-            // fish.setHunger(fish.getHunger()-closestFood.getAmount());
-            // basically: eat the food
+        if (dx <= 10 && dy <= 10 ) {
+            closestFood.eatenBy(fish);
         }
     }
 
@@ -91,8 +89,10 @@ public class FishHungerState implements IFishState {
             context.setState(newState);
         } else {
             findFood();
-            this.targetmove.move(this.fish);
-            EatClosestFood();
+            if (closestFood != null) {
+                this.targetmove.move(this.fish);
+                EatClosestFood();
+            }
         }
     }
 
