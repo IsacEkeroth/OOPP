@@ -120,7 +120,7 @@ public class Fish implements IFish {
             this.isAlive = false;
         }
 
-        speed = Math.max(1, baseSpeed + (hunger / 20));
+        speed = Math.max(1, baseSpeed + (hunger / 50));
         this.behaviour.update();
 
     }

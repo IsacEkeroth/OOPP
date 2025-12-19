@@ -7,13 +7,20 @@ public class FishBehaviour implements IFishBehaviour {
     private IFishState passiveState;
     private IFishState hungerState;
     private IFishState deathState;
+    private IMovement passiveMovement; // varies based on fish type
     private int hungryAt;
 
     public FishBehaviour(IFish fish, double initialDirection, int hungryAt) {
         this.hungryAt = hungryAt;
         this.aquarium = fish.getAquarium();
-
-        this.passiveState = new PassiveState(this, fish, new SimpleMove(this.aquarium, initialDirection), aquarium);
+        
+        if (fish.getType().equals("Goldfish")) {
+            passiveMovement = new SchoolMove(aquarium, initialDirection);
+            School.getInstance().addMember(fish); // unsure if this is the best place to add fish to school
+        } else {
+            passiveMovement = new SimpleMove(aquarium, initialDirection);
+        }
+        this.passiveState = new PassiveState(this, fish, passiveMovement, aquarium);
         this.hungerState = new HungerState(this, fish, new TargetMove(this.aquarium, initialDirection), aquarium);
         this.deathState = new DeathState(this, fish, aquarium);
         this.state = this.passiveState;
@@ -22,7 +29,6 @@ public class FishBehaviour implements IFishBehaviour {
     public void setState(IFishState newState) {
         this.state = newState;
     }
-
     public IFishState getPassiveState() {
         return passiveState;
     }
