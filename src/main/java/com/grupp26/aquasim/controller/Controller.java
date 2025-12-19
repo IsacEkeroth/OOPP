@@ -4,6 +4,7 @@ import com.grupp26.aquasim.ISoundObservable;
 import com.grupp26.aquasim.model.IModelFacade;
 import com.grupp26.aquasim.view.FishSelectionListener;
 import com.grupp26.aquasim.view.IMainView;
+import com.grupp26.aquasim.view.FoodSelectionListener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,6 +27,7 @@ public class Controller implements IController {
     int mouseY;
     ActiveMode mouseMode = ActiveMode.NONE;
     ISoundObservable mediaPlayer;
+    private String selectedFoodType = "";
 
     public Controller(IModelFacade modelFacade, IMainView view, ISoundObservable mediaPlayer) {
         this.modelFacade = modelFacade;
@@ -58,10 +60,23 @@ public class Controller implements IController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 mediaPlayer.notifyPlaySound("click");
-                if (mouseMode == ActiveMode.FOOD) {
+                if (mouseMode == ActiveMode.FOOD_MENU) {
                     handleMouseState(ActiveMode.NONE);
                 } else {
-                    handleMouseState(ActiveMode.FOOD);
+                    handleMouseState(ActiveMode.FOOD_MENU);
+                }
+            }
+        });
+
+        view.addFoodMenuListener(new FoodSelectionListener() {
+            @Override
+            public void onFoodSelected(String foodType) {
+                mediaPlayer.notifyPlaySound("click");
+                // If already placing this food type, deactivate
+                if (mouseMode == ActiveMode.PLACING_FOOD && selectedFoodType.equals(foodType)) {
+                    handleMouseState(ActiveMode.NONE);
+                } else {
+                    handleMouseState(ActiveMode.PLACING_FOOD, foodType);
                 }
             }
         });
@@ -89,11 +104,11 @@ public class Controller implements IController {
             @Override
             public void mouseClicked(MouseEvent e) {
                 mediaPlayer.notifyPlaySound("click");
-                if (mouseMode == ActiveMode.FOOD) {
-                    modelFacade.addFood("base", mouseX, mouseY);
-
+                if (mouseMode == ActiveMode.PLACING_FOOD) {
+                    modelFacade.addFood(selectedFoodType.toLowerCase(), mouseX, mouseY);
+                    System.out.println(selectedFoodType);
                 } else if (mouseMode == ActiveMode.PLACING_FISH) {
-                    modelFacade.addFish(selectedFishType, mouseX, mouseY);
+                    modelFacade.addFish(selectedFishType.toLowerCase(), mouseX, mouseY);
                 }
             }
         });
@@ -117,11 +132,20 @@ public class Controller implements IController {
         handleMouseState(mode, NO_FISH_TYPE);
     }
 
-    private void handleMouseState(ActiveMode mode, String fishType) {
+    private void handleMouseState(ActiveMode mode, String type) {
+        System.out.println(type);
         mouseMode = mode;
-        selectedFishType = fishType;
-
-        view.updateActiveButton(mode, fishType);
+        if (mode == ActiveMode.PLACING_FISH) {
+            selectedFishType = type;
+            selectedFoodType = "";
+        } else if (mode == ActiveMode.PLACING_FOOD) {
+            selectedFoodType = type;
+            selectedFishType = "";
+        } else {
+            selectedFishType = "";
+            selectedFoodType = "";
+        }
+        view.updateActiveButton(mode, type);
     }
 
 }

@@ -8,7 +8,7 @@ import javafx.embed.swing.JFXPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.Desktop.Action;
+
 import java.util.*;
 
 public class MainView extends JFrame implements IMainView {
@@ -23,6 +23,7 @@ public class MainView extends JFrame implements IMainView {
 
     private Map<ActiveMode, JButton> selectableButtons = new HashMap<ActiveMode, JButton>();
     private Map<String, JButton> fishButtons = new HashMap<>();
+    private Map<String, JButton> foodButtons = new HashMap<>();
     private Map<String, Integer> entityAnimationCounter = new HashMap<>();
 
     private final JPanel controlPanel = new JPanel();
@@ -30,10 +31,15 @@ public class MainView extends JFrame implements IMainView {
     private final JButton addFoodButton = new JButton("Add food");
     private final JButton removeFishButton = new JButton("Remove fish");
     private final JButton addDecorationButton = new JButton("Add decoration");
+
     private final JButton goldFishButton = new JButton("GoldFish");
     private final JButton clownFishButton = new JButton("ClownFish");
 
-    private JPanel fishMenuPanel; // Borde nog vara final också?
+    private final JButton baseFoodButton = new JButton("Base");
+    private final JButton loveFoodButton = new JButton("Lovefood");
+
+    private final JPanel fishMenuPanel = new JPanel();
+    private final JPanel foodMenuPanel = new JPanel();
 
     public MainView(int windowWidth, int windowHeight) {
         this.windowWidth = windowWidth;
@@ -44,10 +50,13 @@ public class MainView extends JFrame implements IMainView {
 
     private void registerButtons() {
         selectableButtons.put(ActiveMode.FISH_MENU, this.getAddFishButton());
-        selectableButtons.put(ActiveMode.FOOD, this.getAddFoodButton());
+        selectableButtons.put(ActiveMode.FOOD_MENU, this.getAddFoodButton());
 
         fishButtons.put("GoldFish", this.getGoldFishButton());
         fishButtons.put("ClownFish", this.getClownFishButton());
+
+        foodButtons.put("Base", this.getBaseFoodButton());
+        foodButtons.put("Lovefood", this.getLoveFoodButton());
     }
 
     private void initComponents() {
@@ -61,6 +70,7 @@ public class MainView extends JFrame implements IMainView {
         drawPanel.setLayout(new BorderLayout());
 
         initFishSelectionPanel();
+        initFoodSelectionPanel();
 
         controlPanel.setLayout(new GridLayout(1, 4));
         controlPanel.setOpaque(false);
@@ -69,7 +79,8 @@ public class MainView extends JFrame implements IMainView {
         controlPanel.add(removeFishButton, 2);
         controlPanel.add(addDecorationButton, 3);
 
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        JPanel buttonPanel = new JPanel(
+                new FlowLayout(FlowLayout.LEFT, 0, 0));
         buttonPanel.setOpaque(false);
         buttonPanel.add(controlPanel);
 
@@ -84,15 +95,28 @@ public class MainView extends JFrame implements IMainView {
         this.add(jFXPanel);
     }
 
+    private void initFoodSelectionPanel() {
+        foodMenuPanel.setLayout(new GridLayout(1, 2, 0, 0));
+        foodMenuPanel.setOpaque(false);
+        foodMenuPanel.add(baseFoodButton);
+        foodMenuPanel.add(loveFoodButton);
+        foodMenuPanel.setBounds(10, windowHeight - 170, 250, 50);
+        foodMenuPanel.setVisible(false);
+        drawPanel.add(foodMenuPanel, BorderLayout.SOUTH);
+    }
+
+    public JPanel getFoodMenuPanel() {
+        return this.foodMenuPanel;
+    }
+
+    public JButton getLoveFoodButton() {
+        return this.loveFoodButton;
+    }
+
     private void initFishSelectionPanel() {
-        fishMenuPanel = new JPanel();
         fishMenuPanel.setLayout(new GridLayout(1, 2, 0, 0));
         fishMenuPanel.setOpaque(false);
 
-        // Vore kanske egentligen bättre med en lista som loopas igenom med add(), så
-        // man slipper lägga till en knapp
-        // här varje gång. Med en lista hade vi bara behövt lägga till en knapp längst
-        // upp.
         fishMenuPanel.add(goldFishButton);
         fishMenuPanel.add(clownFishButton);
 
@@ -187,6 +211,18 @@ public class MainView extends JFrame implements IMainView {
         return this.removeFishButton;
     }
 
+    public JButton getBaseFoodButton() {
+        return this.baseFoodButton;
+    }
+
+    public void addFoodMenuListener(FoodSelectionListener listener) {
+        for (Component comp : foodMenuPanel.getComponents()) {
+            if (comp instanceof JButton button) {
+                button.addActionListener(e -> listener.onFoodSelected(button.getText()));
+            }
+        }
+    }
+
     public DrawPanel getDrawPanel() {
         return this.drawPanel;
     }
@@ -196,43 +232,90 @@ public class MainView extends JFrame implements IMainView {
     }
 
     private void setInActive(JButton button) {
-        button.setForeground(Color.BLACK);
+        if (button != null) {
+            button.setForeground(Color.BLACK);
+        }
     }
 
-    public void updateActiveButton(ActiveMode mode, String fishName) {
+    public void updateActiveButton(ActiveMode mode, String type) {
         selectedButton = selectableButtons.get(mode);
-
         for (JButton button : selectableButtons.values()) {
-            setInActive(button);
+            if (button != null)
+                setInActive(button);
         }
-
         if (selectedButton != null) {
             setActive(selectedButton);
         }
+        // handle mutually exclusive menus
+        // Hide both menus by default
+        fishMenuPanel.setVisible(false);
+        foodMenuPanel.setVisible(false);
 
-        // handle fish selection menu
-        handleMenu(mode, fishName, fishButtons, fishMenuPanel);
+        // Reset all button states
+        for (JButton button : selectableButtons.values()) {
+            if (button != null)
+                setInActive(button);
+        }
+        for (JButton button : fishButtons.values()) {
+            if (button != null)
+                setInActive(button);
+        }
+        for (JButton button : foodButtons.values()) {
+            if (button != null)
+                setInActive(button);
+        }
+
+        // Fish menu logic
+        if (mode == ActiveMode.FISH_MENU) {
+            // Toggle fish menu visibility
+            boolean show = !fishMenuPanel.isVisible();
+            fishMenuPanel.setVisible(show);
+            if (show) {
+                setActive(addFishButton);
+            }
+        } else if (mode == ActiveMode.PLACING_FISH) {
+            fishMenuPanel.setVisible(true);
+            setActive(addFishButton);
+            if (fishButtons.containsKey(type)) {
+                setActive(fishButtons.get(type));
+            }
+        }
+        // Food menu logic
+        else if (mode == ActiveMode.FOOD_MENU) {
+            boolean show = !foodMenuPanel.isVisible();
+            foodMenuPanel.setVisible(show);
+            if (show) {
+                setActive(addFoodButton);
+            }
+        } else if (mode == ActiveMode.PLACING_FOOD) {
+            foodMenuPanel.setVisible(true);
+            setActive(addFoodButton);
+            if (foodButtons.containsKey(type)) {
+                setActive(foodButtons.get(type));
+            }
+        }
     }
 
-    private void handleMenu(ActiveMode mode, String type, Map<String, JButton> menuButtons, JPanel panel) {
-
+    private void handleMenu(ActiveMode mode, String type, Map<String, JButton> menuButtons, JPanel panel,
+            ActiveMode placingMode, ActiveMode menuMode) {
         for (JButton button : menuButtons.values()) {
-            setInActive(button);
+            if (button != null)
+                setInActive(button);
         }
-
-        if (mode == ActiveMode.PLACING_FISH) {
-            setActive(selectableButtons.get(ActiveMode.FISH_MENU));
-
+        if (mode == placingMode) {
+            JButton menuButton = selectableButtons.get(menuMode);
+            if (menuButton != null)
+                setActive(menuButton);
             if (menuButtons.containsKey(type)) {
-                setActive(menuButtons.get(type));
+                JButton typeButton = menuButtons.get(type);
+                if (typeButton != null)
+                    setActive(typeButton);
             }
-
         }
-
-        if (mode == ActiveMode.FISH_MENU) {
+        if (mode == menuMode) {
             panel.setVisible(!panel.isVisible());
             setInActive(selectedButton);
-        } else if (mode != ActiveMode.PLACING_FISH) {
+        } else if (mode != placingMode) {
             panel.setVisible(false);
         }
     }
