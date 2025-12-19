@@ -5,6 +5,8 @@ public class Fish implements IFish {
     // setup data
     private final IAquarium aquarium;
     private boolean isAlive;
+    private boolean isInLove;
+    private boolean canSpawnChild;
 
     // fishdata
     private final IFishTypeData fishTypeData;
@@ -25,6 +27,8 @@ public class Fish implements IFish {
     public Fish(IAquarium aquarium, IFishTypeData fishTypeData, double initialDirection) {
 
         this.isAlive = true;
+        this.isInLove = false;
+        this.canSpawnChild = false;
         this.aquarium = aquarium;
         this.fishTypeData = fishTypeData;
         this.behaviour = fishTypeData.createBehaviour(this, initialDirection);
@@ -88,8 +92,19 @@ public class Fish implements IFish {
         return bitingPower;
     }
 
+    @Override
     public boolean isAlive() {
         return isAlive;
+    }
+
+    @Override
+    public boolean isInLove() {
+        return isInLove;
+    }
+
+    @Override
+    public void setLove(boolean love) {
+        this.isInLove = love;
     }
 
     @Override
@@ -131,5 +146,15 @@ public class Fish implements IFish {
 
     public String getType() {
         return fishTypeData.getSpeciesName();
+    }
+
+    @Override
+    public boolean canSpawnChild(){
+        return canSpawnChild;
+    }
+
+    @Override
+    public void setSpawnChild(boolean can){
+        canSpawnChild=can;
     }
 }
