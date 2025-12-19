@@ -9,6 +9,7 @@ public class Aquarium implements IAquarium {
     private final ArrayList<IFish> fishBuffer = new ArrayList<>();
 
     private final Vec2<Integer> aquariumSize;
+    private int HEIGHT_OFFSET = 25; // Adjustable offset to account for window borders
 
     // Considered ph as a double first, but x10 it instead to keep them all as int
     // Maybe all should be double for more precision? or x10 like ph?
@@ -20,7 +21,7 @@ public class Aquarium implements IAquarium {
     // Do we want more attributes? Light level, cleanliness, glass-cleanliness?
 
     public Aquarium(int width, int height) {
-        aquariumSize = new Vec2<>(width, height);
+        aquariumSize = new Vec2<>(width, height - HEIGHT_OFFSET);
         defaultAttributes();
     }
 
@@ -77,6 +78,13 @@ public class Aquarium implements IAquarium {
         } else {
             return false;
         }
+    }
+    
+    @Override
+    public Vec2<Integer> clampPosition(Vec2<Integer> pos, Vec2<Integer> size) {
+        int clampedX = Math.max(0, Math.min(aquariumSize.getX() - size.getX(), pos.getX()));
+        int clampedY = Math.max(0, Math.min(aquariumSize.getY() - size.getY(), pos.getY()));
+        return new Vec2<Integer>(clampedX, clampedY);
     }
 
     @Override

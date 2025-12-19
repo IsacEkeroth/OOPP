@@ -12,6 +12,8 @@ public interface IAquarium {
     void removeFish(IFish fish);
 
     boolean isValidPosition(Vec2<Integer> pos, Vec2<Integer> size);
+    
+    Vec2<Integer> clampPosition(Vec2<Integer> pos, Vec2<Integer> size);
 
     Vec2<Integer> getAquariumSize();
     

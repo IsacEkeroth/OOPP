@@ -6,13 +6,13 @@ public interface IEdible extends ITickable {
 
     Vec3<Integer> getPos();
 
-    void setAmount(int amount);
+    void setAmount(int nutritionValue);
 
     int getAmount();
 
     Vec2<Integer> getSize();
-
-    void eat(int amount);
+    
+    void eatenBy(IFish fish);
 
     boolean isEaten();
 
