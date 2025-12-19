@@ -3,6 +3,7 @@ package com.grupp26.aquasim.model;
 import com.grupp26.aquasim.view.IObserver;
 
 import java.util.ArrayList;
+
 public class ModelFacade implements IModelFacade {
     private final IAquarium aquarium;
     private final FishFactory fishFactory;
@@ -13,12 +14,10 @@ public class ModelFacade implements IModelFacade {
     // TODO -- Typerna är bara en placeholder för tillfället --
     // TODO -- Factory method borde sköta det istället? --
     private final String BG_TYPE = "BG";
-    private final String DECOR_TYPE = "ANCHOR";
-    private final String DECOR_TICKABLE_TYPE = "SEAWEED";
     private final String FOOD_TYPE = "FOOD";
     private DecorationFactory decorationFactory;
     private FoodFactory foodFactory;
-    
+
     private final ISimulationLoop simLoop;
     private final int SIMULATION_DELAY = 25; // milliseconds
 
@@ -57,20 +56,12 @@ public class ModelFacade implements IModelFacade {
             entities.add(entity);
         }
         for (IDecoration deco : state.getDecorations()) {
-            IEntity entity;
+            IEntity entity = new Entity(deco.getPos(),
+                    new Vec2<Integer>(deco.getSize().getX(), deco.getSize().getY()), deco.getType(),
+                    "null",
+                    true);
 
-            if (deco instanceof TickableDecoration) {
-                entity = new Entity(deco.getPos(),
-                        new Vec2<Integer>(deco.getSize().getX(), deco.getSize().getY()), DECOR_TICKABLE_TYPE,
-                        "null",
-                        true);
-            } else {
-
-                entity = new Entity(deco.getPos(),
-                        new Vec2<Integer>(deco.getSize().getX(), deco.getSize().getY()), DECOR_TYPE, "null", true);
-            }
             entities.add(entity);
-
         }
         for (IEdible food : state.getFood()) {
             IEntity entity = new Entity(food.getPos(), food.getSize(), FOOD_TYPE, "null", true);
