@@ -59,6 +59,7 @@ public class FishMatingState implements IFishState {
             }
         }
         else{
+            matingCounter=100;
             context.setState(newstate);
         }
     }

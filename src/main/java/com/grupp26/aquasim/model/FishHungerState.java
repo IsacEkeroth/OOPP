@@ -62,7 +62,7 @@ public class FishHungerState implements IFishState {
 
     private boolean areTherePartners() {
         for (IFish fish : aquarium.getinLoveFish(this.fish)) {
-            if (!fish.isAlive() && this.fish.isInLove()) {
+            if (fish.isAlive() && this.fish.isInLove()) {
                 return true;
             }
         }
