@@ -5,20 +5,27 @@ import java.util.ArrayList;
 /**
  * Represents the current state of an {@link Aquarium}.
  * <p>
- * This class gathers all relevant data for an Aquarium, like fishes, decorations, food, etc.
+ * This class gathers all relevant data for an Aquarium, like fishes,
+ * decorations, food, etc.
  * at a specific time.
  * <p>
- * It's main purpose is to transfer data from the Model to the View in a read-only fashion.
- * This way the Views representation of the state is disconnected from the models internal logic.
+ * It's main purpose is to transfer data from the Model to the View in a
+ * read-only fashion.
+ * This way the Views representation of the state is disconnected from the
+ * models internal logic.
  * </p>
+ * This is used as a DTO.
  */
 public class AquariumState {
-    ArrayList<IFish> fish = new ArrayList<>();
-    ArrayList<IDecoration> decorations = new ArrayList<>();
-    ArrayList<IEdible> food = new ArrayList<>();
+    private final ArrayList<IFish> fish;
+    private final ArrayList<IDecoration> decorations;
+    private final ArrayList<IEdible> food;
 
-    // Attributes
-    int temperature, algaeLevel, o2Conc, salinity, pHLevel;
+    private final int temperature;
+    private final int algaeLevel;
+    private final int o2Conc;
+    private final int salinity;
+    private final int pHLevel;
 
     public AquariumState(ArrayList<IFish> fishList, ArrayList<IDecoration> decorationList, ArrayList<IEdible> foodList,
             int temperature, int algaeLevel, int o2Conc, int salinity, int pHLevel) {
@@ -63,5 +70,4 @@ public class AquariumState {
     public int getPHLevel() {
         return this.pHLevel;
     }
-
 }
