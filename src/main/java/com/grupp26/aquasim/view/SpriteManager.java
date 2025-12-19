@@ -59,7 +59,6 @@ public class SpriteManager {
         return img;
     }
 
-
     public static BufferedImage getSprite(String entityType, int totalTicks) {
         String type = entityType.toUpperCase();
         // Fall 1: animerad typ
@@ -67,7 +66,6 @@ public class SpriteManager {
             return getAnimatedFrame(type, totalTicks);
         }
 
-        System.out.println(entityType);
         // Fall 2: Statisk typ
         switch (type) {
             case "BG":
@@ -85,7 +83,6 @@ public class SpriteManager {
                 return null;
         }
     }
-
 
     public static BufferedImage getAnimatedFrame(String entityType, int totalTicks) {
         AnimationSequence seq = ANIMATION_MAP.get(entityType);
