@@ -3,6 +3,7 @@ package com.grupp26.aquasim.model;
 import com.grupp26.aquasim.view.IObserver;
 
 import java.util.ArrayList;
+
 public class ModelFacade implements IModelFacade {
     private final IAquarium aquarium;
     private final FishFactory fishFactory;
@@ -16,9 +17,10 @@ public class ModelFacade implements IModelFacade {
     private final String DECOR_TYPE = "ANCHOR";
     private final String DECOR_TICKABLE_TYPE = "SEAWEED";
     private final String FOOD_TYPE = "FOOD";
+    private final String LOVE_FOOD_TYPE = "LOVE_FOOD";
     private DecorationFactory decorationFactory;
     private FoodFactory foodFactory;
-    
+
     private final ISimulationLoop simLoop;
     private final int SIMULATION_DELAY = 25; // milliseconds
 
@@ -73,7 +75,13 @@ public class ModelFacade implements IModelFacade {
 
         }
         for (IEdible food : state.getFood()) {
-            IEntity entity = new Entity(food.getPos(), food.getSize(), FOOD_TYPE, "null", true);
+            IEntity entity;
+            if (food instanceof LoveFood) {
+                entity = new Entity(food.getPos(), food.getSize(), LOVE_FOOD_TYPE, "null", true);
+            } else {
+
+                entity = new Entity(food.getPos(), food.getSize(), FOOD_TYPE, "null", true);
+            }
             entities.add(entity);
         }
         notifyObservers();
