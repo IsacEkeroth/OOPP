@@ -6,7 +6,6 @@ public class FoodBehaviour implements IFoodBehaviour {
     private IFoodState staleState;
     private IFoodState sinkingState;
     private IFoodState eatenState;
-    private IAquarium aquarium;
 
     public FoodBehaviour(IEdible food, IAquarium aquarium) {
         this.staleState = new FoodStaleState(this, food, aquarium);

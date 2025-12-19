@@ -11,7 +11,7 @@ public class Food implements IEdible {
     public Food(Vec3<Integer> pos, int amount, IAquarium aquarium) {
         this.pos = pos;
         this.amount = amount;
-        this.isEaten = false;
+        this.isEaten = amount == 0;
         this.behaviour = new FoodBehaviour(this, aquarium);
         this.aquarium = aquarium;
     }
@@ -31,27 +31,22 @@ public class Food implements IEdible {
 
     public void setAmount(int amount) {
         this.amount = Math.max(0, amount);
-        this.isEaten = (this.amount == 0);
+        isEaten = (this.amount == 0);
     }
 
+    @Override
     public int getAmount() {
         return amount;
     }
-
-    public void eat(int amount) {
-
-        if (isEaten || amount <= 0)
-            return;
-
-        this.amount -= amount;
-
-        if (this.amount <= 0) {
-            this.amount = 0;
-            this.isEaten = true;
-        }
-
+    
+    @Override
+    public void eatenBy(IFish fish) {
+        int nutritionGained = Math.min(amount, fish.getBitingPower());
+        setAmount(amount - fish.getBitingPower());
+        fish.setHunger(fish.getHunger() - nutritionGained);
     }
 
+    @Override
     public boolean isEaten() {
         return isEaten;
     }
@@ -63,7 +58,7 @@ public class Food implements IEdible {
 
     @Override
     public Vec2<Integer> getSize() {
-        return new Vec2<Integer>(size);
+        return new Vec2<>(size);
     }
 
 }
