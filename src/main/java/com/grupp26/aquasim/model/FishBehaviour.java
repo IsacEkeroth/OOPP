@@ -39,10 +39,12 @@ public class FishBehaviour implements IFishBehaviour {
         return this.hungryAt;
     }
 
+    @Override
     public void update() {
         this.state.update();
     }
 
+    @Override
     public double getDirection() {
         return this.state.getDirection();
     }

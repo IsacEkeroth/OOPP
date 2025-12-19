@@ -34,14 +34,5 @@ public class App {
 
         // maybe this sould be a part of the view?
         mediaPlayer.notifyPlayMusic("sea");
-
-        Timer timer = new Timer(25, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                facade.tick();
-            }
-        });
-        timer.start();
-
     }
 }

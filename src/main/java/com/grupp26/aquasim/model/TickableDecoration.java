@@ -9,6 +9,7 @@ public class TickableDecoration extends Decoration implements ITickable {
         this.aquarium = aquarium;
     }
 
+    @Override
     public void tick() {
         aquarium.setAlgaeLevel(aquarium.getAlgaeLevel() + 1);
     }

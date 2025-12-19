@@ -20,14 +20,19 @@ public class ModelFacade implements IModelFacade {
     private DecorationFactory decorationFactory;
     private FoodFactory foodFactory;
 
+    private final ISimulationLoop simLoop;
+    private final int SIMULATION_DELAY = 25; // milliseconds
+
     public ModelFacade(IAquarium aquarium, IObserver observer) {
         this.aquarium = aquarium;
         this.observers.add(observer);
         this.fishFactory = new FishFactory();
         this.decorationFactory = new DecorationFactory(aquarium);
         this.foodFactory = new FoodFactory(aquarium);
+        this.simLoop = new SimulationLoop(SIMULATION_DELAY, this::tick);
     }
 
+    @Override
     public void tick() {
         aquarium.tick();
         state = aquarium.getState();
@@ -74,7 +79,6 @@ public class ModelFacade implements IModelFacade {
         notifyObservers();
     }
 
-
     public void addFish(String fishType, int posX, int posY) {
         Fish fish;
 
@@ -98,6 +102,7 @@ public class ModelFacade implements IModelFacade {
         return Math.cos(direction) > 0;
     }
 
+    @Override
     public ArrayList<IEntity> getEntities() {
         return new ArrayList<>(entities);
     }
@@ -106,22 +111,20 @@ public class ModelFacade implements IModelFacade {
     public void removeFish() {
         // Temporary call to removeLastFish() --> Delete later
         aquarium.removeLastFish();
-        notifyObservers();
     }
 
+    @Override
     public void addDecoration(String type, int x, int y) {
         IDecoration decoration = decorationFactory.createDecoration(type);
         decoration.setPos(x, y, decoration.getPos().getZ());
         aquarium.addDecoration(decoration);
-        notifyObservers();
     }
 
+    @Override
     public void addFood(String type, int posX, int posY) {
         IEdible food = foodFactory.createFood(type);
         food.setPos(posX, posY, food.getPos().getZ());
         aquarium.addFood(food);
-
-        notifyObservers();
     }
 
     @Override
