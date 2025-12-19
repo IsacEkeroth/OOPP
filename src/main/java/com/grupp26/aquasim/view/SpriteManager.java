@@ -59,7 +59,7 @@ public class SpriteManager {
         return img;
     }
 
-    // TODO -- Hitta en bättre lösning än switch cases? --
+
     public static BufferedImage getSprite(String entityType, int totalTicks) {
         String type = entityType.toUpperCase();
         // Fall 1: animerad typ
@@ -86,7 +86,7 @@ public class SpriteManager {
         }
     }
 
-    // TODO -- Kanske byta namn på totalTicks? lite oklart --
+
     public static BufferedImage getAnimatedFrame(String entityType, int totalTicks) {
         AnimationSequence seq = ANIMATION_MAP.get(entityType);
         // Temporärt, nu ligger allt som kan animeras i fish_sheet_path

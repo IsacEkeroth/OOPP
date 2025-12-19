@@ -49,4 +49,8 @@ public interface IAquarium {
     void removeLastFish();
   
     void addFood(IEdible edible);
+
+    ArrayList<IFish> getinLoveFish(IFish seeker);
+
+    void addFishToBuffer(IFish fish);
 }

@@ -7,6 +7,8 @@ public class FishBehaviour implements IFishBehaviour {
     private IFishState passiveState;
     private IFishState hungerState;
     private IFishState deathState;
+    private IFishState loveSeekingState;
+    private IFishState matingState;
     private IMovement passiveMovement; // varies based on fish type
     private int hungryAt;
 
@@ -20,9 +22,11 @@ public class FishBehaviour implements IFishBehaviour {
         } else {
             passiveMovement = new SimpleMove(aquarium, initialDirection);
         }
-        this.passiveState = new PassiveState(this, fish, passiveMovement, aquarium);
-        this.hungerState = new HungerState(this, fish, new TargetMove(this.aquarium, initialDirection), aquarium);
-        this.deathState = new DeathState(this, fish, aquarium);
+        this.passiveState = new FishPassiveState(this, fish, passiveMovement, aquarium);
+        this.hungerState = new FishHungerState(this, fish, new TargetMove(this.aquarium, initialDirection), aquarium);
+        this.loveSeekingState = new FishLoveSeekingState(this, fish, new TargetMove(this.aquarium, initialDirection), aquarium);
+        this.matingState = new FishMatingState(this, fish, aquarium);
+        this.deathState = new FishDeathState(this, fish, aquarium);
         this.state = this.passiveState;
     }
 
@@ -41,6 +45,14 @@ public class FishBehaviour implements IFishBehaviour {
         return deathState;
     }
 
+    public IFishState getLoveSeekingState() {
+        return loveSeekingState;
+    }
+
+    public IFishState getMatingState() {
+        return matingState;
+    }
+
     public int getHungryAt() {
         return this.hungryAt;
     }
@@ -48,6 +60,7 @@ public class FishBehaviour implements IFishBehaviour {
     @Override
     public void update() {
         this.state.update();
+        //System.out.println(state);
     }
 
     @Override
