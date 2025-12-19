@@ -2,7 +2,14 @@ package com.grupp26.aquasim.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Represents the state of a fish when it is seeking a mate.
+ * <p>
+ * In this state, the fish searches for the closest compatible partner
+ * and moves towards them. If the fish finds a partner and gets close enough,
+ * it transitions to the mating state.
+ * </p>
+ */
 public class FishLoveSeekingState implements IFishState {
     private IFish fish;
     private IAquarium aquarium;
