@@ -120,7 +120,6 @@ public class Controller implements IController {
                 mediaPlayer.notifyPlaySound("click");
                 if (mouseMode == ActiveMode.PLACING_FOOD) {
                     modelFacade.addFood(selectedType.toLowerCase(), mouseX, mouseY);
-                    System.out.println(selectedType);
                 } else if (mouseMode == ActiveMode.PLACING_FISH) {
                     modelFacade.addFish(selectedType.toLowerCase(), mouseX, mouseY);
                 } else if (mouseMode == ActiveMode.PLACING_DECORATION) {
@@ -148,7 +147,6 @@ public class Controller implements IController {
     }
 
     private void handleMouseState(ActiveMode mode, String type) {
-        System.out.println(type);
         mouseMode = mode;
         if (mode == ActiveMode.PLACING_FISH || mode == ActiveMode.PLACING_FOOD
                 || mode == ActiveMode.PLACING_DECORATION) {

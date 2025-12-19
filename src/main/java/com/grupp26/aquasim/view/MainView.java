@@ -87,8 +87,8 @@ public class MainView extends JFrame implements IMainView {
         controlPanel.setOpaque(false);
         controlPanel.add(addFishButton, 0);
         controlPanel.add(addFoodButton, 1);
-        controlPanel.add(removeFishButton, 2);
-        controlPanel.add(addDecorationButton, 3);
+        controlPanel.add(addDecorationButton, 2);
+        controlPanel.add(removeFishButton, 3);
 
         JPanel buttonPanel = new JPanel(
                 new FlowLayout(FlowLayout.LEFT, 0, 0));
