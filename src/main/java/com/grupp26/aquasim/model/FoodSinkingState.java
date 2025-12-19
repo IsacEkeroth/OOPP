@@ -39,7 +39,7 @@ public class FoodSinkingState implements IFoodState{
 
     private void sink() {
         // Food with more amount sinks faster
-        int sinkFactor = Math.max(1, Math.min(food.getAmount()/100, 5)); // Sink factor between 1 and 5
+        int sinkFactor = Math.max(1, Math.min(food.getAmount()/300, 3)); // Sink factor between 1 and 5
         food.setPos(food.getPos().getX(), food.getPos().getY()+sinkFactor, food.getPos().getZ());
     }
 

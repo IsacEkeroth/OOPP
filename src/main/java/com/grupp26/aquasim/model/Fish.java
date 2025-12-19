@@ -75,7 +75,7 @@ public class Fish implements IFish {
     }
 
     public void setHunger(int hunger) {
-        this.hunger = Math.max(0, Math.min(100, hunger));
+        this.hunger = Math.max(0, Math.min(1000, hunger));
     }
 
     public int getBaseSpeed() {
@@ -134,9 +134,9 @@ public class Fish implements IFish {
         age++;
         hunger++;
 
-        if (hunger >= 100) {
+        if (hunger >= 1000) {
             health--;
-            hunger = 100; // clamp, max 100 hunger
+            hunger = 1000; // clamp, max 100 hunger
         }
 
         if (health <= 0) {
@@ -144,7 +144,7 @@ public class Fish implements IFish {
             this.isAlive = false;
         }
 
-        speed = Math.max(1, baseSpeed + (hunger / 50));
+        speed = Math.max(1, baseSpeed + (hunger / 400));
         this.behaviour.update();
 
     }

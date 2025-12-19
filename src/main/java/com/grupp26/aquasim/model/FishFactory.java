@@ -18,17 +18,17 @@ public class FishFactory {
 
     private final IFishTypeData goldfishData = new FishTypeData(
             "Goldfish",
-            750,
-            5,
-            15,
-            (fish, direction) -> new FishBehaviour(fish, direction, 100));
+            1000,
+            3,
+            600,
+            (fish, direction) -> new FishBehaviour(fish, direction, 500));
 
     private final IFishTypeData clownfishData = new FishTypeData(
             "Clownfish",
-            1000,
-            6,
-            25,
-            (fish, direction) -> new FishBehaviour(fish, direction, 75));
+            1500,
+            5,
+            700,
+            (fish, direction) -> new FishBehaviour(fish, direction, 400));
 
     public Fish createGoldfish(double initialDirection) {
         return new Fish(aquarium, goldfishData, initialDirection);
