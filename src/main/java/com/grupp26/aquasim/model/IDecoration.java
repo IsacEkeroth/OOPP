@@ -8,4 +8,6 @@ public interface IDecoration {
 
     Vec3<Integer> getPos();
 
+    String getType();
+
 }

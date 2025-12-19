@@ -1,6 +1,7 @@
 package com.grupp26.aquasim.model;
 
 public class Decoration implements IDecoration {
+    private final String TYPE = "ANCHOR";
 
     private final IAquarium aquarium;
 
@@ -32,6 +33,11 @@ public class Decoration implements IDecoration {
     @Override
     public Vec3<Integer> getPos() {
         return pos;
+    }
+
+    @Override
+    public String getType() {
+        return TYPE;
     }
 
 }
