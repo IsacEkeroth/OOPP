@@ -24,7 +24,7 @@ public class ModelFacade implements IModelFacade {
     public ModelFacade(IAquarium aquarium, IObserver observer) {
         this.aquarium = aquarium;
         this.observers.add(observer);
-        this.fishFactory = new FishFactory();
+        this.fishFactory = new FishFactory(aquarium);
         this.decorationFactory = new DecorationFactory(aquarium);
         this.foodFactory = new FoodFactory(aquarium);
         School.reset(); // ensures singleton is reset when a new model is created
@@ -75,13 +75,13 @@ public class ModelFacade implements IModelFacade {
 
         switch (fishType.toLowerCase()) {
             case "goldfish":
-                fish = fishFactory.createGoldfish(aquarium, Math.random() * 360);
+                fish = fishFactory.createGoldfish(Math.random() * 360);
                 break;
             case "clownfish":
-                fish = fishFactory.createClownfish(aquarium, Math.random() * 360);
+                fish = fishFactory.createClownfish(Math.random() * 360);
                 break;
             default: // om nått går fel så skapas bara en goldfish
-                fish = fishFactory.createGoldfish(aquarium, Math.random() * 360);
+                fish = fishFactory.createGoldfish(Math.random() * 360);
                 break;
         }
         fish.setPos(posX, posY, fish.getPos().getZ());

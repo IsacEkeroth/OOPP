@@ -12,62 +12,58 @@ public class FishMatingState implements IFishState {
         this.context = context;
         this.fish = fish;
         this.aquarium = aquarium;
-        factory = new FishFactory();
+        factory = new FishFactory(aquarium);
         matingCounter = 100;
-        moveStage=0;
+        moveStage = 0;
     }
 
-    private void giveBirth(){
-        if(fish.canSpawnChild()){
-            if(fish.getType().equals("Goldfish")){
-                IFish fishA = factory.createGoldfish(aquarium, 0);
+    private void giveBirth() {
+        if (fish.canSpawnChild()) {
+            if (fish.getType().equals("Goldfish")) {
+                IFish fishA = factory.createGoldfish(0);
                 fishA.setPos(this.fish.getPos().getX(), this.fish.getPos().getY(), this.fish.getPos().getZ());
                 aquarium.addFishToBuffer(fishA);
-                this.fish.setSpawnChild(false); //nollsätta
+                this.fish.setSpawnChild(false); // nollsätta
             }
-            if(fish.getType().equals("Clownfish")){
-                IFish fishB = factory.createClownfish(aquarium, 0);
+            if (fish.getType().equals("Clownfish")) {
+                IFish fishB = factory.createClownfish(0);
                 fishB.setPos(this.fish.getPos().getX(), this.fish.getPos().getY(), this.fish.getPos().getZ());
                 aquarium.addFishToBuffer(fishB);
-                this.fish.setSpawnChild(false); //nollsätta
+                this.fish.setSpawnChild(false); // nollsätta
             }
         }
     }
 
-    private IFishState checkState(){
-        if(!fish.isAlive()){
+    private IFishState checkState() {
+        if (!fish.isAlive()) {
             return context.getDeathState();
-        }
-        else if (matingCounter != 0){
+        } else if (matingCounter != 0) {
             return this;
-        }
-        else{
+        } else {
             return context.getPassiveState();
         }
     }
 
-    private void action(){
+    private void action() {
         moveStage += 1;
         matingCounter -= 1;
-        if(moveStage%2==0){
-            fish.setPos(fish.getPos().getX()+10, fish.getPos().getY(), fish.getPos().getZ());
-        }
-        else if(moveStage%2==1){
-            fish.setPos(fish.getPos().getX()-10, fish.getPos().getY(), fish.getPos().getZ());
+        if (moveStage % 2 == 0) {
+            fish.setPos(fish.getPos().getX() + 10, fish.getPos().getY(), fish.getPos().getZ());
+        } else if (moveStage % 2 == 1) {
+            fish.setPos(fish.getPos().getX() - 10, fish.getPos().getY(), fish.getPos().getZ());
         }
     }
 
     public void update() {
         IFishState newstate = checkState();
-        if(newstate.equals(this)){
+        if (newstate.equals(this)) {
             action();
-            if(matingCounter<=0){
-                matingCounter=0;
+            if (matingCounter <= 0) {
+                matingCounter = 0;
                 giveBirth();
             }
-        }
-        else{
-            matingCounter=100;
+        } else {
+            matingCounter = 100;
             context.setState(newstate);
         }
     }
