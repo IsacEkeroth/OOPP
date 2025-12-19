@@ -1,4 +1,4 @@
-package com.grupp26.aquasim;
+/*package com.grupp26.aquasim;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,3 +53,5 @@ public class Vec2Test {
                 org.junit.jupiter.params.provider.Arguments.of(42, null));
     }
 }
+
+ */

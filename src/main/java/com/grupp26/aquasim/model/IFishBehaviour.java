@@ -12,6 +12,10 @@ public interface IFishBehaviour {
 
     IFishState getHungerState();
 
+    IFishState getLoveSeekingState();
+
+    IFishState getMatingState();
+
     IFishState getDeathState();
     // state pattern
 

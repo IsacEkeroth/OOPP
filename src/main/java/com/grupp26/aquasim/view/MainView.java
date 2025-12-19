@@ -8,10 +8,8 @@ import javafx.embed.swing.JFXPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.Desktop.Action;
 import java.util.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainView extends JFrame implements IMainView {
 
@@ -22,19 +20,20 @@ public class MainView extends JFrame implements IMainView {
     private IModelFacade facade;
 
     private JButton selectedButton = null;
-    Map<ActiveMode, JButton> selectableButtons = new HashMap<ActiveMode, JButton>();
 
-    // TODO Mappar varje entityID till nuvarande tick för hela simulationen
-    // Agerar som "minne" för view
-    // Varje entityID som ska ritas är mappad till ett tick.
+    private Map<ActiveMode, JButton> selectableButtons = new HashMap<ActiveMode, JButton>();
+    private Map<String, JButton> fishButtons = new HashMap<>();
     private Map<String, Integer> entityAnimationCounter = new HashMap<>();
 
-    // controlPanel för framtida knappar
     private final JPanel controlPanel = new JPanel();
     private final JButton addFishButton = new JButton("Add fish");
-    private final JButton addFoodButton = new JButton("Food mode");
+    private final JButton addFoodButton = new JButton("Add food");
     private final JButton removeFishButton = new JButton("Remove fish");
     private final JButton addDecorationButton = new JButton("Add decoration");
+    private final JButton goldFishButton = new JButton("GoldFish");
+    private final JButton clownFishButton = new JButton("ClownFish");
+
+    private JPanel fishMenuPanel; // Borde nog vara final också?
 
     public MainView(int windowWidth, int windowHeight) {
         this.windowWidth = windowWidth;
@@ -44,8 +43,11 @@ public class MainView extends JFrame implements IMainView {
     }
 
     private void registerButtons() {
-        selectableButtons.put(ActiveMode.FISH, this.getAddFishButton());
+        selectableButtons.put(ActiveMode.FISH_MENU, this.getAddFishButton());
         selectableButtons.put(ActiveMode.FOOD, this.getAddFoodButton());
+
+        fishButtons.put("GoldFish", this.getGoldFishButton());
+        fishButtons.put("ClownFish", this.getClownFishButton());
     }
 
     private void initComponents() {
@@ -56,28 +58,23 @@ public class MainView extends JFrame implements IMainView {
 
         drawPanel = new DrawPanel(windowWidth, windowHeight);
         drawPanel.setOpaque(true);
+        drawPanel.setLayout(new BorderLayout());
 
-        // TODO -- Bättre att ha LayoutManager? Bör vi ändra? --
-        // Denna behövdes lägga till, så vi har ingen layoutmanager.
-        // Vi använder absolute positioning.
-        drawPanel.setLayout(null);
+        initFishSelectionPanel();
 
         controlPanel.setLayout(new GridLayout(1, 4));
+        controlPanel.setOpaque(false);
         controlPanel.add(addFishButton, 0);
         controlPanel.add(addFoodButton, 1);
         controlPanel.add(removeFishButton, 2);
         controlPanel.add(addDecorationButton, 3);
-        controlPanel.setBackground(Color.BLACK);
 
-        int buttonWidth = 500;
-        int buttonHeight = 50;
-        // TODO -- Ändra så vi INTE använder Absolute Positioning --
-        // Placering av controlPanel på (x, y) i drawPanel
-        controlPanel.setBounds(10, windowHeight - 90, buttonWidth, buttonHeight);
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        buttonPanel.setOpaque(false);
+        buttonPanel.add(controlPanel);
 
-        // Lägger controlPanel PÅ drawPanel
+        drawPanel.add(buttonPanel, BorderLayout.SOUTH);
         this.add(drawPanel);
-        drawPanel.add(controlPanel);
         drawPanel.repaint();
 
         this.setVisible(true);
@@ -85,6 +82,39 @@ public class MainView extends JFrame implements IMainView {
         // Audio setup
         JFXPanel jFXPanel = new JFXPanel();
         this.add(jFXPanel);
+    }
+
+    private void initFishSelectionPanel() {
+        fishMenuPanel = new JPanel();
+        fishMenuPanel.setLayout(new GridLayout(1, 2, 0, 0));
+        fishMenuPanel.setOpaque(false);
+
+        // Vore kanske egentligen bättre med en lista som loopas igenom med add(), så
+        // man slipper lägga till en knapp
+        // här varje gång. Med en lista hade vi bara behövt lägga till en knapp längst
+        // upp.
+        fishMenuPanel.add(goldFishButton);
+        fishMenuPanel.add(clownFishButton);
+
+        fishMenuPanel.setBounds(10, windowHeight - 110, 250, 50);
+        fishMenuPanel.setVisible(false); // Gör den osynlig, så den kan togglas rätt sen
+        drawPanel.add(fishMenuPanel, BorderLayout.SOUTH);
+    }
+
+    public JPanel getFishMenuPanel() {
+        return this.fishMenuPanel;
+    }
+
+    @Override
+    public void addFishMenuListener(FishSelectionListener listener) {
+        for (Component comp : fishMenuPanel.getComponents()) {
+            if (comp instanceof JButton) {
+                JButton button = (JButton) comp;
+                button.addActionListener(e -> {
+                    listener.onFishSelected(button.getText());
+                });
+            }
+        }
     }
 
     public void addRenderedEntity(IRenderedEntity e) {
@@ -140,6 +170,14 @@ public class MainView extends JFrame implements IMainView {
         return this.addFishButton;
     }
 
+    public JButton getGoldFishButton() {
+        return this.goldFishButton;
+    }
+
+    public JButton getClownFishButton() {
+        return clownFishButton;
+    }
+
     public JButton getAddFoodButton() {
         return this.addFoodButton;
     }
@@ -161,15 +199,41 @@ public class MainView extends JFrame implements IMainView {
         button.setForeground(Color.BLACK);
     }
 
-    public void updateActiveButton(ActiveMode mode) {
+    public void updateActiveButton(ActiveMode mode, String fishName) {
         selectedButton = selectableButtons.get(mode);
 
         for (JButton button : selectableButtons.values()) {
             setInActive(button);
         }
 
-        if (mode != ActiveMode.NONE) {
+        if (selectedButton != null) {
             setActive(selectedButton);
+        }
+
+        // handle fish selection menu
+        handleMenu(mode, fishName, fishButtons, fishMenuPanel);
+    }
+
+    private void handleMenu(ActiveMode mode, String type, Map<String, JButton> menuButtons, JPanel panel) {
+
+        for (JButton button : menuButtons.values()) {
+            setInActive(button);
+        }
+
+        if (mode == ActiveMode.PLACING_FISH) {
+            setActive(selectableButtons.get(ActiveMode.FISH_MENU));
+
+            if (menuButtons.containsKey(type)) {
+                setActive(menuButtons.get(type));
+            }
+
+        }
+
+        if (mode == ActiveMode.FISH_MENU) {
+            panel.setVisible(!panel.isVisible());
+            setInActive(selectedButton);
+        } else if (mode != ActiveMode.PLACING_FISH) {
+            panel.setVisible(false);
         }
     }
 

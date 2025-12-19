@@ -80,19 +80,23 @@ public class ModelFacade implements IModelFacade {
         notifyObservers();
     }
 
-    // some kind of argument from controller to know which fish to add: enum,
-    // TODO -- Lägg till fler knappar/menyval för att välja en specifik fisk --
-    // String, int?
-    // currently creates one of each type
-    @Override
-    public void addFish(int posX, int posY) {
-        Fish fish = fishFactory.createGoldfish(Math.random() * 360);
+    public void addFish(String fishType, int posX, int posY) {
+        Fish fish;
+
+        switch (fishType.toLowerCase()) {
+            case "goldfish":
+                fish = fishFactory.createGoldfish(Math.random() * 360);
+                break;
+            case "clownfish":
+                fish = fishFactory.createClownfish(Math.random() * 360);
+                break;
+            default: // om nått går fel så skapas bara en goldfish
+                fish = fishFactory.createGoldfish(Math.random() * 360);
+                break;
+        }
         fish.setPos(posX, posY, fish.getPos().getZ());
         aquarium.addFish(fish);
-
-        Fish twoFish = fishFactory.createClownfish(Math.random() * 360);
-        twoFish.setPos(posX, posY, twoFish.getPos().getZ());
-        aquarium.addFish(twoFish);
+        notifyObservers();
     }
 
     private boolean isDirectionRight(double direction) {

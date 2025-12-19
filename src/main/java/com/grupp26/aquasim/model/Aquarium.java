@@ -6,6 +6,7 @@ public class Aquarium implements IAquarium {
     private final ArrayList<IFish> fishList = new ArrayList<>();
     private final ArrayList<IDecoration> decorationList = new ArrayList<>();
     private final ArrayList<IEdible> foodList = new ArrayList<>();
+    private final ArrayList<IFish> fishBuffer = new ArrayList<>();
 
     private final Vec2<Integer> aquariumSize;
     private int HEIGHT_OFFSET = 25; // Adjustable offset to account for window borders
@@ -154,6 +155,26 @@ public class Aquarium implements IAquarium {
     }
 
     @Override
+    public ArrayList<IFish> getinLoveFish(IFish seeker) {
+        ArrayList<IFish> result = new ArrayList<>();
+
+        for (IFish fish : fishList) {
+            if (fish != seeker && fish.isAlive() && fish.isInLove() && fish.getType().equals(seeker.getType())) {
+                result.add(fish);
+            }
+            // returnera en lista på möjliga partner
+        }
+        return result;
+    }
+
+    @Override
+    public void addFishToBuffer(IFish fish){
+        this.fishBuffer.add(fish);
+    }
+
+
+
+    @Override
     public void tick() {
         for (IFish fish : fishList) {
             fish.tick();
@@ -166,5 +187,7 @@ public class Aquarium implements IAquarium {
         for (IEdible edible : foodList) {
             edible.tick();
         }
+        fishList.addAll(fishBuffer);
+        fishBuffer.clear();
     }
 }

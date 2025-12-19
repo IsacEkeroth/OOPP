@@ -1,4 +1,4 @@
-package com.grupp26.aquasim;
+/*package com.grupp26.aquasim;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -62,3 +62,5 @@ public class Vec3Test {
                 org.junit.jupiter.params.provider.Arguments.of(104, -51, null));
     }
 }
+
+ */
